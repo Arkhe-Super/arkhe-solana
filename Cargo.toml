@@ -1,0 +1,7 @@
+[workspace]
+members = [
+    "crates/*",
+    "programs/*",
+    "programs/arkhe-verify",
+    "bridge/*"
+]
