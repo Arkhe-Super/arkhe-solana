@@ -1,18 +1,18 @@
 # Arkhe
 
-Arkhe is a hybrid blockchain architecture for AI provenance and royalty micropayments. It aligns a complex technical architecture (provenance, AI, and blockchain) with legal and financial realities across dozens of countries.
+Arkhe é uma arquitetura de blockchain híbrida para proveniência de IA e micropagamentos de royalties. Ela alinha uma arquitetura técnica complexa (proveniência, IA e blockchain) com realidades legais e financeiras de dezenas de países.
 
-## Three Pillars of Arkhe
+## Três Pilares da Arkhe
 
-1. **International Standards (C2PA & Berne Convention)**
-   Arkhe positions itself as a compliance and settlement layer over established frameworks. Using C2PA (ISO 22144), it handles machine-readable provenance. With `arkhe-eu-ai-act`, it addresses the upcoming EU AI Act Article 50 requirements, generating auditable Compliance Reports anchored on-chain.
+1. **Padrões Internacionais (C2PA e Convenção de Berna)**
+   Arkhe posiciona-se como uma camada de conformidade e liquidação sobre estruturas estabelecidas. Utilizando o C2PA (ISO 22144), ele lida com proveniência legível por máquina. Com o `arkhe-eu-ai-act`, ele aborda os próximos requisitos do Artigo 50 do AI Act da UE, gerando Relatórios de Conformidade auditáveis ancorados on-chain.
 
-2. **Micropayments Infrastructure (Solana)**
-   Using Solana for sub-second, sub-cent transactions, Arkhe integrates with Pay.sh (Google Cloud), x402, and MPP protocols. Royalties are settled atomically only if a valid inclusion proof is verified on-chain via the WormGraph.
+2. **Infraestrutura de Micropagamentos (Solana)**
+   Utilizando Solana para transações de menos de um segundo e frações de centavo, Arkhe integra-se ao Pay.sh (Google Cloud), x402 e protocolos MPP. Os royalties são liquidados atomicamente apenas se uma prova de inclusão válida for verificada on-chain via o WormGraph.
 
-3. **Interoperability (Chain-Agnostic Provenance)**
-   Instead of replacing national registries, Arkhe connects to them. The `arkhe-c2pa-bridge` anchors C2PA manifests to Solana (WormGraph) and Ethereum (EAS), allowing liquidity across chains while maintaining efficient settlement.
+3. **Interoperabilidade (Proveniência Agnóstica a Cadeia)**
+   Em vez de substituir registros nacionais, Arkhe se conecta a eles. A ponte `arkhe-c2pa-bridge` ancora manifestos C2PA em Solana (WormGraph) e Ethereum (EAS), permitindo liquidez através das cadeias, mantendo ao mesmo tempo uma liquidação eficiente.
 
-## Getting Started
+## Começando
 
-See `docs/guides/quickstart.md` and `docs/guides/local-development.md` for information on setting up your local environment, running the solana-test-validator with sol_blake3 enabled, and building the workspace.
+Consulte `docs/guides/quickstart.md` e `docs/guides/local-development.md` para obter informações sobre como configurar seu ambiente local, executar o solana-test-validator com o sol_blake3 ativado, e compilar o workspace.

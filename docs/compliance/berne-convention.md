@@ -1,3 +1,3 @@
-# Berne Convention Alignment
+# Alinhamento à Convenção de Berna
 
-The Berne Convention grants copyright automatically upon creation. However, proving authorship in litigation requires robust evidence. The Arkhe WormGraph provides cryptographic timestamped proof of origin that aligns perfectly with the evidentiary standards required in signee countries.
+A Convenção de Berna concede direitos autorais automaticamente no momento da criação. No entanto, provar a autoria em litígios requer evidências robustas. O WormGraph da Arkhe fornece prova de origem criptográfica com data e hora (timestamp) que se alinha perfeitamente com os padrões probatórios exigidos nos países signatários.

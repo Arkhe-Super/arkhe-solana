@@ -1,4 +1,4 @@
-# Invariant Matrix
+# Matriz de Invariantes
 
 | ID | Enunciado | Falsificador | Crate |
 | --- | --- | --- | --- |

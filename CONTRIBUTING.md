@@ -1,14 +1,14 @@
-# Contributing to Arkhe
+# Contribuindo para a Arkhe
 
-We love your input! We want to make contributing to Arkhe as easy and transparent as possible.
+Adoramos sua contribuição! Queremos tornar a contribuição para a Arkhe o mais fácil e transparente possível.
 
 ## Pull Requests
 
-1. Fork the repo and create your branch from `main`.
-2. If you've added code that should be tested, add tests.
-3. Ensure the test suite passes (`cargo test`).
-4. Make sure your code is formatted (`cargo fmt`).
-5. Issue that pull request!
+1. Faça um fork do repositório e crie sua branch a partir da `main`.
+2. Se você adicionou código que deve ser testado, adicione testes.
+3. Garanta que a suíte de testes passe (`cargo test`).
+4. Certifique-se de que seu código esteja formatado (`cargo fmt`).
+5. Envie seu pull request!
 
-## Any contributions you make will be under the MIT Software License
-In short, when you submit code changes, your submissions are understood to be under the same [MIT License](http://choosealicense.com/licenses/mit/) that covers the project. Feel free to contact the maintainers if that's a concern.
+## Quaisquer contribuições que você fizer estarão sob a Licença de Software MIT
+Em suma, ao enviar alterações de código, suas contribuições são entendidas como estando sob a mesma [Licença MIT](http://choosealicense.com/licenses/mit/) que cobre o projeto. Sinta-se à vontade para contatar os mantenedores se tiver alguma dúvida.
