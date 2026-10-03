@@ -1,5 +1,5 @@
-# Local Development
+# Desenvolvimento Local
 
-To run the local environment:
+Para executar o ambiente local:
 `bash scripts/start-test-validator.sh`
-This script starts the local Solana node, optionally toggling the `sol_blake3` feature gate for exact production environment mirroring.
+Este script inicia o nó Solana local, opcionalmente alternando o feature gate `sol_blake3` para o espelhamento exato do ambiente de produção.

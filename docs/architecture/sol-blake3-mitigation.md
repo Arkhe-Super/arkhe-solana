@@ -1,7 +1,7 @@
-# sol_blake3 Mitigation Strategy
+# Estratégia de Mitigação sol_blake3
 
-The `arkhe-royalty-verify` component relies heavily on the BLAKE3 hash function for performance parities with WormGraph. Because `sol_blake3` is not yet active on the Solana mainnet, Arkhe incorporates a fallback mechanism using `SHA-256`.
+O componente `arkhe-royalty-verify` depende fortemente da função de hash BLAKE3 para paridade de desempenho com o WormGraph. Como o `sol_blake3` ainda não está ativo na rede principal (mainnet) do Solana, a Arkhe incorpora um mecanismo de fallback usando o `SHA-256`.
 
-**For Local Testing:**
-Start the test validator with the feature gate explicitly enabled:
-`solana-test-validator -r` (or disable it to simulate mainnet).
+**Para Testes Locais:**
+Inicie o validador de teste com o feature gate explicitamente ativado:
+`solana-test-validator -r` (ou desative-o para simular a mainnet).

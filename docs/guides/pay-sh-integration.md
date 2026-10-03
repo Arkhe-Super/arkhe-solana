@@ -1,3 +1,3 @@
-# Pay.sh Integration
+# Integração Pay.sh
 
-Arkhe integrates Pay.sh to facilitate programmatic payouts. Agents ping the `arkhe-royalty-verify` service, which triggers the Pay.sh API and splits the micro-transactions across the relevant royalty wallets using the `x402` headers.
+Arkhe integra o Pay.sh para facilitar pagamentos programáticos. Os agentes acionam o serviço `arkhe-royalty-verify`, que aciona a API do Pay.sh e divide as microtransações entre as carteiras de royalties relevantes usando os cabeçalhos `x402`.

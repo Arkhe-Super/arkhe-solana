@@ -1,8 +1,8 @@
-# Settlement Layer
+# Camada de Liquidação
 
-The primary settlement execution environment for Arkhe is Solana, chosen for its sub-second finality and very low transaction fees (ideal for micro-royalties).
+O principal ambiente de execução de liquidação da Arkhe é o Solana, escolhido pela sua finalidade de menos de um segundo e taxas de transação muito baixas (ideal para microroyalties).
 
-Arkhe leverages:
-1. **Pay.sh Integration:** For gateway processing and multi-address payouts.
-2. **x402 & MPP:** To facilitate standard machine-to-machine HTTP payments.
-3. **Anchor Framework:** The `arkhe-verify` contract validates inclusion proofs against the WormGraph.
+A Arkhe aproveita:
+1. **Integração Pay.sh:** Para processamento de gateway e pagamentos para múltiplos endereços.
+2. **x402 e MPP:** Para facilitar pagamentos HTTP padrão de máquina para máquina.
+3. **Framework Anchor:** O contrato `arkhe-verify` valida as provas de inclusão em relação ao WormGraph.
