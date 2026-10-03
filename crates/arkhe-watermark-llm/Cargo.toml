@@ -1,1 +1,4 @@
-[package]\nname = "arkhe-watermark-llm"\nversion = "0.1.0"\nedition = "2021"\n
+[package]
+name = "arkhe-watermark-llm"
+version = "0.1.0"
+edition = "2021"

@@ -1,1 +1,4 @@
-[package]\nname = "circle-gateway"\nversion = "0.1.0"\nedition = "2021"\n
+[package]
+name = "circle-gateway"
+version = "0.1.0"
+edition = "2021"

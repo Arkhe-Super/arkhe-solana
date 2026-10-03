@@ -1,1 +1,4 @@
-[package]\nname = "arkhe-eu-ai-act"\nversion = "0.1.0"\nedition = "2021"\n
+[package]
+name = "arkhe-eu-ai-act"
+version = "0.1.0"
+edition = "2021"
