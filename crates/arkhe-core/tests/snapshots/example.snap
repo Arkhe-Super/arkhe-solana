@@ -1,0 +1,5 @@
+---
+source: crates/arkhe-core/tests/snapshots.rs
+expression: "result"
+---
+"success"
