@@ -1,0 +1,2 @@
+= Arkhe Spec
+Arkhe is a hybrid blockchain platform.
