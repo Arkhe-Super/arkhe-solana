@@ -1,9 +1,9 @@
-# AI Act da UE - Artigo 50(2)
+# EU AI Act - Article 50(2)
 
-O próximo Artigo 50 do AI Act da UE exige que as saídas de IA sejam marcadas em um formato legível por máquina para indicar origem artificial.
+The upcoming Article 50 of the EU AI Act requires that AI outputs be marked in a machine-readable format to indicate artificial origin.
 
-A Arkhe utiliza uma abordagem de dupla camada:
-1. Marcas d'água robustas invisíveis (por exemplo, SynthID-Text).
-2. Metadados seguros (manifestos C2PA).
+Arkhe utilizes a dual-layer approach:
+1. Invisible robust watermarks (e.g., SynthID-Text), which embed the origin information directly into the content data.
+2. Secure metadata (C2PA manifests), which provide verifiable and tamper-evident provenance assertions.
 
-O crate `arkhe-eu-ai-act` gera um Relatório de Conformidade (ComplianceReport) ancorado on-chain provando a adesão a esses regulamentos.
+The `arkhe-eu-ai-act` crate combines these techniques to validate if an output meets the requirements and generates an auditable Compliance Report anchored on-chain, proving adherence to these regulations.

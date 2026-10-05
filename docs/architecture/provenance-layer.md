@@ -1,5 +1,5 @@
-# Camada de Proveniência
+# Provenance Layer
 
-A camada de proveniência opera off-chain e é agnóstica à cadeia. Ela verifica os metadados de origem da IA e gera provas criptográficas que podem ser ancoradas no Ethereum ou no Solana.
+The provenance layer operates off-chain and is chain-agnostic. It verifies AI origin metadata and generates cryptographic proofs that can be anchored to Ethereum or Solana.
 
-Ela implementa a especificação C2PA (ISO 22144) para extrair e validar a proveniência do ativo, utilizando os SDKs oficiais em Rust.
+It implements the C2PA specification (ISO 22144) to extract and validate asset provenance, utilizing the official Rust SDKs. These verifiable and tamper-evident cryptographic proofs ensure that the origin of AI-generated content can be reliably proven across different jurisdictions and blockchain ecosystems.

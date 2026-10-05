@@ -1,3 +1,3 @@
-# Visão Geral da Arquitetura
+# Architecture Overview
 
-A Arkhe une a proveniência de IA e os royalties em blockchain em um cenário multijurisdicional. Ao conectar a proveniência legível por máquina (C2PA) com a lógica de liquidação on-chain, a Arkhe fornece uma plataforma de royalties auditável e eficiente.
+Arkhe unites AI provenance and blockchain royalties in a multijurisdictional landscape. By bridging machine-readable provenance (C2PA) with on-chain settlement logic, Arkhe provides an auditable and efficient royalty platform. The hybrid architecture leverages the strengths of different blockchains: Solana for execution and sub-second settlement, and Ethereum (EVM) for liquidity and attestation.

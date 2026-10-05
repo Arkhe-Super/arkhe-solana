@@ -1,23 +1,25 @@
-# Arquitetura Arkhe
+# Arkhe Architecture
 
-A arquitetura da Arkhe é composta por uma abordagem híbrida que separa a verificação da proveniência da liquidação financeira.
+Arkhe's architecture is composed of a hybrid approach that separates provenance verification from financial settlement.
 
-## Camada de Liquidação (Solana)
+## Settlement Layer (Solana)
 
-Solana é a camada principal de liquidação. O programa `arkhe-verify` (Anchor) verifica as provas de inclusão do Merkle Mountain Range (MMR) provenientes do WormGraph. Os royalties são executados usando Token Extensions (Transfer Hooks) e integrados com gateways de pagamento como o Pay.sh.
+Solana is the primary settlement layer. The `arkhe-verify` (Anchor) program verifies Merkle Mountain Range (MMR) inclusion proofs coming from WormGraph. Royalties are executed using Token Extensions (Transfer Hooks) and integrated with payment gateways such as Pay.sh. This settlement layer is optimized for sub-second finality and very low transaction fees, making it ideal for micro-royalties. It leverages x402 and MPP to facilitate standard HTTP machine-to-machine payments.
 
-**Mitigação do sol_blake3:** Como a chamada de sistema `sol_blake3` ainda não está ativa na rede principal do Solana, a Arkhe usa um fallback restrito por um feature gate para o `SHA-256` ou executa em L2s personalizadas (como a Rede SOON) e o `solana-test-validator` para testes locais.
+**sol_blake3 Mitigation:** Since the `sol_blake3` system call is not yet active on the Solana mainnet, Arkhe uses a feature-gated fallback to `SHA-256` or runs on custom L2s (such as the SOON Network) and the `solana-test-validator` for local testing.
 
-## Camada de Proveniência (Agnóstica)
+## Provenance Layer (Agnostic)
 
-O `arkhe-c2pa-bridge` gerencia manifestos C2PA (ISO 22144), interpretando assinaturas e ancorando o hash (RecordHash) no Solana (via WormGraph) ou no Ethereum (via Serviço de Atestação Ethereum - EAS).
+The provenance layer operates off-chain and is chain-agnostic. It verifies AI origin metadata and generates cryptographic proofs that can be anchored to either Ethereum or Solana.
 
-### Módulos Principais:
-* **arkhe-watermark-llm:** Trata da detecção e incorporação de marcas d'água SynthID-Text.
-* **arkhe-provenance-llm:** Gera envelopes de proveniência JSON Canônicos (RFC 8785).
-* **arkhe-eu-ai-act:** Valida se uma saída atende aos requisitos do Artigo 50(2) do AI Act da UE (C2PA + Marca d'água).
-* **arkhe-light-shed-detect:** Detecção espectral de perturbações adversariais (Bypass de Glaze/Nightshade).
+The `arkhe-c2pa-bridge` manages C2PA (ISO 22144) manifests by parsing signatures and anchoring the hash (RecordHash) on Solana (via WormGraph) or on Ethereum (via Ethereum Attestation Service - EAS).
 
-## Camada de Ponte
+### Core Modules:
+* **arkhe-watermark-llm:** Handles the detection and embedding of SynthID-Text watermarks.
+* **arkhe-provenance-llm:** Generates Canonical JSON (RFC 8785) provenance envelopes.
+* **arkhe-eu-ai-act:** Validates whether an output meets the EU AI Act Article 50(2) requirements (C2PA + Watermark).
+* **arkhe-light-shed-detect:** Spectral detection of adversarial perturbations (Glaze/Nightshade Bypass).
 
-Nós utilizamos o Wormhole NTT (Native Token Transfers) e o Cross-Chain Transfer Protocol (CCTP) da Circle para fornecer saldos unificados de USDC e conectar a camada eficiente de liquidação do Solana à profunda liquidez do ecossistema DeFi do Ethereum.
+## Bridge Layer
+
+We utilize Wormhole NTT (Native Token Transfers) and Circle's Cross-Chain Transfer Protocol (CCTP) to provide unified USDC balances and connect Solana's efficient settlement layer to the deep liquidity of the Ethereum DeFi ecosystem.
