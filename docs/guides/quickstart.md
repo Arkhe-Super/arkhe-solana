@@ -1,5 +1,5 @@
-# Guia de Início Rápido
+# Quickstart Guide
 
-1. Instale Rust, Solana CLI e Anchor.
-2. Execute `cargo build` para compilar os crates.
-3. Execute `anchor build` para compilar os smart contracts.
+1. Install Rust, Solana CLI, and Anchor.
+2. Run `cargo build` to compile the Rust crates for the project workspace.
+3. Run `anchor build` to compile the Solana smart contracts.
