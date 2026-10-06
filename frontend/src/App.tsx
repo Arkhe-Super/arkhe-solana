@@ -1,3 +1,4 @@
+import WebGPUBenchmarkPage from "./ui/pages/WebGPUBenchmarkPage";
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import CreatorDashboard from './pages/CreatorDashboard';
 import FullstackArchitecture from './pages/FullstackArchitecture';
@@ -15,6 +16,7 @@ function App() {
         <Route path="/wormgraph" element={<ProvenanceWormgraph />} />
         <Route path="/royalties" element={<RoyaltiesSolanaBlinks />} />
         <Route path="/registration" element={<WorkRegistrationC2Pa />} />
+        <Route path="/benchmark" element={<WebGPUBenchmarkPage />} />
       </Routes>
     </BrowserRouter>
   );
