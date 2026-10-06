@@ -11,12 +11,18 @@
     "test": "vitest"
   },
   "dependencies": {
+    "@solana/spl-token": "^0.4.15",
+    "@solana/wallet-adapter-base": "^0.9.28",
+    "@solana/wallet-adapter-react": "^0.15.40",
+    "@solana/wallet-adapter-react-ui": "^0.9.40",
+    "@solana/web3.js": "^1.99.0",
     "@tailwindcss/container-queries": "^0.1.1",
     "@tailwindcss/forms": "^0.5.11",
     "@tailwindcss/vite": "^4.3.3",
     "@vercel/analytics": "^2.0.1",
     "autoprefixer": "^10.6.1",
     "blake3-wasm-rs": "^0.6.7",
+    "ethers": "^6.17.0",
     "lucide-react": "^1.51.0",
     "postcss": "^8.5.28",
     "react": "^19.2.8",
