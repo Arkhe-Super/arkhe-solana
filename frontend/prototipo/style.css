@@ -1,6 +1,7 @@
 :root {
     --cor-destaque: #65F7C2;
     --cor-fundo: #070A0D;
+    --cor-fundo-hash: rgba(46, 151, 95, 0.5);
     --cor-menu: #1E1E1E;
     --cor-card: #11161B;
     --cor-borda: #2A3138;
@@ -29,7 +30,7 @@
 .container-menu-lateral {
     display: flex;
     flex-direction: column;
-    width: 13rem;
+    width: 17rem;
     background-color: var(--cor-menu);
     padding: 0 16px 20px;
     border-right: 1px solid var(--cor-borda);
@@ -66,7 +67,9 @@
 
 .hader-menu-principal {
     position: relative;
-    padding-right: 180px;
+    padding: 20px 24px;
+    border-bottom: #e2d0d0 1px solid;
+    width: 100%;
 }
 
 .botao-modo-escuro {
@@ -101,14 +104,14 @@
 }
 
 .card-documento {
-    width: 80%;
-    max-width: 600px;
-    min-height: 400px;
-    margin: 40px 0 0 20px;
+    width: 100%;
+    min-height: 300px;
     padding: 40px;
     background-color: var(--cor-card);
     border: 1px solid var(--cor-borda);
     border-radius: 12px;
+    margin-bottom: 25px;
+    margin-top: 15px;
 }
 
 .modo-escuro-menu {
@@ -125,5 +128,72 @@
 
 .main-menu-principal {
     flex: 1;
-    padding: 40px;
+    overflow-y: auto;
+}
+
+.coluna-arquivo { /*Div da coluna esquerda para poder juntar e separar da coluna da direita*/
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    min-width: 0;
+}
+
+.card-impressao {
+    width: 100%;
+    min-height: 100px;
+    padding: 20px;
+    background-color: var(--cor-card);
+    border: 1px solid var(--cor-borda);
+    border-radius: 12px;
+    margin-bottom: 25px;
+}
+
+.texto-card-impressao {
+    color: var(--cor-texto-suave);
+    font-size: 15px;
+}
+
+.card-hash {
+    width: 100%;
+    min-height: 50px;
+    padding: 20px;
+    background-color: var(--cor-card);
+    border: 1px solid var(--cor-borda);
+    border-radius: 12px;
+    font-size: 14px;
+    background-color: var(--cor-fundo-hash);
+}
+
+.menu-grid {
+    display: grid;
+    grid-template-columns: 500px 1fr; /*Isso já detalha o tamanho de width dos cards e quantos frames ele ocupará, class criada no html para agrupar as duas colunas esquerda e direita para ter o grid e eles ficarem lado a lado*/
+    gap: 24px;
+    align-items: start;
+    padding: 35px 24px 24px 35px;
+}
+
+.coluna-arquivo,
+.coluna-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    min-width: 0;
+}
+
+.titulo-arquivo-span {
+    color: var(--cor-texto-suave);
+    font-size: 12px;
+    letter-spacing: 0.05em;
+}
+
+.card-formulario {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-width: 800px;
+    min-height: 300px;
+    padding: 24px;
+    background-color: var(--cor-card);
+    border: 1px solid var(--cor-borda);
+    border-radius: 12px;
 }
