@@ -13,8 +13,46 @@ Arkhe is a hybrid blockchain architecture for AI provenance and royalty micropay
 3. **Interoperability (Chain-Agnostic Provenance)**
    Instead of replacing national registries, Arkhe connects to them. The `arkhe-c2pa-bridge` anchors C2PA manifests on Solana (WormGraph) and Ethereum (EAS), enabling cross-chain liquidity while maintaining efficient settlement.
 
+## Project Structure
+
+The Arkhe repository is structured as a Rust Cargo workspace containing multiple crates, Solana smart contracts built with the Anchor framework, and a frontend web application.
+
+*   **`crates/`**: Contains various Rust crates such as `arkhe-core`, `arkhe-eu-ai-act`, and `arkhe-c2pa-bridge`.
+*   **`programs/`**: Contains the Anchor-based Solana smart contracts (e.g., `arkhe-verify`).
+*   **`frontend/`**: A Vite + React + TypeScript web application, using `vitest` for testing.
+    *   **Architecture**: The frontend utilizes WebGPU for acceleration, with a fallback to WebAssembly (e.g., using `blake3-wasm-rs` or `hash-wasm`) for cryptographic operations like BLAKE3 hashing when WebGPU is unavailable.
+    *   **Deployment**: The frontend is deployed to Vercel as a Single Page Application (SPA). It requires a `vercel.json` file in the `frontend/` directory configured with route rewrites to `index.html` for client-side routing, and COOP/COEP headers (`Cross-Origin-Opener-Policy: same-origin`, `Cross-Origin-Embedder-Policy: require-corp`) for WASM SharedArrayBuffer support.
+
 ## Getting Started
 
-See `docs/guides/quickstart.md` and `docs/guides/local-development.md` for information on how to set up your local environment, run the `solana-test-validator` with the `sol_blake3` feature enabled, and compile the workspace.
+To set up the project workspace locally:
 
-To build the project workspace, use `cargo build` to compile the Rust crates and `anchor build` to compile the smart contracts. Local Solana development uses `solana-test-validator` via `bash scripts/start-test-validator.sh`. The `sol_blake3` feature is inactive by default (mirroring mainnet). Use the `--blake3` flag to explicitly activate it using `--feature-set` for testing.
+1.  **Prerequisites**: Install Rust, Solana CLI, and Anchor.
+2.  **Compile Rust Crates**: Run `cargo build` to compile the Rust crates.
+3.  **Compile Smart Contracts**: Run `anchor build` to compile the Solana smart contracts.
+
+### Local Development Environment
+
+To start a local Solana node, use the provided script:
+
+```bash
+bash scripts/start-test-validator.sh
+```
+
+By default, the `sol_blake3` feature (HTW2pSyErTj4BV6KBM9NZ9VBUJVxt7sacNWcf76wtzb3) is inactive, mirroring mainnet. To explicitly enable it for testing, use the `--blake3` flag:
+
+```bash
+bash scripts/start-test-validator.sh --blake3
+```
+Alternatively, you can run `solana-test-validator -r` with the feature gate explicitly enabled.
+
+See `docs/guides/quickstart.md` and `docs/guides/local-development.md` for more detailed information.
+
+## Testing and Contributing
+
+We welcome contributions! Please follow these guidelines:
+
+1.  **Formatting**: Ensure your code is properly formatted by running `cargo fmt`.
+2.  **Testing**: Verify the test suite passes by running `cargo test`.
+    *   **Note on `arkhe-c2pa-bridge`**: This crate has known upstream dependency resolution conflicts with `rasn` and `bs58` (via `c2pa` and `anchor-lang`). When running workspace-wide tests, it may require isolation via `default-members` in the root `Cargo.toml` or testing individually via `cargo test -p arkhe-c2pa-bridge`.
+3.  **Pull Requests**: Create a branch from `main`, add tests for your code, and submit your pull request. Contributions are made under the MIT Software License.
