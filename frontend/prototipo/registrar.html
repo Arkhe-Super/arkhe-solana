@@ -1,56 +1,90 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <link rel="stylesheet" href="style.css">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <title>Prototipo</title>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <title>Registrar Obra - ARKHE</title>
 </head>
+
 <body class="body-principal">
+
     <div class="container-menu">
+
         <aside class="container-menu-lateral">
+
             <div class="itens-menu-lateral">
-                <span id="span-icone">A</span><span id="span-arkhe">ARKHE</span>
-            </div><br>
+                <span id="span-icone">A</span>
+                <span id="span-arkhe">ARKHE</span>
+            </div>
+
             <nav class="nav-lateral">
-                <a href="registrar.html" class="item-nav-ml"><span data-icone="registrar">Registrar Obra</span></a>
-                <a href="verificar.html" class="item-nav-ml"><span data-icone="verificar">Verificar</span></a>
-                <a href="royalties.html" class="item-nav-ml"><span data-icone="royalties">Royalties</span></a>
+
+                <a href="registrar.html" class="item-nav-ml ativo">
+                    <span data-icone="registrar">Registrar Obra</span>
+                </a>
+
+                <a href="verificar.html" class="item-nav-ml">
+                    <span data-icone="verificar">Verificar</span>
+                </a>
+
+                <a href="royalties.html" class="item-nav-ml">
+                    <span data-icone="royalties">Royalties</span>
+                </a>
+
             </nav>
-            <div class="rodape-menu-lateral">● SOLANA · DEVNET</div>
+
+            <div class="modo-escuro-menu">
+
+                <label for="switch">
+                    Modo Escuro
+                </label>
+
+                <input
+                    type="checkbox"
+                    id="switch"
+                >
+
+            </div>
+
+            <div class="rodape-menu-lateral">
+
+            </div>
+
         </aside>
+
         <main class="main-menu-principal">
-        <header class="hader-menu-principal">
-            <h1>Registrar Obra</h1>
-            <p>Crie um registro de autoria da Solana</p>
-            <div class="botao-modo-escuro">
-                <span data-icone="modo-escuro">
-                    <label for="switch">Modo Escuro</label><input type="checkbox" id="switch"></input>
-                </span>
-            </div>
-        </header>
-        <hr>
-        <section>
-            <h2>ARQUIVO DA OBRA</h2>
-            <label id="area-arquivo" for="arquivo">
-                <input id="arquivo" type="file">
-                <div id="conteudo-arquivo"></div>
-            </label>
-            <div class="container-hash">
-                <div class="text-hash">
-                    <p>Impressão Digital</p>
-                    <span id="hash-status"></span>
-                </div>
-                <p id="hash-valor">Escolha um arquivo para gerar</p>
-            </div>
-            <div>
-                <span data-icone="escudo" id="icone-hash">O hash será registrado exclusivamente na Solana.</span>
-            </div>
-        </section>
-    </main>
+
+            <header class="hader-menu-principal">
+
+                <h1>Registrar Obra</h1>
+
+                <p>
+                    Crie um registro de autoria da Solana
+                </p>
+
+            </header>
+
+            <section class="card-documento">
+
+            </section>
+
+        </main>
+
     </div>
+
+    <script src="script.js"></script>
+
 </body>
 </html>
