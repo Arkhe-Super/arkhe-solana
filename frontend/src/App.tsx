@@ -5,6 +5,7 @@ import FullstackArchitecture from './pages/FullstackArchitecture';
 import ProvenanceWormgraph from './pages/ProvenanceWormgraph';
 import RoyaltiesSolanaBlinks from './pages/RoyaltiesSolanaBlinks';
 import WorkRegistrationC2Pa from './pages/WorkRegistrationC2Pa';
+import JorgeBenJorVsRodStewartDemo from './demo/JorgeBenJorVsRodStewart';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/royalties" element={<RoyaltiesSolanaBlinks />} />
         <Route path="/registration" element={<WorkRegistrationC2Pa />} />
         <Route path="/benchmark" element={<WebGPUBenchmarkPage />} />
+        <Route path="/demo" element={<JorgeBenJorVsRodStewartDemo />} />
       </Routes>
     </BrowserRouter>
   );

@@ -2,6 +2,10 @@
 
 
 import { useState, useEffect } from 'react';
+import Footer from "../ui/components/Footer";
+import MicropaymentsHistory from "../ui/components/MicropaymentsHistory";
+
+
 
 const mockRegistrationData = {
   user: {
@@ -524,40 +528,7 @@ export default function WorkRegistrationC2Pa() {
 </div>
 </div>
 </div>
-{/* BOTTOM ROW: HISTÓRICO DE MICROPAGAMENTOS X402 (AGENTES IA) & TELEMETRIA TOKEN-2022 */}
-<section className="bg-surface-container-low/90 backdrop-blur-xl border border-outline-variant/30 rounded p-5 mb-6">
-<div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-outline-variant/20 mb-4 gap-2">
-<div>
-<div className="flex items-center gap-2">
-<h2 className="text-headline-md font-headline-md text-on-surface flex items-center gap-2">
-<span className="material-symbols-outlined text-secondary text-lg" data-icon="payments">payments</span>
-                Histórico de Micropagamentos HTTP x402 de Agentes de IA (Pay.sh Rails)
-              </h2>
-<span className="px-2 py-0.5 rounded bg-primary-container/20 text-primary text-label-sm font-label-sm uppercase">TOKEN-2022 HOOK</span>
-</div>
-<p className="text-body-sm font-body-sm text-on-surface-variant">Cobrança e liquidação em milissegundos via streaming para inferência de modelos e uso de obras</p>
-</div>
-<div className="flex items-center gap-2">
-<button className="px-3 py-1 rounded bg-surface-container border border-outline-variant/30 text-code-sm font-code-sm text-on-surface hover:border-tertiary transition-colors flex items-center gap-1.5">
-<span className="material-symbols-outlined text-xs" data-icon="sync">sync</span>
-<span>Live Ingest</span>
-</button>
-</div>
-</div>
-{/* Spec Data Table */}
-<div className="overflow-x-auto">
-<table className="w-full text-left font-code-sm text-code-sm">
-<thead>
-<tr className="border-b border-outline-variant/30 text-outline uppercase font-label-md text-label-md">
-<th className="py-2.5 px-3">Agente / Client ID</th>
-<th className="py-2.5 px-3">Obra Solicitada (BLAKE3 Digest)</th>
-<th className="py-2.5 px-3">Protocol Header</th>
-<th className="py-2.5 px-3">Valor Liquidado</th>
-<th className="py-2.5 px-3">Solana Signature</th>
-<th className="py-2.5 px-3 text-right">Status</th>
-</tr>
-</thead>
-<tbody className="divide-y divide-outline-variant/15 text-on-surface">
+<MicropaymentsHistory>
 {/* Row 1 */}
 <tr className="hover:bg-surface-container transition-colors group">
 <td className="py-2.5 px-3 flex items-center gap-2">
@@ -622,31 +593,11 @@ export default function WorkRegistrationC2Pa() {
 <span className="px-2 py-0.5 rounded bg-secondary/15 text-secondary text-label-sm font-label-sm">CONFIRMED</span>
 </td>
 </tr>
-</tbody>
-</table>
-</div>
-</section>
+</MicropaymentsHistory>
 </main>
 </div>
 {/* FIXED TECHNICAL STATUS BAR (Shared Component: Footer) */}
-<footer className="bg-surface-container-lowest/95 backdrop-blur-md dark:bg-surface-container-lowest/95 text-tertiary dark:text-tertiary fixed bottom-0 left-0 w-full h-8 z-50 flex items-center border-t border-outline-variant/30 shadow-[0_-4px_16px_-2px_rgba(0,0,0,0.4)]">
-<div className="w-full px-4 flex justify-between items-center text-code-sm font-code-sm">
-{/* Left Copyright & Slot Identifier */}
-<div className="flex items-center gap-4">
-<span className="text-code-sm font-code-sm text-on-surface font-semibold">
-          ARKHE FOUNDATION // APACHE-2.0 SYSTEM TELEMETRY KERNEL // SLOT #294029103
-        </span>
-</div>
-{/* Right Telemetry Status Pills & Documentation Links */}
-<div className="flex items-center gap-5">
-<span className="text-secondary font-medium underline cursor-pointer active:opacity-75">Yellowstone gRPC [OK]</span>
-<span className="text-on-surface-variant hover:text-on-surface hover:text-secondary transition-colors duration-150 cursor-pointer active:opacity-75">WASM Runtime: 32MB</span>
-<span className="text-on-surface-variant hover:text-on-surface hover:text-secondary transition-colors duration-150 cursor-pointer active:opacity-75">TPS: 3,420</span>
-<span className="text-on-surface-variant hover:text-on-surface hover:text-secondary transition-colors duration-150 cursor-pointer active:opacity-75">Audit Provenance</span>
-<span className="text-on-surface-variant hover:text-on-surface hover:text-secondary transition-colors duration-150 cursor-pointer active:opacity-75">GitHub Specs</span>
-</div>
-</div>
-</footer>
+<Footer />
 {/* Inline Lightweight Micro-Interactions Script */}
 
     </div>
