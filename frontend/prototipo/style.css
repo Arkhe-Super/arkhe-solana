@@ -154,14 +154,16 @@ body {
     background-color: var(--cor-fundo);
 }
 
-body.tema-claro {
+body:has(#switch:not(:checked)) {
     --cor-destaque: #0FA97A;
+    --cor-erro: #d83434;
+    --cor-fundo-hash:#0FA97A;
     --cor-fundo: #F4F7F6;
     --cor-menu: #FFFFFF;
     --cor-card: #FFFFFF;
     --cor-borda: #D8E0DE;
     --cor-texto: #0F1A17;
-    --cor-texto-medio: #505F59;
+    --cor-texto-medio: #6E7B76;
     --cor-texto-suave: #5B6B66;
     --cor-texto-claro: #3F4D48;
 }
@@ -528,6 +530,35 @@ body.tema-claro {
     border: 1px solid color-mix(in srgb, var(--cor-erro) 30%, transparent);
 }
 
+.card-btn {
+    display: flex;
+    justify-content: right;
+    align-items: right;
+    text-align: right;
+    padding-top: 15px;
+}
+
+.botao-registrar {
+    align-items: right;
+    width: 100%;
+    max-width: 240px;
+    letter-spacing: 2px;
+    padding: 25px;
+    border-radius: 10px;
+    font-size: 18px;
+    cursor: pointer;
+    background-color: var(--cor-destaque);
+    color: var(--cor-card);
+    border: var(--cor-borda) 2px solid;
+    transition: 0.2s;
+}
+
+.botao-registrar:hover {
+    background-color: var(--cor-card);
+    color: var(--cor-destaque);
+    border-color: var(--cor-destaque);
+}
+
 .card-verificar {
     max-width: 420px;
     padding: 24px;
@@ -665,6 +696,7 @@ body.tema-claro {
     border-radius: 6px;
     font-size: 10px;
     font-weight: 600;
+    text-decoration: none;
 }
 
 .dados-resultado {
@@ -833,4 +865,91 @@ body.tema-claro {
     font-size: 13px;
     line-height: 1.5;
     margin: 0;
+}
+
+.conteudo-principal-royalties {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 32px;
+    padding: 25px;
+}
+
+.card-recebido-mes {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    flex-direction: column;
+    justify-content: space-between;
+    align-content: space-between;
+    gap: 24px;
+    min-height: 134px;
+    padding: 18px;
+    font-size: 15px;
+    color: var(--cor-texto-claro);
+    background-color: var(--cor-card);
+    border: 1px solid var(--cor-borda);
+    border-radius: 12px;
+}
+
+.subtitulo-recebido {
+    display: flex;
+    text-align: right;
+    justify-content: right;
+    align-items: end;
+}
+
+#total-mes {
+    font-size: 40px;
+}
+
+.pagamentos-royalties {
+    display: flex;
+    gap: 40px;
+    flex-direction: column;
+    min-height: 134px;
+    padding: 15px;
+    font-size: 15px;
+    color: var(--cor-texto-claro);
+    background-color: var(--cor-card);
+    border: 1px solid var(--cor-borda);
+    border-radius: 12px;
+}
+
+#valor-pagamento {
+    font-size: 40px;
+}
+
+.rede-liquidacao {
+    display: flex;
+    gap: 40px;
+    flex-direction: column;
+    min-height: 134px;
+    padding: 15px;
+    font-size: 15px;
+    color: var(--cor-texto-claro);
+    background-color: var(--cor-card);
+    border: 1px solid var(--cor-borda);
+    border-radius: 12px;
+}
+
+#span-liquidacao {
+    font-size: 20px;
+    color: var(--cor-texto);
+}
+
+.historico-pagamentos {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+.botao-exportar {
+    min-height: 40px;
+    padding: 20px;
+    border-radius: 10px;
+    font-size: 15px;
+    background-color: var(--cor-card);
+    color: var(--cor-texto-claro);
+    border: var(--cor-borda) 1px solid;
 }

@@ -579,7 +579,6 @@ if (cardVerificarOriginal) {
                 "div",
                 "resultado-titulos"
             );
-
         titulos.append(
             criar(
                 "span",
@@ -595,10 +594,11 @@ if (cardVerificarOriginal) {
 
         const selo =
             criar(
-                "span",
+                "a",
                 "selo-resultado",
                 "✕ NÃO ENCONTRADO"
             );
+            selo.href = "registrar.html";
 
         topo.append(
             titulos,

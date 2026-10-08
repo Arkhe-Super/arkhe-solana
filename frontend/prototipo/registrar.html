@@ -189,49 +189,51 @@
 
                     </div>
 
-                    <button
-                        type="button"
-                        id="btn-registrar"
-                        class="botao-registrar"
-                    >
-                        Registrar obra
-                    </button>
+                    <div class="card-btn">
+                        <button
+                            type="button"
+                            id="btn-registrar"
+                            class="botao-registrar"
+                        >
+                            ⭢ Registrar obra
+                        </button>
+                    </div>
 
-                    <template id="modelo-beneficiario">
+                <template id="modelo-beneficiario">
 
-                        <div class="benef-linha">
+                    <div class="benef-linha">
+
+                        <input
+                            class="input-formulario benef-nome"
+                            type="text"
+                            placeholder="Nome do Estúdio"
+                        >
+
+                        <div class="benef-percentual">
 
                             <input
-                                class="input-formulario benef-nome"
-                                type="text"
-                                placeholder="Nome do Estúdio"
+                                class="input-formulario"
+                                type="number"
+                                min="0"
+                                max="100"
+                                value="0"
                             >
 
-                            <div class="benef-percentual">
-
-                                <input
-                                    class="input-formulario"
-                                    type="number"
-                                    min="0"
-                                    max="100"
-                                    value="0"
-                                >
-
-                                <span>%</span>
-
-                            </div>
-
-                            <button
-                                type="button"
-                                class="btn-remover"
-                                aria-label="Remover beneficiário"
-                            >
-                                ✕
-                            </button>
+                            <span>%</span>
 
                         </div>
 
-                    </template>
+                        <button
+                            type="button"
+                            class="btn-remover"
+                            aria-label="Remover beneficiário"
+                        >
+                            ✕
+                        </button>
+
+                    </div>
+
+                </template>
 
                 </div>
 

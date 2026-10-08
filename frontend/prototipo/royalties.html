@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Verificação</title>
+</head>
+
+<body>
+
+    <div class="container-menu">
+
+        <aside class="container-menu-lateral">
+
+            <div class="itens-menu-lateral">
+                <span id="span-icone">A</span>
+                <span id="span-arkhe">ARKHE</span>
+            </div>
+
+            <nav class="nav-lateral">
+
+                <a href="registrar.html" class="item-nav-ml">
+                    <span data-icone="registrar">Registrar Obra</span>
+                </a>
+
+                <a href="verificar.html" class="item-nav-ml">
+                    <span data-icone="verificar">Verificar</span>
+                </a>
+
+                <a href="royalties.html" class="item-nav-ml ativo">
+                    <span data-icone="royalties">Royalties</span>
+                </a>
+
+            </nav>
+        <label class="modo-escuro-menu" for="switch">
+
+                <span>Modo escuro</span>
+
+                <input
+                    type="checkbox"
+                    id="switch"
+                >
+
+                <span class="switch"></span>
+
+            </label>
+
+        </aside>
+
+        <main 
+            class="main-menu-principal"
+        >
+
+            <header 
+                class="hader-menu-principal"
+            >
+
+                <h1>Royalties</h1>
+                <p>Pagamentos recebidos por licença</p>
+
+            </header>
+
+            <section class="conteudo-principal-royalties">
+                <div 
+                    class="card-recebido-mes"
+                >
+                    <span id="titulo-recebido">Recebidos no mês</span><span id="subtitulo-recebido">● LIQUIDADO</span>
+                     <p 
+                    class="valor-recebido"
+                    >
+                <span 
+                        id="total-mes"
+                    >
+                    0,00
+                    </span>
+                </p>
+                </div>
+                <div 
+                    class="pagamentos-royalties"
+                >
+                    <span>Pagamentos</span>
+                    <p id="valor-pagamento">00</p>
+                </div>
+                <div class="rede-liquidacao">
+                    <span>Rede de liquidação</span>
+                    <p id="span-liquidacao"><span class="ponto"></span> Solana</p>
+                </div>  
+            </section>
+            <div class="historico-pagamentos">
+                <h2 class="titulo-arquivo-span">HISTORICO DE PAGAMENTOS</h2>
+                <button type="button" id="btn-exportar" class="botao-exportar">Exportar CSV</button>
+            </div>
+            <div id="lista-pagamentos"></div>
+        </main>
+        <template id="modelo-royalties">
+            
+            <section class="pagamentos">
+
+                <div class="royalties-linha">
+
+                    <div>
+                        <span class="pagamento-icone">↙</span>
+                        <div class="pagamento-data"><small>PAGO EM</small><span class="js-data"></span></div>
+                        <div class="pagamento-obra"><strong class="js-obra"></strong><small class="js-licenca"></small></div>
+                    </div>
+                    <div class="pagamento-divisao">
+                        <span class="pagamento-divisao-titulo">DIVISÃO</span>
+                        <div class="beneficiarios js-beneficiarios"></div>
+                    </div>
+                </div>
+            </section>
+        </template>
+        <template id="modelo-beneficiario-pagto">
+            <div class="benef-card">
+                <span class="benef js-iniciais"></span>
+                <span class="benef-card-nome js-nome"></span>
+                <span class="benef-card-pct js-pct"></span>
+                <strong class="js-parte"></strong>
+            </div>
+        </template>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
