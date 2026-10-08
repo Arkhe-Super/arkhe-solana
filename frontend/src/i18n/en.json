@@ -1,0 +1,56 @@
+{
+  "header": {
+    "title": "ARKHE // PROTOCOL ARCHITECTURE",
+    "architecture": "Architecture",
+    "telemetry": "Telemetry",
+    "inspectors": "Inspectors",
+    "terminal": "Terminal",
+    "sdks": "SDKs",
+    "search": "Search BLAKE3 / Mint / PDA...",
+    "devnet": "Devnet"
+  },
+  "dashboard": {
+    "total_works": "Total Works",
+    "active_agents": "Active Agents",
+    "royalties_usdc": "Royalties USDC",
+    "royalties_sol": "Royalties SOL",
+    "registry": "C2PA Works Registry & On-Chain Licenses",
+    "registry_subtitle": "Cryptographic manifests with BLAKE3 and Token-2022 transfer hooks",
+    "create_royalty_blink": "Create Royalty Blink",
+    "wasm_manifests": "WASM Manifests v2.1",
+    "force_merkle": "Force Merkle Snapshot in Epoch",
+    "register_new_work": "Register New Work",
+    "registered_works": "Registered Works & C2PA Hash",
+    "cumulative_attestation": "Cumulative Attestation Solana <> Ethereum",
+    "all": "All",
+    "this_cycle": "this cycle",
+    "filter": "Filter",
+    "title_creator_attestation": "Creator Attestation & Royalty Engine",
+    "live_geyser_ingestion": "LIVE GEYSER INGESTION",
+    "yellowstone_geyser_ingest": "YELLOWSTONE GEYSER INGEST",
+    "wormgraph_mmr_roots": "WormGraph MMR Roots",
+    "eas_cross_chain_attest": "EAS CROSS-CHAIN ATTEST",
+    "c2pa_registry_title": "C2PA Works Registry & On-Chain Licenses",
+    "c2pa_registry_subtitle": "Cryptographic manifests with BLAKE3 and Token-2022 transfer hooks"
+  },
+  "footer": {
+    "foundation": "ARKHE FOUNDATION // APACHE-2.0 SYSTEM TELEMETRY KERNEL",
+    "slot": "SLOT",
+    "yellowstone": "Yellowstone gRPC [OK]",
+    "wasm_runtime": "WASM Runtime",
+    "tps": "TPS",
+    "audit": "Audit Provenance",
+    "github": "GitHub Specs"
+  },
+  "sidebar": {
+    "subsystem_tracer": "Subsystem Tracer",
+    "pipeline_dag": "Pipeline DAG",
+    "kernel_solana": "Kernel & Solana",
+    "yellowstone_geyser": "Yellowstone Geyser",
+    "c2pa_wasm_engine": "C2PA WASM Engine",
+    "eas_attestations": "EAS Attestations",
+    "paysh_x402_rails": "Pay.sh x402 Rails",
+    "docs_spec": "Docs Spec",
+    "new_request": "New Request"
+  }
+}
