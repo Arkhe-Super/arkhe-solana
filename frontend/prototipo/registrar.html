@@ -45,11 +45,11 @@
 
             </nav>
 
-                <label class="modo-escuro-menu" for="switch">
-                    <span>Modo escuro</span>
-                    <input type="checkbox" id="switch">
-                    <span class="switch"></span>
-                </label>
+            <label class="modo-escuro-menu" for="switch">
+                <span>Modo escuro</span>
+                <input type="checkbox" id="switch">
+                <span class="switch"></span>
+            </label>
 
         </aside>
 
@@ -66,73 +66,122 @@
             </header>
 
             <div class="menu-grid">
-            
+
                 <div class="coluna-arquivo">
 
                     <span class="titulo-arquivo-span">ARQUIVO DA OBRA</span> <br>
 
-                <section class="card-documento">
+                    <section class="card-documento">
 
-                    <div class="card-arquivo">
+                        <div class="card-arquivo">
 
-                        <input type="file" id="arquivo" hidden>
+                            <input type="file" id="arquivo" hidden>
 
-                        <label for="arquivo" class="area-upload">
-                            <div class="icone-arquivo">📄</div>
-                            <strong id="nome-arquivo">Clique para escolher um arquivo</strong>
-                            <span id="info-arquivo">ou arraste e solte aqui</span>
-                        </label>
-                    </div>
+                            <label for="arquivo" class="area-upload">
+                                <div class="icone-arquivo">📄</div>
+                                <strong id="nome-arquivo">Clique para escolher um arquivo</strong>
+                                <span id="info-arquivo">ou arraste e solte aqui</span>
+                            </label>
 
-                </section>
+                        </div>
 
-                <section class="card-impressao">
+                    </section>
 
-                    <span class="texto-card-impressao">Impressão Digital</span>
+                    <section class="card-impressao">
 
-                </section>
+                        <span class="texto-card-impressao">Impressão Digital</span>
 
-                <section class="card-hash">
+                    </section>
 
-                    <span class="texto-card-hash">O hash será registrado exclusivamente na Solana.</span>
+                    <section class="card-hash">
 
-                </section>
-            </div> <!--Tive que criar uma div só para a coluna esquerda e uma para a coluna direita-->
+                        <span class="texto-card-hash">O hash será registrado exclusivamente na Solana.</span>
+
+                    </section>
+
+                </div>
 
                 <div class="coluna-formulario">
 
                     <form class="card-formulario">
 
                         <span class="titulo-arquivo-span">DADOS DO REGISTRO</span>
-                        
+
                         <div class="linha-campos">
+
                             <div class="campo">
+
                                 <label class="label-formulario" for="titulo">Título</label>
-                                <input class="input-formulario" id="titulo" type="text" placeholder="Titulo da obra"> <!--For sempre para o ID-->
+
+                                <input
+                                    class="input-formulario"
+                                    id="titulo"
+                                    type="text"
+                                    placeholder="Titulo da obra"
+                                >
+
                             </div>
+
                             <div class="campo">
+
                                 <label class="label-formulario" for="autor">Autor</label>
-                                <input class="input-formulario" id="autor" type="text" placeholder="Nome do autor">
+
+                                <input
+                                    class="input-formulario"
+                                    id="autor"
+                                    type="text"
+                                    placeholder="Nome do autor"
+                                >
+
                             </div>
+
                         </div>
 
                         <div class="linha-campos">
+
                             <div class="campo">
+
                                 <label class="label-formulario" for="preco">Preço da licença</label>
-                                <input class="input-formulario" id="preco" type="number" min="1" placeholder="0,00">
+
+                                <input
+                                    class="input-formulario"
+                                    id="preco"
+                                    type="number"
+                                    min="1"
+                                    placeholder="0,00"
+                                >
+
                             </div>
+
                         </div>
+
                     </form>
+
                     <hr>
+
                     <div class="benef-topo">
+
                         <div>
+
                             <h2 class="titulo-beneficios">BENEFICIÁRIOS</h2>
-                            <p class="benef-descricao">Defina a divisão automática dos royalties</p>
+
+                            <p class="benef-descricao">
+                                Defina a divisão automática dos royalties
+                            </p>
+
                         </div>
-                        <button type="button" id="btn-adicionar" class="botao-texto">+ Adicionar</button>
+
+                        <button
+                            type="button"
+                            id="btn-adicionar"
+                            class="botao-texto"
+                        >
+                            + Adicionar
+                        </button>
+
                     </div>
 
-                    <div id="lista-beneficiarios"> <!--Aqui é para a lsita quando adicionar o beneficiário. Usar o JS para lista-->
+                    <div id="lista-beneficiarios">
 
                     </div>
 
@@ -140,28 +189,54 @@
 
                     </div>
 
-                    <!--Molde da lista-->
+                    <button
+                        type="button"
+                        id="btn-registrar"
+                        class="botao-registrar"
+                    >
+                        Registrar obra
+                    </button>
+
                     <template id="modelo-beneficiario">
-                        
+
                         <div class="benef-linha">
-                            
-                            <input class="input-formulario benef-nome" type="text" placeholder="Nome do Estúdio">
-                            
+
+                            <input
+                                class="input-formulario benef-nome"
+                                type="text"
+                                placeholder="Nome do Estúdio"
+                            >
+
                             <div class="benef-percentual">
-                                
-                                <input class="input-formulario" type="number" min="0" max="100" value="0">
-                                
+
+                                <input
+                                    class="input-formulario"
+                                    type="number"
+                                    min="0"
+                                    max="100"
+                                    value="0"
+                                >
+
                                 <span>%</span>
-                            
+
                             </div>
-                            
-                            <button type="button" class="btn-remover" aria-label="Remover beneficiário">✕</button>
+
+                            <button
+                                type="button"
+                                class="btn-remover"
+                                aria-label="Remover beneficiário"
+                            >
+                                ✕
+                            </button>
 
                         </div>
 
                     </template>
+
                 </div>
+
             </div>
+
         </main>
 
     </div>
@@ -169,4 +244,5 @@
     <script src="script.js"></script>
 
 </body>
+
 </html>
