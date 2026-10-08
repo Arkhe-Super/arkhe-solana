@@ -6,7 +6,9 @@
     --cor-card: #11161B;
     --cor-borda: #2A3138;
     --cor-texto: #E8ECEF;
+    --cor-texto-medio: #505458;
     --cor-texto-suave: #8B949E;
+    --cor-texto-claro: #a9b3be;
 }
 
 * {
@@ -68,7 +70,7 @@
 .hader-menu-principal {
     position: relative;
     padding: 20px 24px;
-    border-bottom: #e2d0d0 1px solid;
+    border-bottom: var(--cor-borda) 1px solid;
     width: 100%;
 }
 
@@ -115,15 +117,49 @@
 }
 
 .modo-escuro-menu {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: space-between;
     margin-top: 20px;
-    padding: 12px;
+    padding: 10px 14px;
+    gap: 12px;
     border: 1px solid var(--cor-borda);
     border-radius: 8px;
     background-color: var(--cor-card);
     color: var(--cor-texto);
+    cursor: pointer;
+    user-select: none;
+}
+
+
+.modo-escuro-menu input {
+    display: none; /*Caixinha some de input*/
+}
+
+.switch {
+    position: relative;
+    width: 64px;
+    height: 32px;
+    background: #1f4d3f;
+    border: 1px solid #2f6b58;
+    border-radius: 999px;
+    transition: background .3s;
+}
+
+.switch::after {  /* adiciona a bolinha */
+    content: "";  /*Sem essa propriedade, o a bolinha não aparece.*/  
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 24px;
+    height: 24px;
+    background: #5eead4;
+    border-radius: 50%;
+    transition: transform .3s;
+}
+
+#switch:checked + .switch::after {
+    transform: translateX(32px);
 }
 
 .main-menu-principal {
@@ -134,14 +170,43 @@
 .coluna-arquivo { /*Div da coluna esquerda para poder juntar e separar da coluna da direita*/
     display: flex;
     flex-direction: column;
-    gap: 16px;
     min-width: 0;
+    height: 100%;
+}
+
+.area-upload {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 300px;
+    color: #fff;
+    cursor: pointer;
+    text-align: center;
+}
+
+.icone-arquivo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    margin-bottom: 8px;
+    border-radius: 12px;
+    background: #1f4d3f;
+    font-size: 26px;
+}
+
+#info-arquivo {
+    color: #8b9597;
+    font-size: 14px;
 }
 
 .card-impressao {
     width: 100%;
     min-height: 100px;
-    padding: 20px;
+    padding: 18px;
     background-color: var(--cor-card);
     border: 1px solid var(--cor-borda);
     border-radius: 12px;
@@ -176,24 +241,174 @@
 .coluna-form {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 6px;
     min-width: 0;
 }
 
 .titulo-arquivo-span {
     color: var(--cor-texto-suave);
-    font-size: 12px;
+    font-size: 15px;
     letter-spacing: 0.05em;
+}
+
+.coluna-formulario {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-width: 800px;
+    min-height: 900px;
+    padding: 24px;
+    background-color: var(--cor-card);
+    border: 1px solid var(--cor-borda);
+    border-radius: 12px;
 }
 
 .card-formulario {
     display: flex;
     flex-direction: column;
     gap: 16px;
-    max-width: 800px;
-    min-height: 300px;
-    padding: 24px;
-    background-color: var(--cor-card);
+}
+
+.campo {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+}
+
+.label-formulario {
+    font-size: 14px;
+    color: var(--cor-texto-suave);
+    gap: 5px;
+}
+
+.input-formulario {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 8px;
+    background-color: var(--cor-fundo);
     border: 1px solid var(--cor-borda);
-    border-radius: 12px;
+    color: var(--cor-texto);
+    font: inherit;
+}
+
+.linha-campos {
+    display: grid; /* Sempre se deve usar para campos lado a lado*/
+    grid-template-columns: 1fr 1fr;   /* É para deixar as duas colunas iguais */
+    gap: 16px;
+}
+
+.input-formulario:focus { 
+    outline: none; 
+    border-color: var(--cor-destaque);
+}
+
+hr {
+    border-top: 1px;
+    border-color: var(--cor-borda);
+}
+
+.benef-topo {
+    display: flex; 
+    justify-content: space-between; 
+    align-items: flex-end;
+}
+
+.titulo-beneficios {
+    color: var(--cor-texto-medio);
+    font-size: 15px;
+    padding-bottom: 10px;
+}
+
+.benef-descricao {
+    font-size: 17px;
+    color: var(--cor-texto-claro);
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.botao-texto {
+    background-color: var(--cor-card);
+    font: inherit; 
+    cursor: pointer;
+    font-size: 18px;
+    color: var(--cor-texto);
+    border: 0;
+}
+
+.botao-texto:hover { 
+    color: var(--cor-destaque); 
+}
+
+#lista-beneficio {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.benef-linha {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px; /*sempre é melhor para o input, por conta do tamanho doretangulo*/
+    background-color: var(--cor-fundo);
+    border: 1px solid var(--cor-borda);
+    border-radius: 8px;
+}
+
+.benef-nome { 
+    flex: 1; /* Nome ocupará o espaço que sobrar*/
+}  
+
+.benef-percentual { 
+    position: relative; 
+    width: 96px; 
+}
+
+.benef-percentual input {
+    padding-right: 28px;   /* É o espaço para o "%" */
+    text-align: right;
+    font-weight: 600; /* Espressura da letra*/
+    -moz-appearance: textfield; /*Desenho do campo de texto comum, sem visual padrão*/
+    appearance: textfield;/*Desenho do campo de texto comum, sem visual padrão*/
+}
+
+.benef-percentual input::-webkit-inner-spin-button,
+.benef-percentual input::-webkit-outer-spin-button { 
+    -webkit-appearance: none; /* esconde as setinhas de subir e descer*/
+}
+
+.benef-percentual span {
+    position: absolute;
+    right: 12px; /*afasta o simbolo da borda da direita*/
+    top: 50%;
+    transform: translateY(-50%); /*sobe metade da altura do span*/
+    color: var(--cor-texto-suave);
+}
+
+.btn-remover { 
+    background: none; 
+    border: 0; color: 
+    var(--cor-texto-suave); 
+    font-size: 16px; 
+    cursor: pointer; 
+}
+
+.btn-remover:hover { 
+    color: #f87171; 
+}
+
+.resumo { 
+    padding: 12px 16px; 
+    border-radius: 12px; 
+    font-size: 14px; 
+}
+
+.resumo--valido   { 
+    background: rgba(46, 151, 95, 0.25); 
+    color: var(--cor-destaque); 
+}
+
+.resumo--invalido { 
+    background: rgba(248, 113, 113, 0.15); 
+    color: #fca5a5; 
 }
