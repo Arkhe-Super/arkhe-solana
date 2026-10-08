@@ -1,0 +1,56 @@
+{
+  "header": {
+    "title": "ARKHE // ARQUITETURA DO PROTOCOLO",
+    "architecture": "Arquitetura",
+    "telemetry": "Telemetria",
+    "inspectors": "Inspetores",
+    "terminal": "Terminal",
+    "sdks": "SDKs",
+    "search": "Buscar BLAKE3 / Mint / PDA...",
+    "devnet": "Devnet"
+  },
+  "dashboard": {
+    "total_works": "Total de Obras",
+    "active_agents": "Agentes Ativos",
+    "royalties_usdc": "Royalties USDC",
+    "royalties_sol": "Royalties SOL",
+    "registry": "Registro de Obras C2PA & Licenças On-Chain",
+    "registry_subtitle": "Manifestos criptográficos com BLAKE3 e ganchos de transferência Token-2022",
+    "create_royalty_blink": "Criar Blink de Royalty",
+    "wasm_manifests": "Manifestos WASM v2.1",
+    "force_merkle": "Forçar Snapshot Merkle na Epoch",
+    "register_new_work": "Registrar Nova Obra",
+    "registered_works": "Obras Registradas & Hash C2PA",
+    "cumulative_attestation": "Atestação cumulativa Solana <> Ethereum",
+    "all": "Todos",
+    "this_cycle": "este ciclo",
+    "filter": "Filtro",
+    "title_creator_attestation": "Atestação de Criador e Motor de Royalties",
+    "live_geyser_ingestion": "INGESTÃO GEYSER AO VIVO",
+    "yellowstone_geyser_ingest": "INGESTÃO YELLOWSTONE GEYSER",
+    "wormgraph_mmr_roots": "Raízes MMR WormGraph",
+    "eas_cross_chain_attest": "ATESTAÇÃO EAS CROSS-CHAIN",
+    "c2pa_registry_title": "Registro de Obras C2PA e Licenças On-Chain",
+    "c2pa_registry_subtitle": "Manifestos criptográficos com BLAKE3 e transfer hooks Token-2022"
+  },
+  "footer": {
+    "foundation": "FUNDAÇÃO ARKHE // KERNEL DE TELEMETRIA DO SISTEMA APACHE-2.0",
+    "slot": "SLOT",
+    "yellowstone": "Yellowstone gRPC [OK]",
+    "wasm_runtime": "Runtime WASM",
+    "tps": "TPS",
+    "audit": "Auditoria de Proveniência",
+    "github": "Especificações GitHub"
+  },
+  "sidebar": {
+    "subsystem_tracer": "Rastreador de Subsistema",
+    "pipeline_dag": "DAG de Pipeline",
+    "kernel_solana": "Kernel & Solana",
+    "yellowstone_geyser": "Yellowstone Geyser",
+    "c2pa_wasm_engine": "Motor WASM C2PA",
+    "eas_attestations": "Atestações EAS",
+    "paysh_x402_rails": "Trilhos Pay.sh x402",
+    "docs_spec": "Especificação da Documentação",
+    "new_request": "Nova Solicitação"
+  }
+}

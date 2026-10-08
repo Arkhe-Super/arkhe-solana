@@ -2,6 +2,8 @@
 
 
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+import LanguageToggle from '../ui/components/LanguageToggle';
 import Footer from "../ui/components/Footer";
 import MicropaymentsHistory from "../ui/components/MicropaymentsHistory";
 
@@ -89,6 +91,7 @@ const mockDashboardData = {
 };
 
 export default function CreatorDashboard() {
+  const { t } = useTranslation();
   const [data, setData] = useState<typeof mockDashboardData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -141,15 +144,15 @@ export default function CreatorDashboard() {
 <span className="material-symbols-outlined text-tertiary text-lg" data-icon="deployed_code">deployed_code</span>
 </div>
 </div>
-<span>ARKHE // PROTOCOL ARCHITECTURE</span>
+<span>{t("header.title")}</span>
 </a>
 {/* Desktop Navigation Clusters */}
 <nav className="hidden md:flex items-center gap-5 ml-4 font-headline-sm text-headline-sm">
-<a className="text-on-surface-variant hover:text-on-surface transition-colors pb-1 hover:border-tertiary/50 hover:text-tertiary transition-colors duration-150" href="#architecture">Architecture</a>
-<a className="text-tertiary border-b-2 border-tertiary font-semibold pb-1" href="#telemetry">Telemetry</a>
-<a className="text-on-surface-variant hover:text-on-surface transition-colors pb-1 hover:border-tertiary/50 hover:text-tertiary transition-colors duration-150" href="#inspectors">Inspectors</a>
-<a className="text-on-surface-variant hover:text-on-surface transition-colors pb-1 hover:border-tertiary/50 hover:text-tertiary transition-colors duration-150" href="#terminal">Terminal</a>
-<a className="text-on-surface-variant hover:text-on-surface transition-colors pb-1 hover:border-tertiary/50 hover:text-tertiary transition-colors duration-150" href="#sdks">SDKs</a>
+<a className="text-on-surface-variant hover:text-on-surface transition-colors pb-1 hover:border-tertiary/50 hover:text-tertiary transition-colors duration-150" href="#architecture">{t('header.architecture')}</a>
+<a className="text-tertiary border-b-2 border-tertiary font-semibold pb-1" href="#telemetry">{t('header.telemetry')}</a>
+<a className="text-on-surface-variant hover:text-on-surface transition-colors pb-1 hover:border-tertiary/50 hover:text-tertiary transition-colors duration-150" href="#inspectors">{t('header.inspectors')}</a>
+<a className="text-on-surface-variant hover:text-on-surface transition-colors pb-1 hover:border-tertiary/50 hover:text-tertiary transition-colors duration-150" href="#terminal">{t('header.terminal')}</a>
+<a className="text-on-surface-variant hover:text-on-surface transition-colors pb-1 hover:border-tertiary/50 hover:text-tertiary transition-colors duration-150" href="#sdks">{t('header.sdks')}</a>
 </nav>
 </div>
 {/* Trailing Action Clustered Tools */}
@@ -159,13 +162,13 @@ export default function CreatorDashboard() {
 <div className="absolute inset-y-0 left-0 pl-2.5 flex items-center pointer-events-none text-outline">
 <span className="material-symbols-outlined text-sm" data-icon="search">search</span>
 </div>
-<input className="w-full bg-surface-container-lowest border border-outline-variant/40 rounded-lg pl-8 pr-10 py-1 text-code-sm font-code-sm text-on-surface placeholder:text-outline/70 focus:outline-none focus:border-tertiary focus:ring-1 focus:ring-tertiary transition-all" placeholder="Search BLAKE3 / Mint / PDA..." type="text"/>
+<input className="w-full bg-surface-container-lowest border border-outline-variant/40 rounded-lg pl-8 pr-10 py-1 text-code-sm font-code-sm text-on-surface placeholder:text-outline/70 focus:outline-none focus:border-tertiary focus:ring-1 focus:ring-tertiary transition-all" placeholder={t("header.search")} type="text"/>
 <span className="absolute right-2 top-1.5 px-1 py-0.5 rounded border border-outline-variant/50 text-[10px] font-code-sm text-outline">⌘K</span>
 </div>
 {/* Latency Pill */}
 <div className="hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded bg-surface-container border border-outline-variant/30 text-code-sm font-code-sm text-secondary">
 <span className="w-1.5 h-1.5 rounded-full bg-secondary-fixed animate-ping"></span>
-<span>Devnet: 284ms</span>
+<span>{t("header.devnet")}: 284ms</span>
 </div>
 {/* Trailing Action Icons */}
 <div className="flex items-center gap-1">
@@ -175,6 +178,7 @@ export default function CreatorDashboard() {
 <button className="p-1.5 rounded hover:bg-surface-container-highest text-on-surface-variant hover:text-on-surface transition-colors" title="Yellowstone Hub">
 <span className="material-symbols-outlined text-lg" data-icon="hub">hub</span>
 </button>
+<LanguageToggle />
 <button className="p-1.5 rounded hover:bg-surface-container-highest text-on-surface-variant hover:text-on-surface transition-colors" title="Settings">
 <span className="material-symbols-outlined text-lg" data-icon="settings">settings</span>
 </button>
@@ -210,10 +214,10 @@ export default function CreatorDashboard() {
 </div>
 {/* Navigation Tabs Hierarchy */}
 <nav className="flex flex-col gap-1">
-{/* Active: Pipeline DAG (Dashboard intent mapping directly to system pipeline) */}
+{/* Active: {t('sidebar.pipeline_dag')} (Dashboard intent mapping directly to system pipeline) */}
 <a className="flex items-center gap-3 px-3 py-2 rounded bg-surface-container-highest text-secondary border-l-2 border-secondary font-medium shadow-[0_0_12px_-2px_rgba(0,236,145,0.2)]" href="#pipeline">
 <span className="material-symbols-outlined text-lg" data-icon="account_tree">account_tree</span>
-<span className="text-label-md font-label-md">Pipeline DAG</span>
+<span className="text-label-md font-label-md">{t('sidebar.pipeline_dag')}</span>
 </a>
 <a className="flex items-center gap-3 px-3 py-2 rounded text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors" href="#kernel">
 <span className="material-symbols-outlined text-lg" data-icon="memory">memory</span>
@@ -221,19 +225,19 @@ export default function CreatorDashboard() {
 </a>
 <a className="flex items-center gap-3 px-3 py-2 rounded text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors" href="#geyser">
 <span className="material-symbols-outlined text-lg" data-icon="dataset">dataset</span>
-<span className="text-label-md font-label-md">Yellowstone Geyser</span>
+<span className="text-label-md font-label-md">{t('sidebar.yellowstone_geyser')}</span>
 </a>
 <a className="flex items-center gap-3 px-3 py-2 rounded text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors" href="#c2pa">
 <span className="material-symbols-outlined text-lg" data-icon="verified">verified</span>
-<span className="text-label-md font-label-md">C2PA WASM Engine</span>
+<span className="text-label-md font-label-md">{t('sidebar.c2pa_wasm_engine')}</span>
 </a>
 <a className="flex items-center gap-3 px-3 py-2 rounded text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors" href="#eas">
 <span className="material-symbols-outlined text-lg" data-icon="link">link</span>
-<span className="text-label-md font-label-md">EAS Attestations</span>
+<span className="text-label-md font-label-md">{t('sidebar.eas_attestations')}</span>
 </a>
 <a className="flex items-center gap-3 px-3 py-2 rounded text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors" href="#pay-sh">
 <span className="material-symbols-outlined text-lg" data-icon="payments">payments</span>
-<span className="text-label-md font-label-md">Pay.sh x402 Rails</span>
+<span className="text-label-md font-label-md">{t('sidebar.paysh_x402_rails')}</span>
 </a>
 </nav>
 {/* CTA Action in SideNav */}
@@ -249,7 +253,7 @@ export default function CreatorDashboard() {
 <div className="pt-3 border-t border-outline-variant/20 flex flex-col gap-1">
 <a className="flex items-center gap-2.5 px-3 py-1.5 rounded text-code-sm font-code-sm text-outline hover:text-on-surface transition-colors" href="#docs">
 <span className="material-symbols-outlined text-base" data-icon="menu_book">menu_book</span>
-<span>Docs Spec</span>
+<span>{t('sidebar.docs_spec')}</span>
 </a>
 <a className="flex items-center gap-2.5 px-3 py-1.5 rounded text-code-sm font-code-sm text-outline hover:text-on-surface transition-colors" href="#geyser-stream">
 <span className="material-symbols-outlined text-base text-secondary" data-icon="sensors">sensors</span>
@@ -273,7 +277,7 @@ export default function CreatorDashboard() {
 <span className="text-code-sm font-code-sm text-outline">PDA: ark7..90Xw</span>
 </div>
 <h1 className="text-headline-lg font-headline-lg text-on-surface mt-1 tracking-tight flex items-center gap-3">
-            Creator Attestation &amp; Royalty Engine
+            {t('dashboard.title_creator_attestation')}
             <span className="px-2.5 py-0.5 rounded-full bg-secondary/10 border border-secondary/30 text-secondary text-label-sm font-label-sm tracking-wider uppercase flex items-center gap-1.5">
 <span className="w-1.5 h-1.5 rounded-full bg-secondary"></span>
               Live Geyser Ingestion
@@ -284,11 +288,11 @@ export default function CreatorDashboard() {
 <div className="flex flex-wrap items-center gap-2.5">
 <button className="px-3.5 py-2 rounded bg-surface-container-high border border-outline-variant/40 hover:border-tertiary text-on-surface text-label-md font-label-md uppercase tracking-wider flex items-center gap-2 transition-all duration-150">
 <span className="material-symbols-outlined text-tertiary text-base" data-icon="electric_bolt">electric_bolt</span>
-<span>Criar Blink de Royalty</span>
+<span>{t("dashboard.create_royalty_blink")}</span>
 </button>
 <button className="px-4 py-2 rounded bg-primary-container text-on-primary-container font-medium text-label-md font-label-md uppercase tracking-wider flex items-center gap-2 shadow-[0_0_20px_-2px_rgba(153,69,255,0.45)] hover:border-tertiary hover:brightness-110 active:scale-[0.98] transition-all duration-150">
 <span className="material-symbols-outlined text-base" data-icon="add_circle">add_circle</span>
-<span>Registrar Nova Obra</span>
+<span>{t("dashboard.register_new_work")}</span>
 </button>
 </div>
 </section>
@@ -297,15 +301,15 @@ export default function CreatorDashboard() {
 {/* Metric 1: Obras Atestadas */}
 <div className="bg-surface-container-low/85 backdrop-blur-xl border border-outline-variant/30 rounded p-4 relative overflow-hidden shadow-[0_0_20px_-4px_rgba(0,0,0,0.4)]">
 <div className="flex justify-between items-start">
-<span className="text-label-sm font-label-sm text-outline tracking-wider uppercase">Obras Registradas &amp; Hash C2PA</span>
+<span className="text-label-sm font-label-sm text-outline tracking-wider uppercase">{t("dashboard.registered_works")}</span>
 <span className="material-symbols-outlined text-primary text-xl" data-icon="verified_user">verified_user</span>
 </div>
 <div className="mt-3 flex items-baseline gap-3">
 <span className="text-display-lg font-display-lg text-on-surface tracking-tight">1,482</span>
-<span className="text-label-sm font-label-sm text-secondary font-medium">+14 este ciclo</span>
+<span className="text-label-sm font-label-sm text-secondary font-medium">+14 {t("dashboard.this_cycle")}</span>
 </div>
 <div className="mt-3 flex items-center justify-between text-code-sm font-code-sm text-outline border-t border-outline-variant/20 pt-2">
-<span>WASM Manifests v2.1</span>
+<span>{t("dashboard.wasm_manifests")}</span>
 <span className="text-on-surface-variant font-medium">100% C2PA Valid</span>
 </div>
 <div className="absolute -right-6 -bottom-6 w-24 h-24 bg-primary-container/10 rounded-full blur-2xl pointer-events-none"></div>
@@ -326,10 +330,10 @@ export default function CreatorDashboard() {
 </div>
 <div className="absolute -right-6 -bottom-6 w-24 h-24 bg-secondary/10 rounded-full blur-2xl pointer-events-none"></div>
 </div>
-{/* Metric 3: Yellowstone Geyser Streams */}
+{/* Metric 3: {t('sidebar.yellowstone_geyser')} Streams */}
 <div className="bg-surface-container-low/85 backdrop-blur-xl border border-outline-variant/30 rounded p-4 relative overflow-hidden shadow-[0_0_20px_-4px_rgba(0,0,0,0.4)]">
 <div className="flex justify-between items-start">
-<span className="text-label-sm font-label-sm text-outline tracking-wider uppercase">Yellowstone Geyser Ingest</span>
+<span className="text-label-sm font-label-sm text-outline tracking-wider uppercase">{t('sidebar.yellowstone_geyser')} Ingest</span>
 <div className="flex items-center gap-1">
 <span className="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
 <span className="text-[10px] font-code-sm text-secondary uppercase">gRPC OK</span>
@@ -371,13 +375,13 @@ export default function CreatorDashboard() {
 <div>
 <h2 className="text-headline-md font-headline-md text-on-surface flex items-center gap-2">
 <span className="material-symbols-outlined text-tertiary text-lg" data-icon="grid_view">grid_view</span>
-                  Registro de Obras C2PA &amp; Licenças On-Chain
+                  {t("dashboard.registry")}
                 </h2>
-<p className="text-body-sm font-body-sm text-on-surface-variant">Manifestos criptográficos com BLAKE3 e ganchos de transferência Token-2022</p>
+<p className="text-body-sm font-body-sm text-on-surface-variant">{t("dashboard.registry_subtitle")}</p>
 </div>
 <div className="flex items-center gap-2">
-<span className="text-code-sm font-code-sm text-outline">Filtro:</span>
-<span className="px-2 py-0.5 rounded bg-surface-container-high border border-outline-variant/30 text-code-sm font-code-sm text-on-surface">Todos (1,482)</span>
+<span className="text-code-sm font-code-sm text-outline">{t("dashboard.filter")}:</span>
+<span className="px-2 py-0.5 rounded bg-surface-container-high border border-outline-variant/30 text-code-sm font-code-sm text-on-surface">{t('dashboard.all')} (1,482)</span>
 <button className="p-1 rounded bg-surface-container hover:bg-surface-container-highest text-outline hover:text-on-surface">
 <span className="material-symbols-outlined text-sm" data-icon="filter_list">filter_list</span>
 </button>
@@ -533,9 +537,9 @@ export default function CreatorDashboard() {
 <div>
 <h2 className="text-headline-md font-headline-md text-on-surface flex items-center gap-2">
 <span className="material-symbols-outlined text-secondary text-lg" data-icon="device_hub">device_hub</span>
-                  WormGraph MMR Roots
+                  {t('dashboard.wormgraph_mmr_roots')}
                 </h2>
-<p className="text-body-sm font-body-sm text-on-surface-variant">Atestação cumulativa Solana &lt;&gt; Ethereum</p>
+<p className="text-body-sm font-body-sm text-on-surface-variant">{t("dashboard.cumulative_attestation")}</p>
 </div>
 <span className="px-2 py-0.5 rounded bg-surface-container-high text-tertiary text-code-sm font-code-sm">PEAK #3</span>
 </div>
@@ -585,7 +589,7 @@ export default function CreatorDashboard() {
 <div className="mt-4">
 <button className="w-full py-2 px-3 rounded bg-surface-container-high border border-outline-variant/40 hover:border-tertiary text-on-surface text-label-md font-label-md uppercase tracking-wider flex items-center justify-center gap-2 transition-all">
 <span className="material-symbols-outlined text-sm text-secondary" data-icon="commit">commit</span>
-<span>Forçar Snapshot Merkle na Epoch</span>
+<span>{t("dashboard.force_merkle")}</span>
 </button>
 </div>
 </div>
