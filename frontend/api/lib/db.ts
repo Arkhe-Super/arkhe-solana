@@ -9,6 +9,11 @@ export function getPool(): Pool {
     throw new Error('DATABASE_URL is not configured');
   }
 
-  pool ??= new Pool({ connectionString });
+  pool ??= new Pool({
+    connectionString,
+    max: 1,
+    idleTimeoutMillis: 10_000,
+    connectionTimeoutMillis: 5_000,
+  });
   return pool;
 }
