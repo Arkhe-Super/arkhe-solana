@@ -1,5 +1,5 @@
-import { getPool } from './lib/db';
-import { createWork, listWorks, type NewWork } from './lib/works';
+import { getPool } from './lib/db.js';
+import { createWork, listWorks, type NewWork } from './lib/works.js';
 
 type ApiRequest = {
   body?: unknown;

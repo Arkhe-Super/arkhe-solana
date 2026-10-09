@@ -7,8 +7,8 @@ const dependencies = vi.hoisted(() => ({
   searchTextEmbeddings: vi.fn(),
 }));
 
-vi.mock('./lib/db', () => ({ getPool: dependencies.getPool }));
-vi.mock('./lib/embeddings', () => ({
+vi.mock('./lib/db.js', () => ({ getPool: dependencies.getPool }));
+vi.mock('./lib/embeddings.js', () => ({
   EmbeddingProviderError: class extends Error {},
   HuggingFaceEmbeddingProvider: { fromEnvironment: dependencies.fromEnvironment },
   validateEmbeddingText: (value: unknown) => {
@@ -18,7 +18,7 @@ vi.mock('./lib/embeddings', () => ({
     return value.trim();
   },
 }));
-vi.mock('./lib/textEmbeddings', () => ({
+vi.mock('./lib/textEmbeddings.js', () => ({
   saveTextEmbedding: dependencies.saveTextEmbedding,
   searchTextEmbeddings: dependencies.searchTextEmbeddings,
 }));

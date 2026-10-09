@@ -1,5 +1,5 @@
 import type { Pool } from 'pg';
-import { EMBEDDING_DIMENSIONS, EMBEDDING_MODEL, validateEmbedding } from './embeddings';
+import { EMBEDDING_DIMENSIONS, EMBEDDING_MODEL, validateEmbedding } from './embeddings.js';
 
 export type TextEmbedding = {
   content_text: string;
