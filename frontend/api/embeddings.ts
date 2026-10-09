@@ -1,4 +1,5 @@
 import { getPool } from '../server/db.js';
+import { isWriteAuthorized } from '../server/auth.js';
 import {
   EmbeddingProviderError,
   CloudflareEmbeddingProvider,
@@ -8,6 +9,7 @@ import { saveTextEmbedding, searchTextEmbeddings } from '../server/textEmbedding
 
 type ApiRequest = {
   body?: unknown;
+  headers?: Record<string, string | string[] | undefined>;
   method?: string;
 };
 
@@ -70,6 +72,10 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
 
   try {
     if (isIndexRequest(req.body)) {
+      if (!isWriteAuthorized(req.headers?.authorization)) {
+        return res.status(401).json({ error: 'Unauthorized' });
+      }
+
       const provider = CloudflareEmbeddingProvider.fromEnvironment();
       const pool = getPool();
       const embedding = await provider.embed(req.body.content_text);
@@ -98,7 +104,7 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
       error: 'Provide action=index with work_uuid and content_text, or action=search with query',
     });
   } catch (error) {
-    if (error instanceof Error && /^(DATABASE_URL|CLOUDFLARE_API_TOKEN|CLOUDFLARE_ACCOUNT_ID) is not configured$/.test(error.message)) {
+    if (error instanceof Error && /^(DATABASE_URL|CLOUDFLARE_API_TOKEN|CLOUDFLARE_ACCOUNT_ID|ARKHE_WRITE_API_KEY) is not configured$/.test(error.message)) {
       return res.status(503).json({ error: error.message });
     }
 

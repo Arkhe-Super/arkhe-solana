@@ -2,12 +2,14 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 const dependencies = vi.hoisted(() => ({
   getPool: vi.fn(),
+  isWriteAuthorized: vi.fn(),
   fromEnvironment: vi.fn(),
   saveTextEmbedding: vi.fn(),
   searchTextEmbeddings: vi.fn(),
 }));
 
 vi.mock('../server/db.js', () => ({ getPool: dependencies.getPool }));
+vi.mock('../server/auth.js', () => ({ isWriteAuthorized: dependencies.isWriteAuthorized }));
 vi.mock('../server/embeddings.js', () => ({
   EmbeddingProviderError: class extends Error {},
   CloudflareEmbeddingProvider: { fromEnvironment: dependencies.fromEnvironment },
@@ -67,5 +69,52 @@ describe('/api/embeddings input validation', () => {
 
     expect(result()).toEqual({ statusCode: 400, body: expect.objectContaining({ error: expect.any(String) }) });
     expect(dependencies.fromEnvironment).not.toHaveBeenCalled();
+  });
+
+  it('rejects an unauthorized index request before calling external services', async () => {
+    dependencies.isWriteAuthorized.mockReturnValue(false);
+    const { response, result } = createResponse();
+
+    await handler(
+      {
+        method: 'POST',
+        headers: { authorization: 'Bearer invalid' },
+        body: {
+          action: 'index',
+          work_uuid: '550e8400-e29b-41d4-a716-446655440000',
+          content_text: 'Arkhe test work',
+        },
+      },
+      response
+    );
+
+    expect(result()).toEqual({ statusCode: 401, body: { error: 'Unauthorized' } });
+    expect(dependencies.fromEnvironment).not.toHaveBeenCalled();
+    expect(dependencies.getPool).not.toHaveBeenCalled();
+  });
+
+  it('allows an authorized index request', async () => {
+    const embedding = Array.from({ length: 1024 }, () => 0.01);
+    const stored = { id: 1, work_uuid: '550e8400-e29b-41d4-a716-446655440000' };
+    dependencies.isWriteAuthorized.mockReturnValue(true);
+    dependencies.getPool.mockReturnValue({});
+    dependencies.fromEnvironment.mockReturnValue({ embed: vi.fn().mockResolvedValue(embedding) });
+    dependencies.saveTextEmbedding.mockResolvedValue(stored);
+    const { response, result } = createResponse();
+
+    await handler(
+      {
+        method: 'POST',
+        headers: { authorization: 'Bearer valid' },
+        body: {
+          action: 'index',
+          work_uuid: stored.work_uuid,
+          content_text: 'Arkhe test work',
+        },
+      },
+      response
+    );
+
+    expect(result()).toEqual({ statusCode: 201, body: { status: 'created', embedding: stored } });
   });
 });

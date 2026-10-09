@@ -1,8 +1,10 @@
 import { getPool } from '../server/db.js';
+import { isWriteAuthorized } from '../server/auth.js';
 import { createWork, listWorks, type NewWork } from '../server/works.js';
 
 type ApiRequest = {
   body?: unknown;
+  headers?: Record<string, string | string[] | undefined>;
   method?: string;
 };
 
@@ -32,9 +34,8 @@ export default async function handler(
   res: ApiResponse
 ) {
   try {
-    const pool = getPool();
-
     if (req.method === 'GET' || !req.method) {
+      const pool = getPool();
       const works = await listWorks(pool);
       return res.status(200).json({
         status: 'ok',
@@ -51,13 +52,18 @@ export default async function handler(
         });
       }
 
+      if (!isWriteAuthorized(req.headers?.authorization)) {
+        return res.status(401).json({ error: 'Unauthorized' });
+      }
+
+      const pool = getPool();
       const work = await createWork(pool, req.body);
       return res.status(201).json({ status: 'created', work });
     }
 
     return res.status(405).json({ error: 'Method not allowed' });
   } catch (error) {
-    if (error instanceof Error && error.message === 'DATABASE_URL is not configured') {
+    if (error instanceof Error && /^(DATABASE_URL|ARKHE_WRITE_API_KEY) is not configured$/.test(error.message)) {
       return res.status(503).json({ error: error.message });
     }
 
