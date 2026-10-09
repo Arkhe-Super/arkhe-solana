@@ -283,7 +283,7 @@ if (cardVerificarOriginal) {
     };
 
     const buscarRegistro = async (hash) => {
-        return null;
+        return buscarObraPorHash(hash);
     };
 
     if (cabecalho) {
@@ -862,27 +862,40 @@ if (btnRegistrar) {
                         "SHA-256",
                         buffer
                     );
+                const hash = Array.from(new Uint8Array(resultado))
+                    .map((byte) => byte.toString(16).padStart(2, "0"))
+                    .join("");
 
-                const hash =
-                    Array.from(
-                        new Uint8Array(resultado)
-                    )
-                        .map((byte) =>
-                            byte
-                                .toString(16)
-                                .padStart(2, "0")
-                        )
-                        .join("");
+                const divisao = Array.from(
+                document.querySelectorAll("#lista-beneficiarios .benef-linha")
+            ).map((linha) => ({
+                nome: linha.querySelector("input[type='text']")?.value.trim() || "Sem nome",
+                percentual: Number(linha.querySelector(".benef-percentual input").value) || 0,
+            }));
 
-                console.log("Obra:", titulo);
-                console.log("Autor:", autor);
-                console.log("Preço:", preco);
-                console.log("Arquivo:", arquivo.name);
-                console.log("Hash:", hash);
+            const soma = divisao.reduce((s, b) => s + b.percentual, 0);
 
-                alert(
-                    "Dados preparados para o registro."
-                );
+            if (Math.round(soma * 100) / 100 !== 100) {
+                alert("A soma da divisão precisa ser 100%.");
+                return;
+            }
+
+            if (buscarObraPorHash(hash)) {
+                alert("Este arquivo já foi registrado.");
+                return;
+            }
+
+            adicionarObra({
+                obra: titulo,
+                autor,
+                preco: Number(preco),
+                hash,
+                arquivo: arquivo.name,
+                data: new Date().toISOString().slice(0, 10),
+                divisao,
+            });
+
+            alert("Obra registrada!");
             } catch (erro) {
                 console.error(erro);
 

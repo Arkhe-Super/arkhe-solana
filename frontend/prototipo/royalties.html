@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title>Verificação</title>
+    <title>Royalties</title> <!-- MUDOU: estava "Verificação" -->
 </head>
 
 <body>
@@ -34,13 +34,14 @@
                 </a>
 
             </nav>
-        <label class="modo-escuro-menu" for="switch">
+            <label class="modo-escuro-menu" for="switch">
 
                 <span>Modo escuro</span>
 
                 <input
                     type="checkbox"
                     id="switch"
+                    checked
                 >
 
                 <span class="switch"></span>
@@ -77,21 +78,32 @@
                     </span>
                 </p>
                 </div>
+                
                 <div 
                     class="pagamentos-royalties"
                 >
                     <span>Pagamentos</span>
                     <p id="valor-pagamento">00</p>
                 </div>
+                
                 <div class="rede-liquidacao">
                     <span>Rede de liquidação</span>
                     <p id="span-liquidacao"><span class="ponto"></span> Solana</p>
                 </div>  
             </section>
+            
             <div class="historico-pagamentos">
-                <h2 class="titulo-arquivo-span">HISTORICO DE PAGAMENTOS</h2>
+                <h2 class="titulo-arquivo-span">HISTÓRICO DE PAGAMENTOS</h2> 
                 <button type="button" id="btn-exportar" class="botao-exportar">Exportar CSV</button>
             </div>
+
+            <div class="simular-licenca">
+                <select id="select-obra"></select>
+                <input id="inp-licenciado" type="text" placeholder="Nome do licenciado">
+                <button type="button" id="btn-simular" class="botao-exportar">Simular licença</button>
+                <button type="button" id="btn-limpar" class="botao-exportar">Limpar pagamentos</button>
+            </div>
+
             <div id="lista-pagamentos"></div>
         </main>
         <template id="modelo-royalties">
@@ -100,18 +112,20 @@
 
                 <div class="royalties-linha">
 
-                    <div>
+                    <div class="pagamento-topo">
                         <span class="pagamento-icone">↙</span>
                         <div class="pagamento-data"><small>PAGO EM</small><span class="js-data"></span></div>
                         <div class="pagamento-obra"><strong class="js-obra"></strong><small class="js-licenca"></small></div>
+                        <a class="pagamento-tx js-tx" target="_blank" rel="noopener noreferrer"><span class="js-hash"></span> ↗</a>
+                        <span class="pagamento-valor"><span class="js-valor"></span> <small>USDC</small></span>
                     </div>
-                    <div class="pagamento-divisao">
-                        <span class="pagamento-divisao-titulo">DIVISÃO</span>
-                        <div class="beneficiarios js-beneficiarios"></div>
-                    </div>
+
                 </div>
+
             </section>
+
         </template>
+
         <template id="modelo-beneficiario-pagto">
             <div class="benef-card">
                 <span class="benef js-iniciais"></span>
@@ -121,7 +135,8 @@
             </div>
         </template>
     </div>
-
+    <script src="dados.js"></script>
     <script src="script.js"></script>
+    <script src="royalties.js"></script>
 </body>
 </html>
