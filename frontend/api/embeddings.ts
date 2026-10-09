@@ -103,6 +103,10 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
     }
 
     if (error instanceof EmbeddingProviderError) {
+      console.error('Embedding provider request failed', {
+        message: error.message,
+        statusCode: error.statusCode,
+      });
       return res.status(error.statusCode).json({ error: 'Embedding provider is unavailable' });
     }
 
