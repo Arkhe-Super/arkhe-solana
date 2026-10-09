@@ -1,4 +1,5 @@
 export const EMBEDDING_MODEL = 'BAAI/bge-m3';
+export const CLOUDFLARE_EMBEDDING_MODEL = '@cf/baai/bge-m3';
 export const EMBEDDING_DIMENSIONS = 1024;
 export const MAX_EMBEDDING_TEXT_LENGTH = 32_000;
 export const EMBEDDING_REQUEST_TIMEOUT_MS = 15_000;
@@ -53,32 +54,51 @@ export function validateEmbedding(value: unknown): number[] {
   return value;
 }
 
-export function parseFeatureExtractionResponse(value: unknown): number[] {
-  if (Array.isArray(value) && value.length === 1 && Array.isArray(value[0])) {
-    return validateEmbedding(value[0]);
+export function parseCloudflareEmbeddingResponse(value: unknown): number[] {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) {
+    return validateEmbedding(value);
   }
 
-  return validateEmbedding(value);
+  const result = (value as { result?: unknown }).result;
+  if (!result || typeof result !== 'object' || Array.isArray(result)) {
+    return validateEmbedding(result);
+  }
+
+  const data = (result as { data?: unknown }).data;
+  if (Array.isArray(data) && data.length === 1 && Array.isArray(data[0])) {
+    return validateEmbedding(data[0]);
+  }
+
+  return validateEmbedding(data);
 }
 
-export class HuggingFaceEmbeddingProvider implements EmbeddingProvider {
+export class CloudflareEmbeddingProvider implements EmbeddingProvider {
   constructor(
     private readonly token: string,
-    private readonly endpoint = `https://router.huggingface.co/hf-inference/models/${EMBEDDING_MODEL}`,
+    accountId: string,
     private readonly fetchImplementation: FetchImplementation = fetch,
     private readonly timeoutMs = EMBEDDING_REQUEST_TIMEOUT_MS
-  ) {}
+  ) {
+    this.endpoint = `https://api.cloudflare.com/client/v4/accounts/${encodeURIComponent(accountId)}/ai/run/${CLOUDFLARE_EMBEDDING_MODEL}`;
+  }
 
-  static fromEnvironment(): HuggingFaceEmbeddingProvider {
-    const token = process.env.HF_TOKEN;
+  private readonly endpoint: string;
+
+  static fromEnvironment(): CloudflareEmbeddingProvider {
+    const token = process.env.CLOUDFLARE_API_TOKEN;
+    const accountId = process.env.CLOUDFLARE_ACCOUNT_ID;
 
     if (!token) {
-      throw new Error('HF_TOKEN is not configured');
+      throw new Error('CLOUDFLARE_API_TOKEN is not configured');
     }
 
-    return new HuggingFaceEmbeddingProvider(
+    if (!accountId) {
+      throw new Error('CLOUDFLARE_ACCOUNT_ID is not configured');
+    }
+
+    return new CloudflareEmbeddingProvider(
       token,
-      process.env.HF_INFERENCE_URL || undefined
+      accountId
     );
   }
 
@@ -95,27 +115,27 @@ export class HuggingFaceEmbeddingProvider implements EmbeddingProvider {
           Authorization: `Bearer ${this.token}`,
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ inputs: input }),
+        body: JSON.stringify({ text: [input] }),
         signal: controller.signal,
       });
     } catch {
       if (controller.signal.aborted) {
-        throw new EmbeddingProviderError('Hugging Face embedding request timed out', 504);
+        throw new EmbeddingProviderError('Cloudflare embedding request timed out', 504);
       }
 
-      throw new EmbeddingProviderError('Hugging Face embedding request failed');
+      throw new EmbeddingProviderError('Cloudflare embedding request failed');
     } finally {
       clearTimeout(timeout);
     }
 
     if (!response.ok) {
-      throw new EmbeddingProviderError(`Hugging Face embedding request failed with status ${response.status}`);
+      throw new EmbeddingProviderError(`Cloudflare embedding request failed with status ${response.status}`);
     }
 
     try {
-      return parseFeatureExtractionResponse(await response.json());
+      return parseCloudflareEmbeddingResponse(await response.json());
     } catch {
-      throw new EmbeddingProviderError('Hugging Face returned an invalid embedding response');
+      throw new EmbeddingProviderError('Cloudflare returned an invalid embedding response');
     }
   }
 }

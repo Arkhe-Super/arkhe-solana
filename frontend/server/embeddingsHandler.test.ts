@@ -10,7 +10,7 @@ const dependencies = vi.hoisted(() => ({
 vi.mock('../server/db.js', () => ({ getPool: dependencies.getPool }));
 vi.mock('../server/embeddings.js', () => ({
   EmbeddingProviderError: class extends Error {},
-  HuggingFaceEmbeddingProvider: { fromEnvironment: dependencies.fromEnvironment },
+  CloudflareEmbeddingProvider: { fromEnvironment: dependencies.fromEnvironment },
   validateEmbeddingText: (value: unknown) => {
     if (typeof value !== 'string' || !value.trim() || value.length > 32_000) {
       throw new Error('Invalid embedding text');

@@ -1,7 +1,7 @@
 import { getPool } from '../server/db.js';
 import {
   EmbeddingProviderError,
-  HuggingFaceEmbeddingProvider,
+  CloudflareEmbeddingProvider,
   validateEmbeddingText,
 } from '../server/embeddings.js';
 import { saveTextEmbedding, searchTextEmbeddings } from '../server/textEmbeddings.js';
@@ -70,7 +70,7 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
 
   try {
     if (isIndexRequest(req.body)) {
-      const provider = HuggingFaceEmbeddingProvider.fromEnvironment();
+      const provider = CloudflareEmbeddingProvider.fromEnvironment();
       const pool = getPool();
       const embedding = await provider.embed(req.body.content_text);
       const textEmbedding = await saveTextEmbedding(pool, {
@@ -83,7 +83,7 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
     }
 
     if (isSearchRequest(req.body)) {
-      const provider = HuggingFaceEmbeddingProvider.fromEnvironment();
+      const provider = CloudflareEmbeddingProvider.fromEnvironment();
       const pool = getPool();
       const embedding = await provider.embed(req.body.query);
       const matches = await searchTextEmbeddings(pool, {
@@ -98,7 +98,7 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
       error: 'Provide action=index with work_uuid and content_text, or action=search with query',
     });
   } catch (error) {
-    if (error instanceof Error && /^(DATABASE_URL|HF_TOKEN) is not configured$/.test(error.message)) {
+    if (error instanceof Error && /^(DATABASE_URL|CLOUDFLARE_API_TOKEN|CLOUDFLARE_ACCOUNT_ID) is not configured$/.test(error.message)) {
       return res.status(503).json({ error: error.message });
     }
 

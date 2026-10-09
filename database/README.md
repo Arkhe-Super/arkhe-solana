@@ -23,11 +23,11 @@ Configure estas variáveis no ambiente local e no projeto Vercel, sem versionar 
 
 ```dotenv
 DATABASE_URL=postgresql://USER:PASSWORD@HOST:5432/arkhe
-HF_TOKEN=hf_replace_with_a_token_that_can_call_inference_providers
-HF_INFERENCE_URL=https://router.huggingface.co/hf-inference/models/BAAI/bge-m3
+CLOUDFLARE_API_TOKEN=replace_with_a_workers_ai_api_token
+CLOUDFLARE_ACCOUNT_ID=replace_with_your_cloudflare_account_id
 ```
 
-`HF_INFERENCE_URL` é opcional e permite trocar o endpoint por um provedor compatível sem alterar a interface do backend.
+O backend usa a API REST Workers AI com o modelo `@cf/baai/bge-m3`. Mantenha os valores apenas no ambiente local e na Vercel; não os versione.
 
 ## Aplicação local das migrations
 
