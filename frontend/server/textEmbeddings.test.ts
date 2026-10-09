@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
-import { EMBEDDING_DIMENSIONS } from './embeddings';
-import { saveTextEmbedding, searchTextEmbeddings } from './textEmbeddings';
+import { EMBEDDING_DIMENSIONS } from './embeddings.js';
+import { saveTextEmbedding, searchTextEmbeddings } from './textEmbeddings.js';
 
 const vector = Array.from({ length: EMBEDDING_DIMENSIONS }, () => 0.01);
 

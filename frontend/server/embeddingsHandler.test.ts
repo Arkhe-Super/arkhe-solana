@@ -7,8 +7,8 @@ const dependencies = vi.hoisted(() => ({
   searchTextEmbeddings: vi.fn(),
 }));
 
-vi.mock('./lib/db.js', () => ({ getPool: dependencies.getPool }));
-vi.mock('./lib/embeddings.js', () => ({
+vi.mock('../server/db.js', () => ({ getPool: dependencies.getPool }));
+vi.mock('../server/embeddings.js', () => ({
   EmbeddingProviderError: class extends Error {},
   HuggingFaceEmbeddingProvider: { fromEnvironment: dependencies.fromEnvironment },
   validateEmbeddingText: (value: unknown) => {
@@ -18,12 +18,12 @@ vi.mock('./lib/embeddings.js', () => ({
     return value.trim();
   },
 }));
-vi.mock('./lib/textEmbeddings.js', () => ({
+vi.mock('../server/textEmbeddings.js', () => ({
   saveTextEmbedding: dependencies.saveTextEmbedding,
   searchTextEmbeddings: dependencies.searchTextEmbeddings,
 }));
 
-import handler from './embeddings';
+import handler from '../api/embeddings.js';
 
 function createResponse() {
   let statusCode: number | undefined;

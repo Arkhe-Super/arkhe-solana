@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import { createWork, listWorks, type Work } from './works';
+import { createWork, listWorks, type Work } from './works.js';
 
 const work: Work = {
   uuid: '550e8400-e29b-41d4-a716-446655440000',

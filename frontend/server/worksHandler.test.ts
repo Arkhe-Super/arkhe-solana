@@ -2,9 +2,9 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 const database = vi.hoisted(() => ({ getPool: vi.fn() }));
 
-vi.mock('./lib/db', () => database);
+vi.mock('../server/db.js', () => database);
 
-import handler from './works';
+import handler from '../api/works.js';
 
 function createResponse() {
   let statusCode: number | undefined;

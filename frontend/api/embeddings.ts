@@ -1,10 +1,10 @@
-import { getPool } from './lib/db.js';
+import { getPool } from '../server/db.js';
 import {
   EmbeddingProviderError,
   HuggingFaceEmbeddingProvider,
   validateEmbeddingText,
-} from './lib/embeddings.js';
-import { saveTextEmbedding, searchTextEmbeddings } from './lib/textEmbeddings.js';
+} from '../server/embeddings.js';
+import { saveTextEmbedding, searchTextEmbeddings } from '../server/textEmbeddings.js';
 
 type ApiRequest = {
   body?: unknown;

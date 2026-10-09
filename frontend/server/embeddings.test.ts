@@ -4,7 +4,7 @@ import {
   HuggingFaceEmbeddingProvider,
   parseFeatureExtractionResponse,
   validateEmbeddingText,
-} from './embeddings';
+} from './embeddings.js';
 
 const vector = Array.from({ length: EMBEDDING_DIMENSIONS }, (_, index) => index / 100);
 
