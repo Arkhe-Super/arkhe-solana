@@ -38,6 +38,7 @@ function desenharPagamentos() {
 
   if (pagamentos.length === 0) {
     const vazio = document.createElement('p');
+    vazio.className = 'lista-vazia';                                  // MUDOU: classe para o CSS
     vazio.textContent = 'Nenhum pagamento recebido ainda.';
     lista.appendChild(vazio);
     return;
@@ -49,7 +50,14 @@ card.querySelector('.js-data').textContent = formatarData(p.data);
 card.querySelector('.js-obra').textContent = p.obra;
 card.querySelector('.js-licenca').textContent = `Licença · ${p.licenciado}`;
 card.querySelector('.js-hash').textContent = hashCurto(p.assinatura);
-card.querySelector('.js-tx').href = `https://explorer.solana.com/tx/${p.assinatura}?cluster=devnet`;
+
+const linkTx = card.querySelector('.js-tx');
+if (p.assinatura.startsWith('SIMULADO')) {
+    linkTx.title = 'Pagamento simulado (demonstração)';
+} else {
+    linkTx.href = `https://explorer.solana.com/tx/${p.assinatura}?cluster=devnet`;
+}
+
 card.querySelector('.js-valor').textContent = dinheiro(p.valor);
 
 const areaBenef = card.querySelector('.js-beneficiarios');

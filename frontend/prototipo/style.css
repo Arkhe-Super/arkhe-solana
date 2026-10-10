@@ -870,90 +870,89 @@ body:has(#switch:not(:checked)) {
 .conteudo-principal-royalties {
     display: grid;
     grid-template-columns: 2fr 1fr 1fr;
-    gap: 20px;
-    margin-bottom: 32px;
-    padding: 25px;
+    gap: 16px;
+    padding: 24px 32px 0;
+}
+
+.card-recebido-mes,
+.pagamentos-royalties,
+.rede-liquidacao {
+    display: grid;
+    align-content: start;
+    row-gap: 12px;
+    padding: 16px 20px;
+    background-color: var(--cor-card);
+    border: 1px solid var(--cor-borda);
+    border-radius: 10px;
 }
 
 .card-recebido-mes {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    flex-direction: column;
-    justify-content: space-between;
-    align-content: space-between;
-    gap: 24px;
-    min-height: 134px;
-    padding: 18px;
-    font-size: 15px;
-    color: var(--cor-texto-claro);
-    background-color: var(--cor-card);
-    border: 1px solid var(--cor-borda);
-    border-radius: 12px;
+    grid-template-columns: 1fr auto;
 }
 
-.subtitulo-recebido {
-    display: flex;
-    text-align: right;
-    justify-content: right;
-    align-items: end;
+.card-recebido-mes .valor-recebido {
+    grid-column: 1 / -1;
 }
 
-#total-mes {
-    font-size: 40px;
+#titulo-recebido,
+.pagamentos-royalties > span,
+.rede-liquidacao > span {
+    font-size: 13px;
+    color: var(--cor-texto-suave);
 }
 
-.pagamentos-royalties {
-    display: flex;
-    gap: 40px;
-    flex-direction: column;
-    min-height: 134px;
-    padding: 15px;
-    font-size: 15px;
-    color: var(--cor-texto-claro);
-    background-color: var(--cor-card);
-    border: 1px solid var(--cor-borda);
-    border-radius: 12px;
+#subtitulo-recebido {
+    font-family: ui-monospace, Consolas, monospace;
+    font-size: 11px;
+    color: var(--cor-destaque);
 }
 
+.valor-recebido,
 #valor-pagamento {
-    font-size: 40px;
+    margin: 0;
+    font-family: ui-monospace, Consolas, monospace;
+    font-size: 32px;
+    color: var(--cor-texto);
 }
 
-.rede-liquidacao {
-    display: flex;
-    gap: 40px;
-    flex-direction: column;
-    min-height: 134px;
-    padding: 15px;
-    font-size: 15px;
-    color: var(--cor-texto-claro);
-    background-color: var(--cor-card);
-    border: 1px solid var(--cor-borda);
-    border-radius: 12px;
+.valor-recebido small {
+    font-size: 12px;
+    color: var(--cor-destaque);
 }
 
 #span-liquidacao {
-    font-size: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
     color: var(--cor-texto);
+}
+
+.ponto {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--cor-destaque);
 }
 
 .historico-pagamentos {
     display: flex;
-    align-items: center;
     justify-content: space-between;
-    padding: 20px;
+    align-items: center;
+    padding: 28px 32px 12px;
 }
 
 .botao-exportar {
-    min-height: 40px;
-    padding: 20px;
-    border-radius: 10px;
-    font-size: 15px;
+    padding: 10px 16px;
+    font-family: inherit;
+    font-size: 14px;
+    color: var(--cor-texto);
     background-color: var(--cor-card);
-    color: var(--cor-texto-claro);
-    border: var(--cor-borda) 1px solid;
+    border: 1px solid var(--cor-borda);
+    border-radius: 8px;
     cursor: pointer;
-    transition: 0.2s;
 }
 
 .botao-exportar:hover {
@@ -961,152 +960,206 @@ body:has(#switch:not(:checked)) {
     border-color: var(--cor-destaque);
 }
 
-#select-obra select{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-}
-
-.simular-licenca {
-    display: flex;
-    gap: 12px;
-    margin: 24px 0 0;
-    flex-wrap: wrap;
-    padding: 19px;
-}
-
-.simular-licenca select,
-.simular-licenca input {
-    padding: 12px 14px;
-    border-radius: 10px;
-    border: 1px solid var(--cor-borda);
-    background-color: var(--cor-card);
-    color: var(--cor-texto);
-    font: inherit;
-}
-
-.simular-licenca select {
-    min-width: 260px;
-}
-
-.simular-licenca select option {
-    background-color: var(--cor-card);
-    color: var(--cor-texto);
-}
-
 #lista-pagamentos {
-    padding: 0 20px 20px;
+    display: grid;
+    gap: 16px;
+    padding: 0 32px;
 }
 
-.simular-licenca {
-    padding: 0 20px;
+.lista-vazia {
+    margin: 0;
+    padding: 32px;
+    text-align: center;
+    color: var(--cor-texto-suave);
+    border: 1px dashed var(--cor-borda);
+    border-radius: 10px;
 }
 
 .pagamentos {
-    border: 1px solid rgba(128, 128, 128, 0.25);
-    border-radius: 14px;
-    padding: 20px 24px;
-    margin-bottom: 16px;
+    overflow: hidden;
+    background-color: var(--cor-card);
+    border: 1px solid var(--cor-borda);
+    border-radius: 10px;
 }
 
 .pagamento-topo {
-    display: grid;
-    grid-template-columns: 40px 140px 1fr auto auto;
+    display: flex;
     align-items: center;
     gap: 20px;
+    padding: 16px 20px;
 }
 
 .pagamento-icone {
-    width: 40px;
-    height: 40px;
     display: grid;
     place-items: center;
-    border-radius: 10px;
-    background: rgba(94, 234, 212, 0.15);
-    color: #5eead4;
-    font-size: 18px;
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    color: var(--cor-destaque);
+    background-color: color-mix(in srgb, var(--cor-destaque) 15%, transparent);
 }
 
 .pagamento-data,
 .pagamento-obra {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
+    display: grid;
+    gap: 2px;
+}
+
+.pagamento-data {
+    min-width: 96px;
 }
 
 .pagamento-data small {
-    font-size: 11px;
-    letter-spacing: 0.08em;
-    opacity: 0.6;
+    font-family: ui-monospace, Consolas, monospace;
+    font-size: 10px;
+    color: var(--cor-texto-suave);
+}
+
+.pagamento-data span {
+    font-size: 13px;
+    color: var(--cor-texto-claro);
+}
+
+.pagamento-obra {
+    flex: 1;                       
+}
+
+.pagamento-obra strong {
+    font-size: 16px;
 }
 
 .pagamento-obra small {
-    opacity: 0.6;
+    font-size: 12px;
+    color: var(--cor-texto-suave);
 }
 
 .pagamento-tx {
-    color: #5eead4;
+    font-family: ui-monospace, Consolas, monospace;
+    font-size: 12px;
+    color: var(--cor-texto-suave);
     text-decoration: none;
-    font-family: monospace;
-    font-size: 13px;
 }
 
-.pagamento-tx:hover {
-    text-decoration: underline;
+.pagamento-tx[href]:hover {
+    color: var(--cor-destaque);
 }
 
 .pagamento-valor {
-    font-size: 20px;
-    font-weight: 700;
+    min-width: 130px;
     text-align: right;
+    font-family: ui-monospace, Consolas, monospace;
+    font-size: 20px;
 }
 
 .pagamento-valor small {
-    font-size: 12px;
-    font-weight: 400;
-    opacity: 0.6;
+    font-size: 11px;
+    color: var(--cor-destaque);
 }
 
 .pagamento-divisao {
-    margin-top: 18px;
-    padding-top: 16px;
-    border-top: 1px solid rgba(128, 128, 128, 0.2);
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 12px 20px;
+    border-top: 1px solid var(--cor-borda);
 }
 
 .pagamento-divisao-titulo {
-    display: block;
+    min-width: 76px;
+    font-family: ui-monospace, Consolas, monospace;
     font-size: 11px;
-    letter-spacing: 0.08em;
-    opacity: 0.6;
-    margin-bottom: 10px;
+    color: var(--cor-texto-suave);
 }
 
 .beneficiarios {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
+    flex: 1;
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(0, 1fr);
+    gap: 12px;
 }
 
 .benef-card {
-    display: grid;
-    grid-template-columns: 32px 1fr auto auto;
+    display: flex;
     align-items: center;
-    gap: 14px;
+    gap: 10px;
+    padding: 8px 12px;
+    background-color: var(--cor-fundo);
+    border-radius: 8px;
 }
 
 .benef {
-    width: 32px;
-    height: 32px;
     display: grid;
     place-items: center;
+    flex-shrink: 0;
+    width: 26px;
+    height: 26px;
     border-radius: 50%;
-    background: rgba(94, 234, 212, 0.15);
-    color: #5eead4;
-    font-size: 12px;
-    font-weight: 600;
+    border: 1px solid var(--cor-borda);
+    font-family: ui-monospace, Consolas, monospace;
+    font-size: 10px;
+    color: var(--cor-texto-suave);
+}
+
+.benef-card-nome {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 14px;
 }
 
 .benef-card-pct {
-    opacity: 0.7;
+    font-family: ui-monospace, Consolas, monospace;
+    font-size: 11px;
+    color: var(--cor-texto-suave);
+}
+
+/* simular pagamento */
+.simulador {
+    margin: 24px 32px;
+    padding: 12px 20px;
+    border: 1px dashed var(--cor-borda);
+    border-radius: 10px;
+    color: var(--cor-texto-suave);
+}
+
+.simulador summary {
+    cursor: pointer;
+    font-family: ui-monospace, Consolas, monospace;
+    font-size: 11px;
+}
+
+.simulador-corpo {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 12px;
+    margin-top: 14px;
+}
+
+.simulador-campo {
+    display: grid;
+    gap: 6px;
+    font-size: 12px;
+}
+
+.simulador-campo select,
+.simulador-campo input {
+    min-width: 240px;
+    padding: 10px 12px;
+    font-family: inherit;
+    font-size: 14px;
+    color: var(--cor-texto);
+    background-color: var(--cor-fundo);
+    border: 1px solid var(--cor-borda);
+    border-radius: 8px;
+}
+
+@media (max-width: 900px) {
+    .conteudo-principal-royalties { grid-template-columns: 1fr; }
+    .pagamento-topo { flex-wrap: wrap; }
+    .beneficiarios { grid-auto-flow: row; }
+    .pagamento-divisao { flex-direction: column; align-items: stretch; }
 }

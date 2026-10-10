@@ -97,17 +97,24 @@
                 <button type="button" id="btn-exportar" class="botao-exportar">Exportar CSV</button>
             </div>
 
-            <div class="simular-licenca">
-                <select id="select-obra"></select>
-                <input id="inp-licenciado" type="text" placeholder="Nome do licenciado">
-                <button type="button" id="btn-simular" class="botao-exportar">Simular licença</button>
-                <button type="button" id="btn-limpar" class="botao-exportar">Limpar pagamentos</button>
-            </div>
+            <details class="simulador">
+                <summary>MODO DEMONSTRAÇÃO · SIMULAR PAGAMENTO</summary>
+                <div class="simulador-corpo">
+                    <label class="simulador-campo">Obra
+                        <select id="sel-obra"></select>
+                    </label>
+                    <label class="simulador-campo">Licenciado
+                        <input id="inp-licenciado" type="text" placeholder="Ex.: Coletivo Prisma">
+                    </label>
+                    <button type="button" id="btn-simular" class="botao-exportar">Simular pagamento</button>
+                    <button type="button" id="btn-limpar" class="botao-exportar">Limpar pagamentos</button>
+                </div>
+            </details>
 
             <div id="lista-pagamentos"></div>
         </main>
         <template id="modelo-royalties">
-            
+
             <section class="pagamentos">
 
                 <div class="royalties-linha">
@@ -120,19 +127,15 @@
                         <span class="pagamento-valor"><span class="js-valor"></span> <small>USDC</small></span>
                     </div>
 
+                    <div class="pagamento-divisao">
+                        <span class="pagamento-divisao-titulo">DIVISÃO</span>
+                        <div class="beneficiarios js-beneficiarios"></div>
+                    </div>
+
                 </div>
 
             </section>
 
-        </template>
-
-        <template id="modelo-beneficiario-pagto">
-            <div class="benef-card">
-                <span class="benef js-iniciais"></span>
-                <span class="benef-card-nome js-nome"></span>
-                <span class="benef-card-pct js-pct"></span>
-                <strong class="js-parte"></strong>
-            </div>
         </template>
     </div>
     <script src="dados.js"></script>

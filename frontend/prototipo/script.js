@@ -118,7 +118,8 @@ if (inputArquivo) {
 
             const arquivo = evento.dataTransfer.files[0];
 
-            if (arquivo) {
+           if (arquivo) {
+                inputArquivo.files = evento.dataTransfer.files;   // ← linha nova
                 processarArquivo(arquivo);
             }
         });
@@ -740,6 +741,9 @@ if (cardVerificarOriginal) {
                 evento.dataTransfer.files[0];
 
             if (arquivo) {
+                inputArquivoVerificar.files =
+                    evento.dataTransfer.files;                    // ← linhas novas
+
                 processarArquivoVerificacao(
                     arquivo
                 );
