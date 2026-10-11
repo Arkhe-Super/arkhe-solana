@@ -2,13 +2,17 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 const dependencies = vi.hoisted(() => ({
   getPool: vi.fn(),
+  isDatabaseUnavailableError: vi.fn(),
   isWriteAuthorized: vi.fn(),
   fromEnvironment: vi.fn(),
   saveTextEmbedding: vi.fn(),
   searchTextEmbeddings: vi.fn(),
 }));
 
-vi.mock('../server/db.js', () => ({ getPool: dependencies.getPool }));
+vi.mock('../server/db.js', () => ({
+  getPool: dependencies.getPool,
+  isDatabaseUnavailableError: dependencies.isDatabaseUnavailableError,
+}));
 vi.mock('../server/auth.js', () => ({ isWriteAuthorized: dependencies.isWriteAuthorized }));
 vi.mock('../server/embeddings.js', () => ({
   EmbeddingProviderError: class extends Error {},
@@ -116,5 +120,21 @@ describe('/api/embeddings input validation', () => {
     );
 
     expect(result()).toEqual({ statusCode: 201, body: { status: 'created', embedding: stored } });
+  });
+
+  it('reports an unavailable database during search without exposing provider or database details', async () => {
+    const embedding = Array.from({ length: 1024 }, () => 0.01);
+    dependencies.getPool.mockReturnValue({});
+    dependencies.fromEnvironment.mockReturnValue({ embed: vi.fn().mockResolvedValue(embedding) });
+    dependencies.searchTextEmbeddings.mockRejectedValue({ code: '28P01', name: 'error' });
+    dependencies.isDatabaseUnavailableError.mockReturnValue(true);
+    const { response, result } = createResponse();
+
+    await handler(
+      { method: 'POST', body: { action: 'search', query: 'Arkhe provenance', limit: 1 } },
+      response
+    );
+
+    expect(result()).toEqual({ statusCode: 503, body: { error: 'Database unavailable' } });
   });
 });

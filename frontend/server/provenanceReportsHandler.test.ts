@@ -4,11 +4,15 @@ import { validProvenanceReport } from './provenanceReport.fixture.js';
 
 const dependencies = vi.hoisted(() => ({
   getPool: vi.fn(),
+  isDatabaseUnavailableError: vi.fn(),
   isWriteAuthorized: vi.fn(),
 }));
 
 vi.mock('../server/auth.js', () => ({ isWriteAuthorized: dependencies.isWriteAuthorized }));
-vi.mock('../server/db.js', () => ({ getPool: dependencies.getPool }));
+vi.mock('../server/db.js', () => ({
+  getPool: dependencies.getPool,
+  isDatabaseUnavailableError: dependencies.isDatabaseUnavailableError,
+}));
 
 import handler from '../api/provenance-reports.js';
 
@@ -30,6 +34,7 @@ function createResponse() {
 describe('/api/provenance-reports', () => {
   beforeEach(() => {
     dependencies.getPool.mockReset();
+    dependencies.isDatabaseUnavailableError.mockReset();
     dependencies.isWriteAuthorized.mockReset();
   });
 
@@ -128,5 +133,20 @@ describe('/api/provenance-reports', () => {
     await handler({ method: 'POST', body: validProvenanceReport() }, response);
 
     expect(result()).toEqual({ statusCode: 500, body: { error: 'Unable to persist provenance report' } });
+  });
+
+  it('reports an unavailable database without exposing PostgreSQL details', async () => {
+    dependencies.getPool.mockImplementation(() => {
+      throw { code: '28P01', name: 'error' };
+    });
+    dependencies.isDatabaseUnavailableError.mockReturnValue(true);
+    const { response, result } = createResponse();
+
+    await handler(
+      { method: 'GET', query: { id: '550e8400-e29b-41d4-a716-446655440000' } },
+      response
+    );
+
+    expect(result()).toEqual({ statusCode: 503, body: { error: 'Database unavailable' } });
   });
 });

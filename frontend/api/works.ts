@@ -1,4 +1,4 @@
-import { getPool } from '../server/db.js';
+import { getPool, isDatabaseUnavailableError } from '../server/db.js';
 import { isWriteAuthorized } from '../server/auth.js';
 import { createWork, listWorks, type NewWork } from '../server/works.js';
 
@@ -72,8 +72,12 @@ export default async function handler(
 
     return res.status(405).json({ error: 'Method not allowed' });
   } catch (error) {
-    if (error instanceof Error && /^(DATABASE_URL|ARKHE_WRITE_API_KEY) is not configured$/.test(error.message)) {
+    if (error instanceof Error && error.message === 'ARKHE_WRITE_API_KEY is not configured') {
       return res.status(503).json({ error: error.message });
+    }
+
+    if (isDatabaseUnavailableError(error)) {
+      return res.status(503).json({ error: 'Database unavailable' });
     }
 
     logDatabaseFailure('works', error);

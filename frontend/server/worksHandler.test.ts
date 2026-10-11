@@ -2,10 +2,14 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 const dependencies = vi.hoisted(() => ({
   getPool: vi.fn(),
+  isDatabaseUnavailableError: vi.fn(),
   isWriteAuthorized: vi.fn(),
 }));
 
-vi.mock('../server/db.js', () => ({ getPool: dependencies.getPool }));
+vi.mock('../server/db.js', () => ({
+  getPool: dependencies.getPool,
+  isDatabaseUnavailableError: dependencies.isDatabaseUnavailableError,
+}));
 vi.mock('../server/auth.js', () => ({ isWriteAuthorized: dependencies.isWriteAuthorized }));
 
 import handler from '../api/works.js';
@@ -28,6 +32,7 @@ function createResponse() {
 describe('/api/works', () => {
   beforeEach(() => {
     dependencies.getPool.mockReset();
+    dependencies.isDatabaseUnavailableError.mockReset();
     dependencies.isWriteAuthorized.mockReset();
   });
 
@@ -47,14 +52,27 @@ describe('/api/works', () => {
     dependencies.getPool.mockImplementation(() => {
       throw new Error('DATABASE_URL is not configured');
     });
+    dependencies.isDatabaseUnavailableError.mockReturnValue(true);
     const { response, result } = createResponse();
 
     await handler({ method: 'GET' }, response);
 
     expect(result()).toEqual({
       statusCode: 503,
-      body: { error: 'DATABASE_URL is not configured' },
+      body: { error: 'Database unavailable' },
     });
+  });
+
+  it('reports a rejected Neon credential as unavailable without exposing details', async () => {
+    dependencies.getPool.mockImplementation(() => {
+      throw { code: '28P01', name: 'error' };
+    });
+    dependencies.isDatabaseUnavailableError.mockReturnValue(true);
+    const { response, result } = createResponse();
+
+    await handler({ method: 'GET' }, response);
+
+    expect(result()).toEqual({ statusCode: 503, body: { error: 'Database unavailable' } });
   });
 
   it('rejects an unauthorized POST before accessing the database', async () => {

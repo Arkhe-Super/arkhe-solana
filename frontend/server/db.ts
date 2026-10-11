@@ -2,6 +2,26 @@ import { Pool } from 'pg';
 
 let pool: Pool | undefined;
 
+const DATABASE_UNAVAILABLE_CODES = new Set([
+  '08001',
+  '08006',
+  '28P01',
+  '3D000',
+  '57P03',
+  'ECONNREFUSED',
+  'ENOTFOUND',
+  'ETIMEDOUT',
+]);
+
+export function isDatabaseUnavailableError(error: unknown): boolean {
+  if (error instanceof Error && error.message === 'DATABASE_URL is not configured') {
+    return true;
+  }
+
+  const code = (error as { code?: unknown } | undefined)?.code;
+  return typeof code === 'string' && DATABASE_UNAVAILABLE_CODES.has(code);
+}
+
 export function getPool(): Pool {
   const connectionString = process.env.DATABASE_URL;
 

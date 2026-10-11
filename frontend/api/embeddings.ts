@@ -1,4 +1,4 @@
-import { getPool } from '../server/db.js';
+import { getPool, isDatabaseUnavailableError } from '../server/db.js';
 import { isWriteAuthorized } from '../server/auth.js';
 import {
   EmbeddingProviderError,
@@ -112,8 +112,12 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
       error: 'Provide action=index with work_uuid and content_text, or action=search with query',
     });
   } catch (error) {
-    if (error instanceof Error && /^(DATABASE_URL|CLOUDFLARE_API_TOKEN|CLOUDFLARE_ACCOUNT_ID|ARKHE_WRITE_API_KEY) is not configured$/.test(error.message)) {
+    if (error instanceof Error && /^(CLOUDFLARE_API_TOKEN|CLOUDFLARE_ACCOUNT_ID|ARKHE_WRITE_API_KEY) is not configured$/.test(error.message)) {
       return res.status(503).json({ error: error.message });
+    }
+
+    if (isDatabaseUnavailableError(error)) {
+      return res.status(503).json({ error: 'Database unavailable' });
     }
 
     if (error instanceof EmbeddingProviderError) {

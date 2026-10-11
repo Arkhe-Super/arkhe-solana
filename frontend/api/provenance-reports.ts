@@ -1,4 +1,4 @@
-import { getPool } from '../server/db.js';
+import { getPool, isDatabaseUnavailableError } from '../server/db.js';
 import { isWriteAuthorized } from '../server/auth.js';
 import { validateProvenanceReport } from '../server/provenanceReport.js';
 import { getProvenanceReport, saveProvenanceReport } from '../server/provenanceReports.js';
@@ -39,8 +39,8 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
       if (!report) return res.status(404).json({ error: 'Provenance report not found' });
       return res.status(200).json({ status: 'ok', report });
     } catch (error) {
-      if (error instanceof Error && error.message === 'DATABASE_URL is not configured') {
-        return res.status(503).json({ error: error.message });
+      if (isDatabaseUnavailableError(error)) {
+        return res.status(503).json({ error: 'Database unavailable' });
       }
       logDatabaseFailure('provenance-reports:get', error);
       return res.status(500).json({ error: 'Unable to access provenance reports' });
@@ -84,8 +84,8 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
       message: 'The report is structurally valid. C2PA, Solana, MMR, authorship, and provenance were not verified cryptographically.',
     });
   } catch (error) {
-    if (error instanceof Error && error.message === 'DATABASE_URL is not configured') {
-      return res.status(503).json({ error: error.message });
+    if (isDatabaseUnavailableError(error)) {
+      return res.status(503).json({ error: 'Database unavailable' });
     }
     logDatabaseFailure('provenance-reports:post', error);
     return res.status(500).json({ error: 'Unable to persist provenance report' });
