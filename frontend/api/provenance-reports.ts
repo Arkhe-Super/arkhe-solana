@@ -63,7 +63,7 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
   }
 
   const validation = validateProvenanceReport(req.body);
-  if (!validation.success) {
+  if (validation.success === false) {
     return res.status(400).json({
       error: 'Invalid provenance report schema',
       details: validation.errors,
