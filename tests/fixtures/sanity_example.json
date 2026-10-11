@@ -1,0 +1,28 @@
+{
+  "schema_version": "1.1",
+  "generated_at": "2026-10-11T10:00:00Z",
+  "target_a": {
+    "title": "Taj Mahal",
+    "artist": "Jorge Ben",
+    "year": 1972,
+    "mbid": "7be9baef-1f19-482a-a035-ff9c7c4f4a38",
+    "sha256": "<SHA256(arquivo_A.wav)>"
+  },
+  "target_b": {
+    "title": "Da Ya Think I'm Sexy?",
+    "artist": "Rod Stewart",
+    "year": 1978,
+    "mbid": "c36d0b55-8d5f-4663-95aa-2831518f8eb0",
+    "sha256": "<SHA256(arquivo_B.wav)>"
+  },
+  "similarity": {},
+  "manifest": {},
+  "script_sha256": "79d302684c9218f1eeba443107c6803ea501ea441eb206658613cc72dc19e548",
+  "content_hash": "<recomputável via RFC 8785 sobre campos cobertos>",
+  "trust_policy": "integrity_only",
+  "trust_context": {
+    "verifier": "encypher-c2pa",
+    "verifier_version": "<versão instalada>",
+    "trust_basis": "bundled_static_material"
+  }
+}
