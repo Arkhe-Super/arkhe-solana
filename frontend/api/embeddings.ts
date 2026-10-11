@@ -17,6 +17,14 @@ type ApiResponse = {
   status: (code: number) => { json: (body: unknown) => void };
 };
 
+function logUnexpectedFailure(error: unknown) {
+  const failure = error as { code?: unknown; name?: unknown } | undefined;
+  console.error('Embedding request failed unexpectedly', {
+    code: typeof failure?.code === 'string' ? failure.code : undefined,
+    name: typeof failure?.name === 'string' ? failure.name : 'UnknownError',
+  });
+}
+
 type IndexRequest = {
   action: 'index';
   content_text: string;
@@ -116,6 +124,7 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
       return res.status(error.statusCode).json({ error: 'Embedding provider is unavailable' });
     }
 
+    logUnexpectedFailure(error);
     return res.status(500).json({ error: 'Unable to process embeddings' });
   }
 }

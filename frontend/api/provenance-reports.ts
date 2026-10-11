@@ -14,6 +14,15 @@ type ApiResponse = {
   status: (code: number) => { json: (body: unknown) => void };
 };
 
+function logDatabaseFailure(endpoint: string, error: unknown) {
+  const failure = error as { code?: unknown; name?: unknown } | undefined;
+  console.error('Database request failed', {
+    endpoint,
+    code: typeof failure?.code === 'string' ? failure.code : undefined,
+    name: typeof failure?.name === 'string' ? failure.name : 'UnknownError',
+  });
+}
+
 /**
  * Saves structurally valid provenance reports. Cryptographic verification remains
  * the responsibility of the separate preflight service.
@@ -33,6 +42,7 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
       if (error instanceof Error && error.message === 'DATABASE_URL is not configured') {
         return res.status(503).json({ error: error.message });
       }
+      logDatabaseFailure('provenance-reports:get', error);
       return res.status(500).json({ error: 'Unable to access provenance reports' });
     }
   }
@@ -77,6 +87,7 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
     if (error instanceof Error && error.message === 'DATABASE_URL is not configured') {
       return res.status(503).json({ error: error.message });
     }
+    logDatabaseFailure('provenance-reports:post', error);
     return res.status(500).json({ error: 'Unable to persist provenance report' });
   }
 }

@@ -14,6 +14,15 @@ type ApiResponse = {
   };
 };
 
+function logDatabaseFailure(endpoint: string, error: unknown) {
+  const failure = error as { code?: unknown; name?: unknown } | undefined;
+  console.error('Database request failed', {
+    endpoint,
+    code: typeof failure?.code === 'string' ? failure.code : undefined,
+    name: typeof failure?.name === 'string' ? failure.name : 'UnknownError',
+  });
+}
+
 function isNewWork(value: unknown): value is NewWork {
   if (!value || typeof value !== 'object' || Array.isArray(value)) {
     return false;
@@ -67,6 +76,7 @@ export default async function handler(
       return res.status(503).json({ error: error.message });
     }
 
+    logDatabaseFailure('works', error);
     return res.status(500).json({ error: 'Unable to access works' });
   }
 }
