@@ -13,7 +13,10 @@ export function getPool(): Pool {
     connectionString,
     max: 1,
     idleTimeoutMillis: 10_000,
-    connectionTimeoutMillis: 5_000,
+    // Neon can need a few seconds to wake a suspended compute endpoint.
+    // Keep this bounded for Vercel functions while avoiding false failures
+    // during a cold connection.
+    connectionTimeoutMillis: 10_000,
   });
   return pool;
 }
