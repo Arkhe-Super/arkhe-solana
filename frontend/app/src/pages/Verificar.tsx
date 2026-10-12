@@ -67,14 +67,14 @@ export default function Verificar() {
     }
   }
 
-  const verificar = () => {
+   const verificar = async () => {
     if (!hash) return
 
     setVerificando(true)
     setResultado({ tipo: 'vazio', texto: 'Verificando autenticidade...' })
 
     try {
-      const registro = buscarObraPorHash(hash)
+      const registro = await buscarObraPorHash(hash)
       if (registro) {
         setResultado({ tipo: 'encontrado', registro })
       } else {
