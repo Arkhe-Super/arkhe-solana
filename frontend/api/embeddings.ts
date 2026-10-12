@@ -84,12 +84,13 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
         return res.status(401).json({ error: 'Unauthorized' });
       }
 
+      const contentText = validateEmbeddingText(req.body.content_text);
       const provider = CloudflareEmbeddingProvider.fromEnvironment();
       const pool = getPool();
-      const embedding = await provider.embed(req.body.content_text);
+      const embedding = await provider.embed(contentText);
       const textEmbedding = await saveTextEmbedding(pool, {
         workUuid: req.body.work_uuid,
-        contentText: req.body.content_text,
+        contentText,
         embedding,
       });
 
@@ -97,9 +98,10 @@ export default async function handler(req: ApiRequest, res: ApiResponse) {
     }
 
     if (isSearchRequest(req.body)) {
+      const query = validateEmbeddingText(req.body.query);
       const provider = CloudflareEmbeddingProvider.fromEnvironment();
       const pool = getPool();
-      const embedding = await provider.embed(req.body.query);
+      const embedding = await provider.embed(query);
       const matches = await searchTextEmbeddings(pool, {
         embedding,
         limit: req.body.limit,

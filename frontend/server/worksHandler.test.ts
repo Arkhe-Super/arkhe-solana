@@ -96,6 +96,29 @@ describe('/api/works', () => {
     expect(dependencies.getPool).not.toHaveBeenCalled();
   });
 
+  it('rejects a malformed work UUID before checking authorization or accessing the database', async () => {
+    const { response, result } = createResponse();
+
+    await handler(
+      {
+        method: 'POST',
+        body: {
+          uuid: 'not-a-uuid',
+          blake3_hash: null,
+          c2pa_manifest: { source: 'test' },
+        },
+      },
+      response
+    );
+
+    expect(result()).toEqual({
+      statusCode: 400,
+      body: { error: 'uuid, blake3_hash and c2pa_manifest are required' },
+    });
+    expect(dependencies.isWriteAuthorized).not.toHaveBeenCalled();
+    expect(dependencies.getPool).not.toHaveBeenCalled();
+  });
+
   it('allows an authorized POST', async () => {
     const work = {
       uuid: '550e8400-e29b-41d4-a716-446655440000',

@@ -113,13 +113,18 @@ describe('/api/embeddings input validation', () => {
         body: {
           action: 'index',
           work_uuid: stored.work_uuid,
-          content_text: 'Arkhe test work',
+          content_text: '  Arkhe test work  ',
         },
       },
       response
     );
 
     expect(result()).toEqual({ statusCode: 201, body: { status: 'created', embedding: stored } });
+    expect(dependencies.fromEnvironment.mock.results[0]?.value.embed).toHaveBeenCalledWith('Arkhe test work');
+    expect(dependencies.saveTextEmbedding).toHaveBeenCalledWith(
+      expect.anything(),
+      expect.objectContaining({ contentText: 'Arkhe test work' })
+    );
   });
 
   it('reports an unavailable database during search without exposing provider or database details', async () => {

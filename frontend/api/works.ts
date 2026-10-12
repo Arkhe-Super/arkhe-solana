@@ -14,6 +14,8 @@ type ApiResponse = {
   };
 };
 
+const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
 function logDatabaseFailure(endpoint: string, error: unknown) {
   const failure = error as { code?: unknown; name?: unknown } | undefined;
   console.error('Database request failed', {
@@ -31,6 +33,7 @@ function isNewWork(value: unknown): value is NewWork {
   const work = value as Partial<NewWork>;
   return (
     typeof work.uuid === 'string' &&
+    UUID_PATTERN.test(work.uuid) &&
     (typeof work.blake3_hash === 'string' || work.blake3_hash === null) &&
     !!work.c2pa_manifest &&
     typeof work.c2pa_manifest === 'object' &&
