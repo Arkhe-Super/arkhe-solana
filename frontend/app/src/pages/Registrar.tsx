@@ -134,12 +134,13 @@ export default function Registrar() {
         return
       }
 
-      if (buscarObraPorHash(hashArquivo)) {
+      if (await buscarObraPorHash(hashArquivo)) {
         alert('Este arquivo já foi registrado.')
         return
       }
+    
 
-      adicionarObra({
+      await adicionarObra({
         obra: titulo.trim(),
         autor: autor.trim(),
         preco: Number(preco),
