@@ -159,14 +159,14 @@ export default function FullstackArchitecture() {
 </div>
 {/* Trailing Action Icons */}
 <div className="flex items-center gap-1">
-<button className="p-1.5 rounded hover:bg-surface-container-highest text-on-surface-variant hover:text-on-surface transition-colors" title="Integrated Terminal">
+<button type="button" className="p-1.5 rounded hover:bg-surface-container-highest text-on-surface-variant hover:text-on-surface transition-colors" title="Integrated Terminal">
 <span className="material-symbols-outlined text-lg" data-icon="terminal">terminal</span>
 </button>
-<button className="p-1.5 rounded hover:bg-surface-container-highest text-on-surface-variant hover:text-on-surface transition-colors" title="Yellowstone Hub">
+<button type="button" className="p-1.5 rounded hover:bg-surface-container-highest text-on-surface-variant hover:text-on-surface transition-colors" title="Yellowstone Hub">
 <span className="material-symbols-outlined text-lg" data-icon="hub">hub</span>
 </button>
 <LanguageToggle />
-<button className="p-1.5 rounded hover:bg-surface-container-highest text-on-surface-variant hover:text-on-surface transition-colors" title="Settings">
+<button type="button" className="p-1.5 rounded hover:bg-surface-container-highest text-on-surface-variant hover:text-on-surface transition-colors" title="Settings">
 <span className="material-symbols-outlined text-lg" data-icon="settings">settings</span>
 </button>
 </div>
@@ -229,7 +229,7 @@ export default function FullstackArchitecture() {
 </nav>
 {/* CTA Action in SideNav */}
 <div className="mt-4 px-2">
-<button className="w-full py-2 px-3 rounded bg-primary-container text-on-primary-container text-label-md font-label-md uppercase tracking-wider flex items-center justify-center gap-2 shadow-[0_0_16px_rgba(153,69,255,0.35)] hover:border-tertiary/50 hover:text-tertiary transition-colors duration-150 active:scale-[0.99]">
+<button type="button" className="w-full py-2 px-3 rounded bg-primary-container text-on-primary-container text-label-md font-label-md uppercase tracking-wider flex items-center justify-center gap-2 shadow-[0_0_16px_rgba(153,69,255,0.35)] hover:border-tertiary/50 hover:text-tertiary transition-colors duration-150 active:scale-[0.99]">
 <span className="material-symbols-outlined text-sm" data-icon="data_object">data_object</span>
 <span>Inspect State Vector</span>
 </button>
@@ -273,11 +273,11 @@ export default function FullstackArchitecture() {
 </div>
 {/* Quick Primary Action Triggers */}
 <div className="flex flex-wrap items-center gap-2.5">
-<button className="px-3.5 py-2 rounded bg-surface-container-high border border-outline-variant/40 hover:border-tertiary text-on-surface text-label-md font-label-md uppercase tracking-wider flex items-center gap-2 transition-all duration-150">
+<button type="button" className="px-3.5 py-2 rounded bg-surface-container-high border border-outline-variant/40 hover:border-tertiary text-on-surface text-label-md font-label-md uppercase tracking-wider flex items-center gap-2 transition-all duration-150">
 <span className="material-symbols-outlined text-tertiary text-base" data-icon="electric_bolt">electric_bolt</span>
 <span>{t("dashboard.create_royalty_blink")}</span>
 </button>
-<button className="px-4 py-2 rounded bg-primary-container text-on-primary-container font-medium text-label-md font-label-md uppercase tracking-wider flex items-center gap-2 shadow-[0_0_20px_-2px_rgba(153,69,255,0.45)] hover:border-tertiary hover:brightness-110 active:scale-[0.98] transition-all duration-150">
+<button type="button" className="px-4 py-2 rounded bg-primary-container text-on-primary-container font-medium text-label-md font-label-md uppercase tracking-wider flex items-center gap-2 shadow-[0_0_20px_-2px_rgba(153,69,255,0.45)] hover:border-tertiary hover:brightness-110 active:scale-[0.98] transition-all duration-150">
 <span className="material-symbols-outlined text-base" data-icon="add_circle">add_circle</span>
 <span>{t("dashboard.register_new_work")}</span>
 </button>
@@ -369,7 +369,7 @@ export default function FullstackArchitecture() {
 <div className="flex items-center gap-2">
 <span className="text-code-sm font-code-sm text-outline">{t("dashboard.filter")}:</span>
 <span className="px-2 py-0.5 rounded bg-surface-container-high border border-outline-variant/30 text-code-sm font-code-sm text-on-surface">{t('dashboard.all')} (1,482)</span>
-<button className="p-1 rounded bg-surface-container hover:bg-surface-container-highest text-outline hover:text-on-surface">
+<button type="button" className="p-1 rounded bg-surface-container hover:bg-surface-container-highest text-outline hover:text-on-surface">
 <span className="material-symbols-outlined text-sm" data-icon="filter_list">filter_list</span>
 </button>
 </div>
@@ -510,7 +510,7 @@ export default function FullstackArchitecture() {
 <div className="mt-4 pt-3 border-t border-outline-variant/20 flex flex-col sm:flex-row sm:items-center justify-between text-code-sm font-code-sm text-outline gap-2">
 <span>Mostrando 4 de 1,482 manifestos indexados via WASM Kernel</span>
 <div className="flex items-center gap-3">
-<button className="text-primary hover:underline flex items-center gap-1">
+<button type="button" className="text-primary hover:underline flex items-center gap-1">
 <span>Download Provenance Report (JSON-LD)</span>
 <span className="material-symbols-outlined text-xs" data-icon="download">download</span>
 </button>
@@ -574,7 +574,7 @@ export default function FullstackArchitecture() {
 </div>
 </div>
 <div className="mt-4">
-<button className="w-full py-2 px-3 rounded bg-surface-container-high border border-outline-variant/40 hover:border-tertiary text-on-surface text-label-md font-label-md uppercase tracking-wider flex items-center justify-center gap-2 transition-all">
+<button type="button" className="w-full py-2 px-3 rounded bg-surface-container-high border border-outline-variant/40 hover:border-tertiary text-on-surface text-label-md font-label-md uppercase tracking-wider flex items-center justify-center gap-2 transition-all">
 <span className="material-symbols-outlined text-sm text-secondary" data-icon="commit">commit</span>
 <span>{t("dashboard.force_merkle")}</span>
 </button>

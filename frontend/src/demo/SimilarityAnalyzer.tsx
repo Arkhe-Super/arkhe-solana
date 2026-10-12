@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { useState } from 'react';
 import { TAJ_MAHAL, DA_YA_THINK, SIMILARITY_RESULT } from './demoData';
 
@@ -6,6 +7,7 @@ interface Props {
 }
 
 export default function SimilarityAnalyzer({ onSimilarityProven }: Props) {
+  const { t } = useTranslation();
   const [analyzing, setAnalyzing] = useState(false);
   const [result, setResult] = useState<typeof SIMILARITY_RESULT | null>(null);
 
@@ -18,7 +20,7 @@ export default function SimilarityAnalyzer({ onSimilarityProven }: Props) {
 
   return (
     <div className="bg-surface-container p-6 rounded-lg border border-outline/20">
-      <h2 className="text-xl font-bold mb-4">Análise de Similaridade</h2>
+      <h2 className="text-xl font-bold mb-4">{t('demo.similarity_analysis')}</h2>
 
       <div className="flex flex-col gap-4 mb-6">
         <div className="p-3 bg-surface rounded border border-outline/30 flex justify-between items-center">
@@ -56,11 +58,12 @@ export default function SimilarityAnalyzer({ onSimilarityProven }: Props) {
           onClick={handleAnalyze}
           disabled={analyzing}
           className="w-full py-2 bg-secondary text-on-secondary rounded font-bold disabled:opacity-50"
+          type="button"
         >
-          {analyzing ? 'A Analisar...' : 'Comparar Obras'}
+          {analyzing ? t('demo.analyzing') : t('demo.compare_works')}
         </button>
       ) : (
-        <button
+        <button type="button"
           onClick={onSimilarityProven}
           className="w-full py-2 bg-primary text-on-primary rounded font-bold"
         >

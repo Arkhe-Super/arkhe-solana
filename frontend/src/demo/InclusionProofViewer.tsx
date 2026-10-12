@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 
 
 interface Props {
@@ -9,12 +10,13 @@ interface Props {
 }
 
 export default function InclusionProofViewer({ proof }: Props) {
+  const { t } = useTranslation();
   if (!proof) return null;
 
   return (
     <div className="bg-surface-container-high p-4 rounded-lg border border-outline/30 mt-4">
       <h3 className="text-sm font-bold text-on-surface mb-2 flex items-center gap-2">
-        <span className="text-success">✓</span> Prova de Inclusão MMR Válida
+        <span className="text-success">✓</span> {t('demo.valid_proof')}
       </h3>
 
       <div className="space-y-2 text-xs font-mono text-on-surface-variant overflow-x-auto">
