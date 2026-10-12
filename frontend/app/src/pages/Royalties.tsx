@@ -17,8 +17,12 @@ const iniciais = (nome: string) =>
 
 const hashCurto = (h: string) => `${h.slice(0, 4)}...${h.slice(-4)}`
 
-const carregarPagamentos = () =>
-  lerDados().pagamentos.sort((a, b) => b.data.localeCompare(a.data))
+type Dados = Awaited<ReturnType<typeof lerDados>>
+
+const carregarPagamentos = async () => {
+  const dados = await lerDados()
+  return dados.pagamentos.sort((a, b) => b.data.localeCompare(a.data))
+}
 
 const celula = (valor: string | number) =>
   `"${String(valor).replaceAll('"', '""')}"`
@@ -36,10 +40,20 @@ export default function Royalties() {
     localStorage.setItem('tema', escuro ? 'escuro' : 'claro')
   }, [escuro])
 
-  const [pagamentos, setPagamentos] = useState(carregarPagamentos)
-  const [obras] = useState(() => lerDados().obras)
-  const [obraSel, setObraSel] = useState(obras[0]?.hash ?? '')
+  const [pagamentos, setPagamentos] = useState<Dados['pagamentos']>([])
+  const [obras, setObras] = useState<Dados['obras']>([])
+  const [obraSel, setObraSel] = useState('')
   const [licenciado, setLicenciado] = useState('')
+
+  useEffect(() => {
+    const carregar = async () => {
+      const dados = await lerDados()
+      setPagamentos(await carregarPagamentos())
+      setObras(dados.obras)
+      setObraSel(dados.obras[0]?.hash ?? '')
+    }
+    carregar()
+  }, [])
 
   let totalMes = 0
   if (pagamentos.length > 0) {
@@ -80,20 +94,20 @@ export default function Royalties() {
     URL.revokeObjectURL(url)
   }
 
-  const simular = () => {
+  const simular = async () => {
     if (!obraSel) {
       alert('Registre uma obra primeiro.')
       return
     }
-    simularPagamento(obraSel, licenciado.trim() || 'Licenciado Demo')
-    setPagamentos(carregarPagamentos())
+    await simularPagamento(obraSel, licenciado.trim() || 'Licenciado Demo')
+    setPagamentos(await carregarPagamentos())
   }
 
-  const limpar = () => {
+  const limpar = async () => {
     if (!confirm('Apagar todos os pagamentos?')) return
-    const d = lerDados()
+    const d = await lerDados()
     d.pagamentos = []
-    salvarDados(d)
+    await salvarDados(d)
     setPagamentos([])
   }
 
@@ -155,7 +169,9 @@ export default function Royalties() {
               <span className="ponto"></span> Solana
             </p>
           </div>
-        </section>        <div className="historico-pagamentos">
+        </section>
+
+        <div className="historico-pagamentos">
           <h2 className="titulo-arquivo-span">HISTÓRICO DE PAGAMENTOS</h2>
           <button
             type="button"
