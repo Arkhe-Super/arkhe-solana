@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { useState } from 'react';
 import { useBlake3 } from '../hooks/useBlake3';
 import { useC2PA } from '../hooks/useC2PA';
@@ -9,6 +10,7 @@ interface Props {
 }
 
 export default function WorkRegistrationForm({ onRegistered }: Props) {
+  const { t } = useTranslation();
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
   const [year, setYear] = useState('');
@@ -46,26 +48,26 @@ export default function WorkRegistrationForm({ onRegistered }: Props) {
 
   return (
     <div className="bg-surface-container p-6 rounded-lg border border-outline/20">
-      <h2 className="text-xl font-bold mb-4">Registar Obra</h2>
+      <h2 className="text-xl font-bold mb-4">{t('demo.register_work')}</h2>
 
       <div className="flex gap-2 mb-6">
-        <button
+        <button type="button"
           onClick={() => handleDemoSelect(TAJ_MAHAL)}
           className="px-3 py-1 bg-primary/20 text-primary rounded-md hover:bg-primary/30"
         >
-          Carregar "Taj Mahal"
+          {t('demo.load_taj_mahal')}
         </button>
-        <button
+        <button type="button"
           onClick={() => handleDemoSelect(DA_YA_THINK)}
           className="px-3 py-1 bg-secondary/20 text-secondary rounded-md hover:bg-secondary/30"
         >
-          Carregar "Da Ya Think..."
+          {t('demo.load_da_ya_think')}
         </button>
       </div>
 
       <div className="space-y-4">
         <div>
-          <label className="block text-sm mb-1">Título</label>
+          <label className="block text-sm mb-1">{t('demo.title_label')}</label>
           <input
             type="text"
             value={title}
@@ -75,7 +77,7 @@ export default function WorkRegistrationForm({ onRegistered }: Props) {
         </div>
 
         <div>
-          <label className="block text-sm mb-1">Autor</label>
+          <label className="block text-sm mb-1">{t('demo.author_label')}</label>
           <input
             type="text"
             value={author}
@@ -85,7 +87,7 @@ export default function WorkRegistrationForm({ onRegistered }: Props) {
         </div>
 
         <div>
-          <label className="block text-sm mb-1">Ano</label>
+          <label className="block text-sm mb-1">{t('demo.year_label')}</label>
           <input
             type="text"
             value={year}
@@ -95,9 +97,9 @@ export default function WorkRegistrationForm({ onRegistered }: Props) {
         </div>
 
         <div>
-          <label className="block text-sm mb-1">Áudio</label>
+          <label className="block text-sm mb-1">{t('demo.audio_label')}</label>
           <div className="p-2 bg-surface rounded border border-outline/30 text-sm text-on-surface-variant flex items-center gap-2">
-            <span>📁 {file ? file.name : "Selecionar ficheiro"}</span>
+            <span>📁 {file ? file.name : t('demo.select_file')}</span>
           </div>
         </div>
 
@@ -111,11 +113,12 @@ export default function WorkRegistrationForm({ onRegistered }: Props) {
           onClick={handleRegister}
           disabled={!file || isHashing || isVerifying || isProcessing}
           className="w-full py-2 bg-primary text-on-primary rounded font-bold disabled:opacity-50 mt-4"
+          type="button"
         >
-          {isHashing ? 'A Calcular Hash...' :
-           isVerifying ? 'A Verificar C2PA...' :
-           isProcessing ? 'A Ancorar...' :
-           'Registar no WormGraph'}
+          {isHashing ? t('demo.hashing') :
+           isVerifying ? t('demo.verifying_c2pa') :
+           isProcessing ? t('demo.anchoring') :
+           t('demo.register_wormgraph')}
         </button>
       </div>
     </div>

@@ -5,15 +5,29 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 import enTranslations from './en.json';
 import ptTranslations from './pt.json';
 
+export const SUPPORTED_LANGUAGES = ['en', 'pt'] as const;
+export type SupportedLanguage = (typeof SUPPORTED_LANGUAGES)[number];
+
+export const DEFAULT_LANGUAGE: SupportedLanguage = 'en';
+
 i18n
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
     resources: {
       en: { translation: enTranslations },
-      'pt-BR': { translation: ptTranslations },
+      pt: { translation: ptTranslations },
     },
-    fallbackLng: 'en',
+    lng: DEFAULT_LANGUAGE,
+    fallbackLng: DEFAULT_LANGUAGE,
+    detection: {
+      order: ['localStorage'],
+      lookupLocalStorage: 'arkhe.lang',
+      caches: ['localStorage'],
+    },
+    supportedLngs: SUPPORTED_LANGUAGES,
+    nonExplicitSupportedLngs: false,
+    load: 'languageOnly',
     interpolation: {
       escapeValue: false,
     },

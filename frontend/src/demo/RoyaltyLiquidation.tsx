@@ -1,9 +1,11 @@
+import { useTranslation } from 'react-i18next';
 import { useState } from 'react';
 import { useRoyalty } from '../hooks/useRoyalty';
 import InclusionProofViewer from './InclusionProofViewer';
 import { TAJ_MAHAL, DA_YA_THINK } from './demoData';
 
 export default function RoyaltyLiquidation() {
+  const { t } = useTranslation();
   const { settleRoyalty, isProcessing } = useRoyalty();
   const [settledTx, setSettledTx] = useState<string | null>(null);
 
@@ -21,29 +23,29 @@ export default function RoyaltyLiquidation() {
 
   return (
     <div className="bg-surface-container p-6 rounded-lg border border-outline/20">
-      <h2 className="text-xl font-bold mb-4">Liquidação de Royalties</h2>
+      <h2 className="text-xl font-bold mb-4">{t('demo.royalty_settlement')}</h2>
 
       <div className="space-y-4 mb-6">
         <div className="text-sm">
-          <p><span className="text-on-surface-variant">Obra:</span> {TAJ_MAHAL.title} ({TAJ_MAHAL.author})</p>
-          <p><span className="text-on-surface-variant">Uso detectado:</span> {DA_YA_THINK.title} ({DA_YA_THINK.author})</p>
-          <p><span className="text-on-surface-variant">Similaridade:</span> 94%</p>
+          <p><span className="text-on-surface-variant">{t('demo.work')}:</span> {TAJ_MAHAL.title} ({TAJ_MAHAL.author})</p>
+          <p><span className="text-on-surface-variant">{t('demo.detected_usage')}:</span> {DA_YA_THINK.title} ({DA_YA_THINK.author})</p>
+          <p><span className="text-on-surface-variant">{t('demo.similarity')}:</span> 94%</p>
         </div>
 
         <div className="p-4 bg-surface rounded border border-outline/30">
-          <h3 className="font-bold mb-2">Split:</h3>
+          <h3 className="font-bold mb-2">{t('demo.split')}</h3>
           <div className="flex justify-between items-center text-sm">
             <span>Jorge Ben Jor (70%)</span>
-            <span className="font-mono text-xs text-on-surface-variant">→ [Endereço Solana]</span>
+            <span className="font-mono text-xs text-on-surface-variant">→ [{t('demo.solana_address')}]</span>
           </div>
           <div className="flex justify-between items-center text-sm mt-2">
             <span>Rod Stewart (30%)</span>
-            <span className="font-mono text-xs text-on-surface-variant">→ [Endereço Solana]</span>
+            <span className="font-mono text-xs text-on-surface-variant">→ [{t('demo.solana_address')}]</span>
           </div>
         </div>
 
         <div className="flex justify-between items-center font-bold text-lg">
-          <span>Valor a Liquidar:</span>
+          <span>{t('demo.value_to_settle')}:</span>
           <span className="text-primary">1.000 USDC</span>
         </div>
       </div>
@@ -53,12 +55,13 @@ export default function RoyaltyLiquidation() {
           onClick={handleLiquidate}
           disabled={isProcessing}
           className="w-full py-3 bg-tertiary text-on-tertiary rounded font-bold disabled:opacity-50"
+          type="button"
         >
-          {isProcessing ? 'A Processar Transação...' : 'Liquidar Royalties'}
+          {isProcessing ? t('demo.processing') : t('demo.settle_royalties')}
         </button>
       ) : (
         <div className="p-3 bg-success/20 text-success rounded text-center font-bold">
-          Transação Confirmada!<br/>
+          {t('demo.transaction_confirmed')}<br/>
           <span className="text-xs font-mono font-normal">TX: {settledTx.substring(0, 20)}...</span>
         </div>
       )}
