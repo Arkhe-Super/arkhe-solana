@@ -1,1 +1,0 @@
-The generated video is available at `/home/jules/verification/videos/e7cae257283cfc53777f83cfd183bcfc.webm`.
