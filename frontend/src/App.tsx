@@ -7,10 +7,12 @@ import RoyaltiesSolanaBlinks from './pages/RoyaltiesSolanaBlinks';
 import WorkRegistrationC2Pa from './pages/WorkRegistrationC2Pa';
 import WorksExplorer from './pages/WorksExplorer';
 import JorgeBenJorVsRodStewartDemo from './demo/JorgeBenJorVsRodStewart';
+import ApplicationNavigation from './ui/components/ApplicationNavigation';
 
 function App() {
   return (
     <BrowserRouter>
+      <ApplicationNavigation />
       <Routes>
         <Route path="/" element={<Navigate to="/creator" />} />
         <Route path="/creator" element={<CreatorDashboard />} />

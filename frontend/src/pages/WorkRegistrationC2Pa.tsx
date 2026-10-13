@@ -283,7 +283,7 @@ export default function WorkRegistrationC2Pa() {
 <div className="bg-surface-container-low/85 backdrop-blur-xl border border-outline-variant/30 rounded p-4 relative overflow-hidden shadow-[0_0_20px_-4px_rgba(0,0,0,0.4)]">
 <div className="flex justify-between items-start">
 <span className="text-label-sm font-label-sm text-outline tracking-wider uppercase">EAS Cross-Chain Attest</span>
-<span className="material-symbols-outlined text-outline text-xl" data-icon="link_2">stethoscope_arrow</span>
+<span className="material-symbols-outlined text-outline text-xl" data-icon="link_2">link_2</span>
 </div>
 <div className="mt-3 flex items-baseline gap-2">
 <span className="text-display-lg font-display-lg text-on-surface tracking-tight">892</span>

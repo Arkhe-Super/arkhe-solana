@@ -2,6 +2,7 @@
 
 
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const mockDashboardData = {
   user: {
@@ -85,6 +86,7 @@ const mockDashboardData = {
 };
 
 export default function CreatorDashboard() {
+  const navigate = useNavigate();
   const [data, setData] = useState<typeof mockDashboardData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -96,7 +98,7 @@ export default function CreatorDashboard() {
         // Simulate API call
         await new Promise(resolve => setTimeout(resolve, 1000));
         setData(mockDashboardData);
-      } catch (err) {
+      } catch {
         setError('Failed to load dashboard data');
       } finally {
         setLoading(false);
@@ -234,9 +236,9 @@ export default function CreatorDashboard() {
 </nav>
 {/* CTA Action in SideNav */}
 <div className="mt-4 px-2">
-<button className="w-full py-2 px-3 rounded bg-primary-container text-on-primary-container text-label-md font-label-md uppercase tracking-wider flex items-center justify-center gap-2 shadow-[0_0_16px_rgba(153,69,255,0.35)] hover:border-tertiary/50 hover:text-tertiary transition-colors duration-150 active:scale-[0.99]">
+<button onClick={() => navigate('/works')} className="w-full py-2 px-3 rounded bg-primary-container text-on-primary-container text-label-md font-label-md uppercase tracking-wider flex items-center justify-center gap-2 shadow-[0_0_16px_rgba(153,69,255,0.35)] hover:border-tertiary/50 hover:text-tertiary transition-colors duration-150 active:scale-[0.99]">
 <span className="material-symbols-outlined text-sm" data-icon="data_object">data_object</span>
-<span>Inspect State Vector</span>
+<span>Consultar obras</span>
 </button>
 </div>
 {/* Spacer */}
@@ -278,13 +280,13 @@ export default function CreatorDashboard() {
 </div>
 {/* Quick Primary Action Triggers */}
 <div className="flex flex-wrap items-center gap-2.5">
-<button className="px-3.5 py-2 rounded bg-surface-container-high border border-outline-variant/40 hover:border-tertiary text-on-surface text-label-md font-label-md uppercase tracking-wider flex items-center gap-2 transition-all duration-150">
+<button onClick={() => navigate('/royalties')} className="px-3.5 py-2 rounded bg-surface-container-high border border-outline-variant/40 hover:border-tertiary text-on-surface text-label-md font-label-md uppercase tracking-wider flex items-center gap-2 transition-all duration-150">
 <span className="material-symbols-outlined text-tertiary text-base" data-icon="electric_bolt">electric_bolt</span>
-<span>Criar Blink de Royalty</span>
+<span>Ver módulo de royalties</span>
 </button>
-<button className="px-4 py-2 rounded bg-primary-container text-on-primary-container font-medium text-label-md font-label-md uppercase tracking-wider flex items-center gap-2 shadow-[0_0_20px_-2px_rgba(153,69,255,0.45)] hover:border-tertiary hover:brightness-110 active:scale-[0.98] transition-all duration-150">
+<button onClick={() => navigate('/registration')} className="px-4 py-2 rounded bg-primary-container text-on-primary-container font-medium text-label-md font-label-md uppercase tracking-wider flex items-center gap-2 shadow-[0_0_20px_-2px_rgba(153,69,255,0.45)] hover:border-tertiary hover:brightness-110 active:scale-[0.98] transition-all duration-150">
 <span className="material-symbols-outlined text-base" data-icon="add_circle">add_circle</span>
-<span>Registrar Nova Obra</span>
+<span>Abrir registro (demo)</span>
 </button>
 </div>
 </section>
@@ -345,7 +347,7 @@ export default function CreatorDashboard() {
 <div className="bg-surface-container-low/85 backdrop-blur-xl border border-outline-variant/30 rounded p-4 relative overflow-hidden shadow-[0_0_20px_-4px_rgba(0,0,0,0.4)]">
 <div className="flex justify-between items-start">
 <span className="text-label-sm font-label-sm text-outline tracking-wider uppercase">EAS Cross-Chain Attest</span>
-<span className="material-symbols-outlined text-outline text-xl" data-icon="link_2">stethoscope_arrow</span>
+<span className="material-symbols-outlined text-outline text-xl" data-icon="link_2">link_2</span>
 </div>
 <div className="mt-3 flex items-baseline gap-2">
 <span className="text-display-lg font-display-lg text-on-surface tracking-tight">892</span>

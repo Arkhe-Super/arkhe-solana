@@ -2,6 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+@media (max-width: 767px) {
+  aside.fixed.top-14.left-0 {
+    display: none;
+  }
+
+  main.ml-64 {
+    margin-left: 0;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
 @layer utilities {
     .dot-matrix {
       background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
