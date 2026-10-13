@@ -14,9 +14,9 @@ export default function ApplicationNavigation() {
   const usesLiveApi = pathname === '/works';
 
   return (
-    <div className="fixed bottom-12 right-3 z-[60] flex max-w-[calc(100vw-1.5rem)] flex-col items-end gap-2">
+    <div className="fixed bottom-12 left-3 z-[60] flex max-w-[calc(100vw-1.5rem)] flex-col items-start gap-2">
       {!usesLiveApi && (
-        <p className="rounded border border-amber-300/30 bg-surface-container-lowest/95 px-3 py-2 text-right text-xs text-amber-200 shadow-lg backdrop-blur">
+        <p className="rounded border border-amber-300/30 bg-surface-container-lowest/95 px-3 py-2 text-xs text-amber-200 shadow-lg backdrop-blur">
           Interface demonstrativa: sem transação Solana, pagamento ou atestação em tempo real.
         </p>
       )}
