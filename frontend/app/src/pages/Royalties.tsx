@@ -129,6 +129,9 @@ export default function Royalties() {
           <Link to="/royalties" className="item-nav-ml ativo">
             <span data-icone="royalties">Royalties</span>
           </Link>
+          <Link to="/obras" className="item-nav-ml">
+           <span data-icone="registrar">Obras</span>
+          </Link>
         </nav>
 
         <label className="modo-escuro-menu" htmlFor="switch">

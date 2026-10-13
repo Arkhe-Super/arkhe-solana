@@ -67,7 +67,7 @@ export default function Verificar() {
     }
   }
 
-   const verificar = async () => {
+  const verificar = async () => {
     if (!hash) return
 
     setVerificando(true)
@@ -98,17 +98,20 @@ export default function Verificar() {
           <span id="span-arkhe">ARKHE</span>
         </div>
 
-                <nav className="nav-lateral">
-          <Link to="/registrar" className="item-nav-ml">
-            <span data-icone="registrar">Registrar Obra</span>
-          </Link>
-          <Link to="/verificar" className="item-nav-ml ativo">
-            <span data-icone="verificar">Verificar</span>
-          </Link>
-          <Link to="/royalties" className="item-nav-ml">
-            <span data-icone="royalties">Royalties</span>
-          </Link>
-        </nav>
+        <nav className="nav-lateral">
+       <Link to="/registrar" className="item-nav-ml">
+       <span data-icone="registrar">Registrar Obra</span>
+       </Link>
+       <Link to="/verificar" className="item-nav-ml ativo">
+       <span data-icone="verificar">Verificar</span>
+       </Link>
+       <Link to="/royalties" className="item-nav-ml">
+       <span data-icone="royalties">Royalties</span>
+       </Link>
+       <Link to="/obras" className="item-nav-ml">
+       <span data-icone="registrar">Obras</span>
+       </Link>
+       </nav>
 
         <label className="modo-escuro-menu" htmlFor="switch">
           <span>Modo escuro</span>
@@ -191,7 +194,9 @@ export default function Verificar() {
                   Compare a impressão digital do arquivo com um registro existente.
                 </p>
               </div>
-            </div>            <div className="verif-coluna">
+            </div>
+
+            <div className="verif-coluna">
               <span className="titulo-arquivo-span">RESULTADO DA VERIFICAÇÃO</span>
 
               <div className="area-resultado">

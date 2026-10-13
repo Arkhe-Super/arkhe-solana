@@ -130,7 +130,7 @@ export default function Registrar() {
       }))
 
       if (soma !== 100) {
-        alert('A soma da divisão precisa ser 100%.')
+               alert('A soma da divisão precisa ser 100%.')
         return
       }
 
@@ -138,7 +138,6 @@ export default function Registrar() {
         alert('Este arquivo já foi registrado.')
         return
       }
-    
 
       await adicionarObra({
         obra: titulo.trim(),
@@ -168,7 +167,7 @@ export default function Registrar() {
             <span id="span-arkhe">ARKHE</span>
           </div>
 
-                    <nav className="nav-lateral">
+          <nav className="nav-lateral">
             <Link to="/registrar" className="item-nav-ml ativo">
               <span data-icone="registrar">Registrar Obra</span>
             </Link>
@@ -178,12 +177,15 @@ export default function Registrar() {
             <Link to="/royalties" className="item-nav-ml">
               <span data-icone="royalties">Royalties</span>
             </Link>
+            <Link to="/obras" className="item-nav-ml">
+              <span data-icone="registrar">Obras</span>
+            </Link>
           </nav>
 
           <label className="modo-escuro-menu" htmlFor="switch">
             <span>Modo escuro</span>
             <input
-              type="checkbox"
+                           type="checkbox"
               id="switch"
               checked={escuro}
               onChange={(e) => setEscuro(e.target.checked)}
@@ -245,7 +247,9 @@ export default function Registrar() {
                   O hash será registrado exclusivamente na Solana.
                 </span>
               </section>
-            </div>            <div className="coluna-formulario">
+            </div>
+
+            <div className="coluna-formulario">
               <form className="card-formulario">
                 <span className="titulo-arquivo-span">DADOS DO REGISTRO</span>
 
