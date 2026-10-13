@@ -25,21 +25,37 @@ export default function WorksExplorer() {
   const [searchError, setSearchError] = useState<string | null>(null);
   const [isSearching, setIsSearching] = useState(false);
 
-  async function loadWorks() {
-    setIsLoadingWorks(true);
-    setWorksError(null);
+  async function loadWorks(resetLoadingState = true) {
+    if (resetLoadingState) {
+      setIsLoadingWorks(true);
+      setWorksError(null);
+    }
 
     try {
       setWorks(await getWorks());
     } catch (error) {
-      setWorksError(messageFor(error, 'Não foi possível carregar as obras cadastradas.'));
+      setWorksError(messageFor(error, 'The registered works could not be loaded.'));
     } finally {
       setIsLoadingWorks(false);
     }
   }
 
   useEffect(() => {
-    void loadWorks();
+    let cancelled = false;
+    getWorks()
+      .then((loadedWorks) => {
+        if (!cancelled) setWorks(loadedWorks);
+      })
+      .catch((error: unknown) => {
+        if (!cancelled) setWorksError(messageFor(error, 'The registered works could not be loaded.'));
+      })
+      .finally(() => {
+        if (!cancelled) setIsLoadingWorks(false);
+      });
+
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   async function handleSearch(event: FormEvent<HTMLFormElement>) {
@@ -51,7 +67,7 @@ export default function WorksExplorer() {
     try {
       setMatches(await searchWorks(query, limit));
     } catch (error) {
-      setSearchError(messageFor(error, 'Não foi possível pesquisar obras semelhantes.'));
+      setSearchError(messageFor(error, 'The semantic search could not be completed.'));
     } finally {
       setIsSearching(false);
     }
@@ -61,19 +77,18 @@ export default function WorksExplorer() {
     <main className="min-h-screen bg-surface text-on-surface p-6 sm:p-10 font-body-md">
       <div className="mx-auto max-w-5xl space-y-8">
         <header className="border-b border-outline/20 pb-6">
-          <p className="text-sm font-semibold uppercase tracking-widest text-tertiary">Arkhe · dados reais</p>
-          <h1 className="mt-2 text-3xl font-bold text-primary">Obras e busca semântica</h1>
+          <p className="text-sm font-semibold uppercase tracking-widest text-tertiary">Arkhe · live API data</p>
+          <h1 className="mt-2 text-3xl font-bold text-primary">Works & semantic text search</h1>
           <p className="mt-3 max-w-3xl text-on-surface-variant">
-            Consulte obras cadastradas no Neon e pesquise descrições textuais indexadas pelo backend.
-            Esta busca não compara áudio nem substitui a demonstração de similaridade musical.
+            Read works from Neon and search backend-indexed text descriptions. This search does not compare audio and does not replace the music similarity demonstration.
           </p>
         </header>
 
         <section className="rounded-lg border border-outline/20 bg-surface-container-low p-5">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div>
-              <h2 className="text-xl font-semibold">Obras cadastradas</h2>
-              <p className="text-sm text-on-surface-variant">Leitura pública de <code>/api/works</code>.</p>
+              <h2 className="text-xl font-semibold">Registered works</h2>
+              <p className="text-sm text-on-surface-variant">Public read from <code>/api/works</code>.</p>
             </div>
             <button
               type="button"
@@ -81,14 +96,14 @@ export default function WorksExplorer() {
               disabled={isLoadingWorks}
               className="rounded-md border border-primary/50 px-3 py-2 text-sm font-semibold text-primary hover:bg-primary/10 disabled:cursor-not-allowed disabled:opacity-60"
             >
-              {isLoadingWorks ? 'Atualizando…' : 'Atualizar'}
+              {isLoadingWorks ? 'Refreshing…' : 'Refresh'}
             </button>
           </div>
 
           {worksError && <p className="mt-4 rounded-md bg-error/10 p-3 text-sm text-error">{worksError}</p>}
-          {isLoadingWorks && <p className="mt-4 text-sm text-on-surface-variant">Carregando obras…</p>}
+          {isLoadingWorks && <p className="mt-4 text-sm text-on-surface-variant">Loading works…</p>}
           {!isLoadingWorks && !worksError && works.length === 0 && (
-            <p className="mt-4 text-sm text-on-surface-variant">Nenhuma obra cadastrada foi retornada pela API.</p>
+            <p className="mt-4 text-sm text-on-surface-variant">The API returned no registered works.</p>
           )}
           {!isLoadingWorks && works.length > 0 && (
             <ul className="mt-4 divide-y divide-outline/15 rounded-md border border-outline/20 bg-surface-container-lowest">
@@ -96,9 +111,9 @@ export default function WorksExplorer() {
                 <li key={work.uuid} className="space-y-1 p-4 text-sm">
                   <p className="font-mono text-primary">{work.uuid}</p>
                   <p className="text-on-surface-variant">
-                    BLAKE3: {work.blake3_hash ? truncate(work.blake3_hash, 40) : 'não informado'}
+                    BLAKE3: {work.blake3_hash ? truncate(work.blake3_hash, 40) : 'not provided'}
                   </p>
-                  <p className="text-xs text-outline">Manifesto C2PA disponível: {Object.keys(work.c2pa_manifest).length > 0 ? 'sim' : 'não'}</p>
+                  <p className="text-xs text-outline">C2PA manifest present: {Object.keys(work.c2pa_manifest).length > 0 ? 'yes' : 'no'}</p>
                 </li>
               ))}
             </ul>
@@ -106,24 +121,24 @@ export default function WorksExplorer() {
         </section>
 
         <section className="rounded-lg border border-outline/20 bg-surface-container-low p-5">
-          <h2 className="text-xl font-semibold">Busca semântica textual</h2>
+          <h2 className="text-xl font-semibold">Semantic text search</h2>
           <p className="mt-1 text-sm text-on-surface-variant">
-            Envia uma consulta ao endpoint público <code>/api/embeddings</code> com <code>action: search</code>.
+            Sends a query to the public <code>/api/embeddings</code> endpoint with <code>action: search</code>.
           </p>
 
           <form className="mt-4 flex flex-col gap-3 sm:flex-row" onSubmit={handleSearch}>
             <label className="flex-1">
-              <span className="sr-only">Texto da busca</span>
+              <span className="sr-only">Search text</span>
               <input
                 value={query}
                 onChange={(event) => setQuery(event.target.value)}
                 className="w-full rounded-md border border-outline/40 bg-surface-container-lowest px-3 py-2 text-on-surface outline-none focus:border-tertiary"
-                placeholder="Ex.: obra sobre proveniência musical"
+                placeholder="Example: a work about music provenance"
                 maxLength={32000}
               />
             </label>
             <label className="flex items-center gap-2 text-sm text-on-surface-variant">
-              Resultados
+              Results
               <input
                 type="number"
                 min="1"
@@ -138,14 +153,14 @@ export default function WorksExplorer() {
               disabled={isSearching || !query.trim()}
               className="rounded-md bg-primary-container px-4 py-2 font-semibold text-on-primary-container hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-60"
             >
-              {isSearching ? 'Pesquisando…' : 'Pesquisar'}
+              {isSearching ? 'Searching…' : 'Search'}
             </button>
           </form>
 
           {searchError && <p className="mt-4 rounded-md bg-error/10 p-3 text-sm text-error">{searchError}</p>}
-          {isSearching && <p className="mt-4 text-sm text-on-surface-variant">Gerando consulta e pesquisando embeddings…</p>}
+          {isSearching && <p className="mt-4 text-sm text-on-surface-variant">Generating the query embedding and searching…</p>}
           {!isSearching && matches?.length === 0 && (
-            <p className="mt-4 text-sm text-on-surface-variant">Nenhuma descrição semanticamente semelhante foi encontrada.</p>
+            <p className="mt-4 text-sm text-on-surface-variant">No semantically similar description was found.</p>
           )}
           {!isSearching && matches && matches.length > 0 && (
             <ol className="mt-4 space-y-3">
@@ -153,10 +168,10 @@ export default function WorksExplorer() {
                 <li key={match.id} className="rounded-md border border-outline/20 bg-surface-container-lowest p-4">
                   <div className="flex flex-wrap justify-between gap-2">
                     <p className="font-mono text-sm text-primary">{match.work_uuid}</p>
-                    <p className="text-sm text-secondary">Distância cosseno: {match.cosine_distance.toFixed(4)}</p>
+                    <p className="text-sm text-secondary">Cosine distance: {match.cosine_distance.toFixed(4)}</p>
                   </div>
                   <p className="mt-2 whitespace-pre-wrap text-on-surface">{match.content_text}</p>
-                  <p className="mt-2 text-xs text-outline">Modelo: {match.model}</p>
+                  <p className="mt-2 text-xs text-outline">Model: {match.model}</p>
                 </li>
               ))}
             </ol>

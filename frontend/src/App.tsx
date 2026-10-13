@@ -1,12 +1,10 @@
-import WebGPUBenchmarkPage from "./ui/pages/WebGPUBenchmarkPage";
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import CreatorDashboard from './pages/CreatorDashboard';
-import FullstackArchitecture from './pages/FullstackArchitecture';
 import ProvenanceWormgraph from './pages/ProvenanceWormgraph';
 import RoyaltiesSolanaBlinks from './pages/RoyaltiesSolanaBlinks';
 import WorkRegistrationC2Pa from './pages/WorkRegistrationC2Pa';
 import WorksExplorer from './pages/WorksExplorer';
-import JorgeBenJorVsRodStewartDemo from './demo/JorgeBenJorVsRodStewart';
+import MusicCaseStudy from './pages/MusicCaseStudy';
 import ApplicationNavigation from './ui/components/ApplicationNavigation';
 
 function App() {
@@ -16,13 +14,13 @@ function App() {
       <Routes>
         <Route path="/" element={<Navigate to="/creator" />} />
         <Route path="/creator" element={<CreatorDashboard />} />
-        <Route path="/architecture" element={<FullstackArchitecture />} />
+        <Route path="/architecture" element={<Navigate to="/creator" replace />} />
         <Route path="/wormgraph" element={<ProvenanceWormgraph />} />
         <Route path="/royalties" element={<RoyaltiesSolanaBlinks />} />
         <Route path="/registration" element={<WorkRegistrationC2Pa />} />
         <Route path="/works" element={<WorksExplorer />} />
-        <Route path="/benchmark" element={<WebGPUBenchmarkPage />} />
-        <Route path="/demo" element={<JorgeBenJorVsRodStewartDemo />} />
+        <Route path="/benchmark" element={<Navigate to="/creator" replace />} />
+        <Route path="/demo" element={<MusicCaseStudy />} />
       </Routes>
     </BrowserRouter>
   );

@@ -1,12 +1,12 @@
 import { NavLink, useLocation } from 'react-router-dom';
 
 const navigationItems = [
-  { to: '/creator', label: 'Painel' },
-  { to: '/works', label: 'Obras reais' },
-  { to: '/registration', label: 'Registro (demo)' },
-  { to: '/wormgraph', label: 'Proveniência (demo)' },
-  { to: '/royalties', label: 'Royalties (demo)' },
-  { to: '/demo', label: 'Caso musical' },
+  { to: '/creator', label: 'Overview' },
+  { to: '/works', label: 'Works & search' },
+  { to: '/registration', label: 'Register proof' },
+  { to: '/wormgraph', label: 'Verify proof' },
+  { to: '/royalties', label: 'Royalty calculator' },
+  { to: '/demo', label: 'Music case study (demo)' },
 ];
 
 export default function ApplicationNavigation() {
@@ -17,15 +17,15 @@ export default function ApplicationNavigation() {
     <div className="fixed bottom-12 left-3 z-[60] flex max-w-[calc(100vw-1.5rem)] flex-col items-start gap-2">
       {!usesLiveApi && (
         <p className="rounded border border-amber-300/30 bg-surface-container-lowest/95 px-3 py-2 text-xs text-amber-200 shadow-lg backdrop-blur">
-          Interface demonstrativa: sem transação Solana, pagamento ou atestação em tempo real.
+          Clear status: Devnet proof is real only after wallet confirmation. Payments, C2PA verification, and unavailable database features are not simulated as real.
         </p>
       )}
       <details className="group rounded border border-outline-variant/50 bg-surface-container-lowest/95 text-on-surface shadow-lg backdrop-blur">
         <summary className="flex cursor-pointer list-none items-center gap-2 px-3 py-2 text-sm font-semibold marker:content-none">
           <span className="material-symbols-outlined text-base" aria-hidden="true">menu</span>
-          Navegar
+          Navigate
         </summary>
-        <nav aria-label="Navegação principal" className="flex min-w-48 flex-col border-t border-outline-variant/30 p-1">
+        <nav aria-label="Primary navigation" className="flex min-w-48 flex-col border-t border-outline-variant/30 p-1">
           {navigationItems.map((item) => (
             <NavLink
               key={item.to}

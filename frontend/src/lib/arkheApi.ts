@@ -54,11 +54,11 @@ export async function getWorks(): Promise<Work[]> {
   const body = await readJson(response);
 
   if (!response.ok) {
-    throw new ArkheApiError(errorMessage(body, 'Não foi possível consultar as obras.'), response.status);
+    throw new ArkheApiError(errorMessage(body, 'The works could not be requested.'), response.status);
   }
 
   if (!body || typeof body !== 'object' || !Array.isArray((body as Partial<WorksResponse>).works)) {
-    throw new ArkheApiError('A API retornou uma lista de obras inválida.');
+    throw new ArkheApiError('The API returned an invalid works list.');
   }
 
   return (body as WorksResponse).works;
@@ -67,11 +67,11 @@ export async function getWorks(): Promise<Work[]> {
 export async function searchWorks(query: string, limit = 10): Promise<SimilarWork[]> {
   const normalizedQuery = query.trim();
   if (!normalizedQuery) {
-    throw new ArkheApiError('Informe um texto para pesquisar.');
+    throw new ArkheApiError('Enter text to search.');
   }
 
   if (!Number.isInteger(limit) || limit < 1 || limit > 100) {
-    throw new ArkheApiError('O limite de resultados deve estar entre 1 e 100.');
+    throw new ArkheApiError('The result limit must be between 1 and 100.');
   }
 
   const response = await fetch('/api/embeddings', {
@@ -82,11 +82,11 @@ export async function searchWorks(query: string, limit = 10): Promise<SimilarWor
   const body = await readJson(response);
 
   if (!response.ok) {
-    throw new ArkheApiError(errorMessage(body, 'Não foi possível realizar a busca semântica.'), response.status);
+    throw new ArkheApiError(errorMessage(body, 'The semantic search could not be completed.'), response.status);
   }
 
   if (!body || typeof body !== 'object' || !Array.isArray((body as Partial<SearchResponse>).matches)) {
-    throw new ArkheApiError('A API retornou resultados de busca inválidos.');
+    throw new ArkheApiError('The API returned invalid search results.');
   }
 
   return (body as SearchResponse).matches;
