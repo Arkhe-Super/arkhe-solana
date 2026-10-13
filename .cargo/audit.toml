@@ -1,0 +1,8 @@
+[advisories]
+ignore = [
+    # RUSTSEC-2023-0071 | rsa: Marvin Attack timing sidechannel.
+    # Transitive dep of c2pa -> rsa. Arkhe Phase A performs no RSA private-key
+    # operations, using it only for signature verification (public key).
+    # No fix available upstream.
+    "RUSTSEC-2023-0071",
+]
