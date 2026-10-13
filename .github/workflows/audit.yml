@@ -4,9 +4,13 @@ on:
   push:
     paths:
       - 'Cargo.lock'
+      - '.cargo/audit.toml'
+      - 'docs/security/**'
   pull_request:
     paths:
       - 'Cargo.lock'
+      - '.cargo/audit.toml'
+      - 'docs/security/**'
   schedule:
     - cron: '0 0 * * 0' # run every sunday
 
