@@ -7,16 +7,23 @@ import RoyaltiesSolanaBlinks from './pages/RoyaltiesSolanaBlinks';
 import WorkRegistrationC2Pa from './pages/WorkRegistrationC2Pa';
 import WorksExplorer from './pages/WorksExplorer';
 import JorgeBenJorVsRodStewartDemo from './demo/JorgeBenJorVsRodStewart';
+import Registrar from '../app/src/pages/Registrar';
+import Verificar from '../app/src/pages/Verificar';
+import Royalties from '../app/src/pages/Royalties';
+import '../app/src/style.css';
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Navigate to="/creator" />} />
+        <Route path="/" element={<Navigate to="/registrar" replace />} />
+        <Route path="/registrar" element={<Registrar />} />
+        <Route path="/verificar" element={<Verificar />} />
+        <Route path="/royalties" element={<Royalties />} />
         <Route path="/creator" element={<CreatorDashboard />} />
         <Route path="/architecture" element={<FullstackArchitecture />} />
         <Route path="/wormgraph" element={<ProvenanceWormgraph />} />
-        <Route path="/royalties" element={<RoyaltiesSolanaBlinks />} />
+        <Route path="/royalties-solana" element={<RoyaltiesSolanaBlinks />} />
         <Route path="/registration" element={<WorkRegistrationC2Pa />} />
         <Route path="/works" element={<WorksExplorer />} />
         <Route path="/benchmark" element={<WebGPUBenchmarkPage />} />
