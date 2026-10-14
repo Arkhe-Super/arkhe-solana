@@ -23,7 +23,8 @@ export default function Obras() {
 
   const [obras, setObras] = useState<ObraApi[]>([])
   const [carregando, setCarregando] = useState(true)
-  const [erro, setErro] = useState(false)
+  const [erro, setErro] = useState<string | null>(null)
+
 
   useEffect(() => {
     const carregar = async () => {
@@ -32,17 +33,21 @@ export default function Obras() {
         console.log('Resposta da API:', dados)
         setObras(dados.works ?? [])
       } catch (e) {
-        console.error('Erro ao listar obras:', e)
-        setErro(true)
-      } finally {
+      setErro(
+      e instanceof Error
+      ? e.message
+      : 'Não foi possível carregar as obras.',
+      )
+      }
+     finally {
         setCarregando(false)
       }
     }
     carregar()
   }, [])
 
-  const mostrarErro = !carregando && erro
-  const mostrarVazio = !carregando && !erro && obras.length === 0
+ const mostrarVazio = !carregando && !erro && obras.length === 0
+
 
   return (
     <div className="container-menu">
@@ -88,9 +93,7 @@ export default function Obras() {
         <div id="lista-pagamentos">
           {carregando && <p className="lista-vazia">Carregando obras...</p>}
 
-          {mostrarErro && (
-            <p className="lista-vazia">Não foi possível carregar as obras.</p>
-          )}
+          {erro && <p className="lista-vazia">{erro}</p>}
 
           {mostrarVazio && (
             <p className="lista-vazia">Nenhuma obra cadastrada ainda.</p>
