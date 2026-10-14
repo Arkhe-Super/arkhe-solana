@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
-import { useState, useEffect } from 'react'
-import { adicionarObra, buscarObraPorHash } from '../dados'
+import { useEffect, useState } from 'react'
+import { blake3 } from 'hash-wasm'
+import { buscarObraPorHash, registrarObra } from '../api'
 
 type Beneficiario = {
   id: number
@@ -10,8 +11,32 @@ type Beneficiario = {
 
 export default function Registrar() {
   const [escuro, setEscuro] = useState(
-    localStorage.getItem('tema') !== 'claro'
+    localStorage.getItem('tema') !== 'claro',
   )
+
+  const [arquivo, setArquivo] = useState<File | null>(null)
+  const [nomeArquivo, setNomeArquivo] = useState(
+    'Clique para escolher um arquivo',
+  )
+  const [infoArquivo, setInfoArquivo] = useState(
+    'ou arraste e solte aqui',
+  )
+  const [hash, setHash] = useState(
+    'Escolha um arquivo para gerar',
+  )
+  const [arrastando, setArrastando] = useState(false)
+  const [titulo, setTitulo] = useState('')
+  const [autor, setAutor] = useState('')
+  const [preco, setPreco] = useState('')
+  const [registrando, setRegistrando] = useState(false)
+
+  const [beneficiarios, setBeneficiarios] = useState<Beneficiario[]>([
+    {
+      id: 1,
+      nome: '',
+      percentual: 0,
+    },
+  ])
 
   useEffect(() => {
     document.body.classList.toggle('modo-escuro', escuro)
@@ -19,74 +44,94 @@ export default function Registrar() {
     localStorage.setItem('tema', escuro ? 'escuro' : 'claro')
   }, [escuro])
 
-  const [arquivo, setArquivo] = useState<File | null>(null)
-  const [nomeArquivo, setNomeArquivo] = useState('Clique para escolher um arquivo')
-  const [infoArquivo, setInfoArquivo] = useState('ou arraste e solte aqui')
-  const [hash, setHash] = useState('Escolha um arquivo para gerar')
-  const [arrastando, setArrastando] = useState(false)
-
-  const [titulo, setTitulo] = useState('')
-  const [autor, setAutor] = useState('')
-  const [preco, setPreco] = useState('')
-  const [registrando, setRegistrando] = useState(false)
-
   const formatarTamanho = (bytes: number) => {
-    if (bytes < 1024) return bytes + ' B'
-    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB'
-    if (bytes < 1024 * 1024 * 1024) return (bytes / (1024 * 1024)).toFixed(1) + ' MB'
-    return (bytes / (1024 * 1024 * 1024)).toFixed(2) + ' GB'
+    if (bytes < 1024) {
+      return `${bytes} B`
+    }
+
+    if (bytes < 1024 * 1024) {
+      return `${(bytes / 1024).toFixed(1)} KB`
+    }
+
+    if (bytes < 1024 * 1024 * 1024) {
+      return `${(bytes / (1024 * 1024)).toFixed(1)} MB`
+    }
+
+    return `${(bytes / (1024 * 1024 * 1024)).toFixed(2)} GB`
   }
 
   const gerarHash = async (arq: File) => {
     const buffer = await arq.arrayBuffer()
-    const resultado = await crypto.subtle.digest('SHA-256', buffer)
-    return Array.from(new Uint8Array(resultado))
-      .map((byte) => byte.toString(16).padStart(2, '0'))
-      .join('')
+    return blake3(new Uint8Array(buffer))
   }
 
   const processarArquivo = async (arq: File) => {
     setArquivo(arq)
     setNomeArquivo(arq.name)
-    setInfoArquivo(formatarTamanho(arq.size) + ' · ' + (arq.type || 'tipo desconhecido'))
+    setInfoArquivo(
+      `${formatarTamanho(arq.size)} - ${
+        arq.type || 'tipo desconhecido'
+      }`,
+    )
     setHash('Gerando impressão digital...')
 
     try {
-      setHash(await gerarHash(arq))
-    } catch {
+      const hashGerado = await gerarHash(arq)
+      setHash(hashGerado)
+    } catch (erro) {
+      console.error(erro)
       setHash('Não foi possível gerar a impressão digital.')
     }
   }
 
-  const [beneficiarios, setBeneficiarios] = useState<Beneficiario[]>([
-    { id: 1, nome: '', percentual: 0 },
-  ])
-
   const adicionarBeneficiario = () => {
-    setBeneficiarios([
-      ...beneficiarios,
-      { id: Date.now(), nome: '', percentual: 0 },
+    setBeneficiarios((atuais) => [
+      ...atuais,
+      {
+        id: Date.now(),
+        nome: '',
+        percentual: 0,
+      },
     ])
   }
 
   const removerBeneficiario = (id: number) => {
-    setBeneficiarios(beneficiarios.filter((b) => b.id !== id))
-  }
-
-  const mudarNome = (id: number, nome: string) => {
-    setBeneficiarios(
-      beneficiarios.map((b) => (b.id === id ? { ...b, nome } : b))
+    setBeneficiarios((atuais) =>
+      atuais.filter((beneficiario) => beneficiario.id !== id),
     )
   }
 
-  const mudarPercentual = (id: number, percentual: number) => {
-    setBeneficiarios(
-      beneficiarios.map((b) => (b.id === id ? { ...b, percentual } : b))
+  const mudarNome = (id: number, nome: string) => {
+    setBeneficiarios((atuais) =>
+      atuais.map((beneficiario) =>
+        beneficiario.id === id
+          ? { ...beneficiario, nome }
+          : beneficiario,
+      ),
+    )
+  }
+
+  const mudarPercentual = (
+    id: number,
+    percentual: number,
+  ) => {
+    setBeneficiarios((atuais) =>
+      atuais.map((beneficiario) =>
+        beneficiario.id === id
+          ? { ...beneficiario, percentual }
+          : beneficiario,
+      ),
     )
   }
 
   const soma =
-    Math.round(beneficiarios.reduce((total, b) => total + b.percentual, 0) * 100) / 100
+    Math.round(
+      beneficiarios.reduce(
+        (total, beneficiario) =>
+          total + beneficiario.percentual,
+        0,
+      ) * 100,
+    ) / 100
 
   let classeSoma = 'soma-benef'
   let textoSoma = ''
@@ -94,28 +139,38 @@ export default function Registrar() {
   if (beneficiarios.length > 0) {
     if (soma === 100) {
       classeSoma += ' valida'
-      textoSoma = 'Distribuição válida · 100%'
+      textoSoma = 'Distribuição válida - 100%'
     } else {
       classeSoma += ' invalida'
-      textoSoma = 'A soma precisa ser 100% (atual: ' + soma + '%)'
+      textoSoma = `A soma precisa ser 100% (atual: ${soma}%)`
     }
   }
 
-  const registrarObra = async () => {
+  const registrar = async () => {
     if (!arquivo) {
       alert('Selecione o arquivo da obra.')
       return
     }
+
     if (!titulo.trim()) {
       alert('Informe o título da obra.')
       return
     }
+
     if (!autor.trim()) {
       alert('Informe o autor da obra.')
       return
     }
-    if (!preco) {
-      alert('Informe o preço da licença.')
+
+    const precoNumerico = Number(preco)
+
+    if (!preco || !Number.isFinite(precoNumerico) || precoNumerico <= 0) {
+      alert('Informe um preço válido para a licença.')
+      return
+    }
+
+    if (soma !== 100) {
+      alert('A soma da divisão precisa ser 100%.')
       return
     }
 
@@ -123,36 +178,41 @@ export default function Registrar() {
 
     try {
       const hashArquivo = await gerarHash(arquivo)
+      const obraExistente = await buscarObraPorHash(hashArquivo)
 
-      const divisao = beneficiarios.map((b) => ({
-        nome: b.nome.trim() || 'Sem nome',
-        percentual: b.percentual,
-      }))
-
-      if (soma !== 100) {
-               alert('A soma da divisão precisa ser 100%.')
-        return
-      }
-
-      if (await buscarObraPorHash(hashArquivo)) {
+      if (obraExistente) {
         alert('Este arquivo já foi registrado.')
         return
       }
 
-      await adicionarObra({
-        obra: titulo.trim(),
-        autor: autor.trim(),
-        preco: Number(preco),
-        hash: hashArquivo,
-        arquivo: arquivo.name,
-        data: new Date().toISOString().slice(0, 10),
-        divisao,
+      const divisao = beneficiarios.map((beneficiario) => ({
+        nome: beneficiario.nome.trim() || 'Sem nome',
+        percentual: beneficiario.percentual,
+      }))
+
+      await registrarObra({
+        uuid: crypto.randomUUID(),
+        blake3_hash: hashArquivo,
+        c2pa_manifest: {
+          titulo: titulo.trim(),
+          autor: autor.trim(),
+          preco: precoNumerico,
+          arquivo: arquivo.name,
+          data: new Date().toISOString(),
+          divisao,
+        },
       })
 
+      setHash(hashArquivo)
       alert('Obra registrada!')
     } catch (erro) {
       console.error(erro)
-      alert('Não foi possível preparar o registro.')
+
+      alert(
+        erro instanceof Error
+          ? erro.message
+          : 'Não foi possível registrar a obra.',
+      )
     } finally {
       setRegistrando(false)
     }
@@ -168,15 +228,21 @@ export default function Registrar() {
           </div>
 
           <nav className="nav-lateral">
-            <Link to="/registrar" className="item-nav-ml ativo">
+            <Link
+              to="/registrar"
+              className="item-nav-ml ativo"
+            >
               <span data-icone="registrar">Registrar Obra</span>
             </Link>
+
             <Link to="/verificar" className="item-nav-ml">
               <span data-icone="verificar">Verificar</span>
             </Link>
+
             <Link to="/royalties" className="item-nav-ml">
               <span data-icone="royalties">Royalties</span>
             </Link>
+
             <Link to="/obras" className="item-nav-ml">
               <span data-icone="registrar">Obras</span>
             </Link>
@@ -184,13 +250,17 @@ export default function Registrar() {
 
           <label className="modo-escuro-menu" htmlFor="switch">
             <span>Modo escuro</span>
+
             <input
-                           type="checkbox"
+              type="checkbox"
               id="switch"
               checked={escuro}
-              onChange={(e) => setEscuro(e.target.checked)}
+              onChange={(evento) =>
+                setEscuro(evento.target.checked)
+              }
             />
-            <span className="switch"></span>
+
+            <span className="switch" />
           </label>
         </aside>
 
@@ -202,7 +272,9 @@ export default function Registrar() {
 
           <div className="menu-grid">
             <div className="coluna-arquivo">
-              <span className="titulo-arquivo-span">ARQUIVO DA OBRA</span> <br />
+              <span className="titulo-arquivo-span">
+                ARQUIVO DA OBRA
+              </span>
 
               <section className="card-documento">
                 <div className="card-arquivo">
@@ -210,35 +282,58 @@ export default function Registrar() {
                     type="file"
                     id="arquivo"
                     hidden
-                    onChange={(e) => {
-                      const f = e.target.files?.[0]
-                      if (f) processarArquivo(f)
+                    onChange={(evento) => {
+                      const arquivoSelecionado =
+                        evento.target.files?.[0]
+
+                      if (arquivoSelecionado) {
+                        void processarArquivo(arquivoSelecionado)
+                      }
                     }}
                   />
+
                   <label
                     htmlFor="arquivo"
-                    className={'area-upload' + (arrastando ? ' arrastando' : '')}
-                    onDragOver={(e) => {
-                      e.preventDefault()
+                    className={
+                      `area-upload${
+                        arrastando ? ' arrastando' : ''
+                      }`
+                    }
+                    onDragOver={(evento) => {
+                      evento.preventDefault()
                       setArrastando(true)
                     }}
                     onDragLeave={() => setArrastando(false)}
-                    onDrop={(e) => {
-                      e.preventDefault()
+                    onDrop={(evento) => {
+                      evento.preventDefault()
                       setArrastando(false)
-                      const f = e.dataTransfer.files[0]
-                      if (f) processarArquivo(f)
+
+                      const arquivoSolto =
+                        evento.dataTransfer.files[0]
+
+                      if (arquivoSolto) {
+                        void processarArquivo(arquivoSolto)
+                      }
                     }}
                   >
                     <div className="icone-arquivo">📄</div>
-                    <strong id="nome-arquivo">{nomeArquivo}</strong>
-                    <span id="info-arquivo">{infoArquivo}</span>
+
+                    <strong id="nome-arquivo">
+                      {nomeArquivo}
+                    </strong>
+
+                    <span id="info-arquivo">
+                      {infoArquivo}
+                    </span>
                   </label>
                 </div>
               </section>
 
               <section className="card-impressao">
-                <span className="texto-card-impressao">Impressão Digital</span>
+                <span className="texto-card-impressao">
+                  Impressão Digital
+                </span>
+
                 <p className="valor-hash">{hash}</p>
               </section>
 
@@ -250,46 +345,76 @@ export default function Registrar() {
             </div>
 
             <div className="coluna-formulario">
-              <form className="card-formulario">
-                <span className="titulo-arquivo-span">DADOS DO REGISTRO</span>
+              <form
+                className="card-formulario"
+                onSubmit={(evento) => evento.preventDefault()}
+              >
+                <span className="titulo-arquivo-span">
+                  DADOS DO REGISTRO
+                </span>
 
                 <div className="linha-campos">
                   <div className="campo">
-                    <label className="label-formulario" htmlFor="titulo">Título</label>
+                    <label
+                      className="label-formulario"
+                      htmlFor="titulo"
+                    >
+                      Título
+                    </label>
+
                     <input
                       className="input-formulario"
                       id="titulo"
                       type="text"
-                      placeholder="Titulo da obra"
+                      placeholder="Título da obra"
                       value={titulo}
-                      onChange={(e) => setTitulo(e.target.value)}
+                      onChange={(evento) =>
+                        setTitulo(evento.target.value)
+                      }
                     />
                   </div>
 
                   <div className="campo">
-                    <label className="label-formulario" htmlFor="autor">Autor</label>
+                    <label
+                      className="label-formulario"
+                      htmlFor="autor"
+                    >
+                      Autor
+                    </label>
+
                     <input
                       className="input-formulario"
                       id="autor"
                       type="text"
                       placeholder="Nome do autor"
                       value={autor}
-                      onChange={(e) => setAutor(e.target.value)}
+                      onChange={(evento) =>
+                        setAutor(evento.target.value)
+                      }
                     />
                   </div>
                 </div>
 
                 <div className="linha-campos">
                   <div className="campo">
-                    <label className="label-formulario" htmlFor="preco">Preço da licença</label>
+                    <label
+                      className="label-formulario"
+                      htmlFor="preco"
+                    >
+                      Preço da licença
+                    </label>
+
                     <input
                       className="input-formulario"
                       id="preco"
                       type="number"
-                      min="1"
+                      min="0.01"
+                      step="0.01"
                       placeholder="0,00"
                       value={preco}
-                      onChange={(e) => setPreco(e.target.value)}
+                      onChange={(evento) =>
+                        setPreco(evento.target.value)
+                      }
                     />
                   </div>
                 </div>
@@ -299,7 +424,10 @@ export default function Registrar() {
 
               <div className="benef-topo">
                 <div>
-                  <h2 className="titulo-beneficios">BENEFICIÁRIOS</h2>
+                  <h2 className="titulo-beneficios">
+                    BENEFICIÁRIOS
+                  </h2>
+
                   <p className="benef-descricao">
                     Defina a divisão automática dos royalties
                   </p>
@@ -316,14 +444,22 @@ export default function Registrar() {
               </div>
 
               <div id="lista-beneficiarios">
-                {beneficiarios.map((b) => (
-                  <div className="benef-linha" key={b.id}>
+                {beneficiarios.map((beneficiario) => (
+                  <div
+                    className="benef-linha"
+                    key={beneficiario.id}
+                  >
                     <input
                       className="input-formulario benef-nome"
                       type="text"
                       placeholder="Nome do Estúdio"
-                      value={b.nome}
-                      onChange={(e) => mudarNome(b.id, e.target.value)}
+                      value={beneficiario.nome}
+                      onChange={(evento) =>
+                        mudarNome(
+                          beneficiario.id,
+                          evento.target.value,
+                        )
+                      }
                     />
 
                     <div className="benef-percentual">
@@ -332,11 +468,16 @@ export default function Registrar() {
                         type="number"
                         min="0"
                         max="100"
-                        value={b.percentual}
-                        onChange={(e) =>
-                          mudarPercentual(b.id, Number(e.target.value) || 0)
+                        step="0.01"
+                        value={beneficiario.percentual}
+                        onChange={(evento) =>
+                          mudarPercentual(
+                            beneficiario.id,
+                            Number(evento.target.value) || 0,
+                          )
                         }
                       />
+
                       <span>%</span>
                     </div>
 
@@ -344,7 +485,9 @@ export default function Registrar() {
                       type="button"
                       className="btn-remover"
                       aria-label="Remover beneficiário"
-                      onClick={() => removerBeneficiario(b.id)}
+                      onClick={() =>
+                        removerBeneficiario(beneficiario.id)
+                      }
                     >
                       ✕
                     </button>
@@ -352,7 +495,10 @@ export default function Registrar() {
                 ))}
               </div>
 
-              <div id="benef-resumo-soma" className={classeSoma}>
+              <div
+                id="benef-resumo-soma"
+                className={classeSoma}
+              >
                 {textoSoma}
               </div>
 
@@ -361,10 +507,12 @@ export default function Registrar() {
                   type="button"
                   id="btn-registrar"
                   className="botao-registrar"
-                  onClick={registrarObra}
+                  onClick={() => void registrar()}
                   disabled={registrando}
                 >
-                  {registrando ? 'Preparando registro...' : '⭢ Registrar obra'}
+                  {registrando
+                    ? 'Registrando...'
+                    : '⭢ Registrar obra'}
                 </button>
               </div>
             </div>
